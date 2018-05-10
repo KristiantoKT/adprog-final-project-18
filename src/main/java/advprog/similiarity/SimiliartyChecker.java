@@ -1,9 +1,9 @@
 package advprog.similiarity;
 
-import org.springframework.web.client.RestTemplate;
-
 import java.net.URL;
 import java.net.URLConnection;
+import org.springframework.web.client.RestTemplate;
+
 
 public class SimiliartyChecker {
 
