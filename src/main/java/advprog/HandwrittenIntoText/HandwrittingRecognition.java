@@ -123,13 +123,4 @@ public class HandwrittingRecognition {
             return null;
         }
     }
-
-    public static void main(String[] args) {
-        HandwrittingRecognition test = new HandwrittingRecognition();
-        String url = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Cursive_Writing_on_Notebook_paper.jpg/800px-Cursive_Writing_on_Notebook_paper.jpg";
-        String url2 = "https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX19530859.jpg";
-        String url3 = "http://www.fki.inf.unibe.ch/databases/iam-on-line-handwriting-database/images/processed-strokes.png";
-        String url4 = "http://bamboo.wacom.com/wp-content/uploads/2015/05/kn6-e1432076977500.png";
-        System.out.println(test.convertImageToString(url4));
-    }
 }
