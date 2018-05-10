@@ -12,8 +12,8 @@ public class SimiliarityCheckerTest {
 
     @Test
     public void testCheckerWithSameText() {
-        text1 = "Halo apa kabar kawan semua!";
-        text2 = "Halo apa kabar kawan semua!";
+        text1 = "Hello everybody how are you today boi!";
+        text2 = "Hello everybody how are you today boi!";
 
         assertEquals(100.0, SimiliartyChecker.checkSimiliarity(text1,text2),0.001);
 
@@ -21,8 +21,8 @@ public class SimiliarityCheckerTest {
 
     @Test
     public void testCheckerWithDifferentText() {
-        text1 = "Halo apa kabar semuanya!";
-        text2 = "wadidaw dibalik jadi wadidaw";
+        text1 = "Hello everybody how are you today boi!!";
+        text2 = "Ich guten morgen italy";
 
         assertEquals(0.0, SimiliartyChecker.checkSimiliarity(text1,text2),0.01);
     }
@@ -32,7 +32,7 @@ public class SimiliarityCheckerTest {
         String urlValid = "https://www.google.com/";
         String urlInvalid = "not a website";
 
-        assertTrue(SimiliartyChecker.checkUrlValidity(urlValid));
-        assertFalse(SimiliartyChecker.checkUrlValidity(urlInvalid));
+        assertTrue(SimiliartyChecker.checkUrlValidity(urlValid,urlValid));
+        assertFalse(SimiliartyChecker.checkUrlValidity(urlInvalid,urlInvalid));
     }
 }

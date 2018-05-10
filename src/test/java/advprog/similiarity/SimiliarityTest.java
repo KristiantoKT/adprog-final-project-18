@@ -22,7 +22,7 @@ public class SimiliarityTest {
 
         similiarityObj.setLang(lang);
         similiarityObj.setLangConfidence(langConfidence);
-        similiarityObj.setSimiliarity(similiarity);
+        similiarityObj.setSimilarity(similiarity);
         similiarityObj.setTime(time);
         similiarityObj.setTimeStamp(timeStamp);
         similiarityObj.setUrl1(url1);
@@ -32,7 +32,7 @@ public class SimiliarityTest {
 
         assertEquals(similiarityObj.getLang(),lang);
         assertEquals(similiarityObj.getLangConfidence(),langConfidence,0.001);
-        assertEquals(similiarityObj.getSimiliarity(),similiarity,0.001);
+        assertEquals(similiarityObj.getSimilarity(),similiarity,0.001);
         assertEquals(similiarityObj.getTime(),time,0.001);
         assertEquals(similiarityObj.getTimeStamp(),timeStamp);
         assertEquals(similiarityObj.getUrl1(),url1);

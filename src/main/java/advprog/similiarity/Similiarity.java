@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Similiarity {
 
     private double time;
-    private double similiarity;
+    private double similarity;
     private double langConfidence;
     private String lang;
     private String timeStamp;
@@ -28,12 +28,12 @@ public class Similiarity {
         this.time = time;
     }
 
-    public double getSimiliarity() {
-        return similiarity;
+    public double getSimilarity() {
+        return similarity;
     }
 
-    public void setSimiliarity(double similiarity) {
-        this.similiarity = similiarity;
+    public void setSimilarity(double similarity) {
+        this.similarity = similarity;
     }
 
     public String getLang() {
