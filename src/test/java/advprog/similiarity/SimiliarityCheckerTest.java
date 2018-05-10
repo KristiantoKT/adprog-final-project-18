@@ -26,4 +26,13 @@ public class SimiliarityCheckerTest {
 
         assertEquals(0.0, SimiliartyChecker.checkSimiliarity(text1,text2),0.01);
     }
+
+    @Test
+    public void testUrlValidity() {
+        String urlValid = "https://www.google.com/";
+        String urlInvalid = "not a website";
+
+        assertTrue(SimiliartyChecker.checkUrlValidity(urlValid));
+        assertFalse(SimiliartyChecker.checkUrlValidity(urlInvalid));
+    }
 }
