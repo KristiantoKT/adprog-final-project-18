@@ -30,8 +30,8 @@ DeployProduction:
     - gem install dpl
     - wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
   script:
-    - dpl --provider=heroku --app=$similiarity --api-key=$a8942f1f-3d95-4f9d-910a-677bf3efb894
+    - dpl --provider=heroku --app=similiarity --api-key=a8942f1f-3d95-4f9d-910a-677bf3efb894
   when: manual
   environment:
     name: production
-    url: $https://similiarity.herokuapp.com/
+    url: https://similiarity.herokuapp.com/
