@@ -23,7 +23,7 @@ class ComicTest {
     }
 
     @Test
-    void setName() {
+    void setTitle() {
         comic.setTitle("Dave");
         Assertions.assertEquals("Dave", comic.getTitle());
     }
