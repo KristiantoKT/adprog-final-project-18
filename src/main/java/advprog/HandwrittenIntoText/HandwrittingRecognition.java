@@ -62,10 +62,4 @@ public class HandwrittingRecognition {
         }
         return resultResponseEntity.getBody();
     }
-
-    public static void main(String[] args) {
-        HandwrittingRecognition test = new HandwrittingRecognition();
-        String hasil = test.convertImageToString("http://www.fki.inf.unibe.ch/databases/iam-on-line-handwriting-database/images/processed-strokes.png");
-        System.out.println(hasil);
-    }
 }
