@@ -21,6 +21,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.text.ParseException;
+
 public class PrimbonTest {
     Primbon primbon;
 
@@ -37,11 +40,11 @@ public class PrimbonTest {
     @Test
     void setTanggal(){
         primbon.setTanggal("2018-05-12");
-        assertEquals("2018-05-11", primbon.getTanggal());
+        assertEquals("2018-05-12", primbon.getTanggal());
     }
 
     @Test
-    void tanggalJadwal(){
+    void tanggalJadwal() throws ParseException {
         assertEquals("Jumat Legi", primbon.tanggalJawa("2018-05-11"));
     }
 
@@ -52,6 +55,6 @@ public class PrimbonTest {
 
     @Test
     void hari(){
-        assertEquals("Minggu", primbon.hari(0));
+        assertEquals("Minggu", primbon.days(1));
     }
 }
