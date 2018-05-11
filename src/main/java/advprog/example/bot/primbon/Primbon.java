@@ -24,7 +24,7 @@ public class Primbon {
         Date konstan = sdf.parse(dataK);
         long a = hari.getTime()-konstan.getTime();
         long diffDay = a /(24 * 60 * 60 * 1000);
-        return hari(hari.getDay()) + " " + weton(diffDay);
+        return days(hari.getDay()) + " " + weton(diffDay);
     }
     public String weton(long a){
         if(a%5==0){
@@ -44,7 +44,7 @@ public class Primbon {
         }
     }
 
-    public static String hari(int a){
+    public String days(int a){
         if(a==0){
             return "Minggu";
         }
