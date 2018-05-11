@@ -40,14 +40,14 @@ public class HandwrittingRecognition {
         if(postEntity.getStatusCodeValue() != 202) {
             throw new Exception("[ERROR]" + postEntity.getStatusCodeValue());
         }
-
         String operationLocation = postEntity.getHeaders().get("Operation-Location").get(0);
         return operationLocation;
     }
 
     private Handwritting retrieveText(String operationLocation) throws Exception {
         HttpEntity<String> entityResult = new HttpEntity<String>(defaultHeader);
-        ResponseEntity<Handwritting> resultResponseEntity= rest.exchange(operationLocation, HttpMethod.GET, entityResult, Handwritting.class);
+        ResponseEntity<Handwritting> resultResponseEntity= rest.exchange(operationLocation,
+                HttpMethod.GET, entityResult, Handwritting.class);
         String status = resultResponseEntity.getBody().getStatus();
         while(status.equals("Running")) {
             if(resultResponseEntity.getStatusCodeValue() != 200) {
