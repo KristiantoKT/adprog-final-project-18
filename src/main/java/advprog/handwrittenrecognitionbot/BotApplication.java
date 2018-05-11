@@ -12,8 +12,9 @@ public class BotApplication extends SpringBootServletInitializer{
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
         return builder.sources(HandwrittenRecognitionBot.class);
     }
-
+/**
     public static void main(String[] args) {
         SpringApplication.run(HandwrittenRecognitionBot.class, args);
     }
+ */
 }
