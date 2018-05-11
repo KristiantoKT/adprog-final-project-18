@@ -16,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 @LineMessageHandler
 public class HandwrittenRecognitionBot {
+
     @Autowired
     private LineMessagingClient lineMessagingClient;
 
@@ -24,7 +25,7 @@ public class HandwrittenRecognitionBot {
     private String urlImage;
 
     @EventMapping
-    public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
+    public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
         TextMessageContent content = event.getMessage();
         String contentText = content.getText();
         String[] arrContentText = contentText.split(" ");
@@ -32,8 +33,9 @@ public class HandwrittenRecognitionBot {
                 && arrContentText[1].equalsIgnoreCase("this")) {
             String message = getStringFromImage();
             String replyToken = event.getReplyToken();
-            sendMessage(replyToken, message);
+            return sendMessage(replyToken, message);
         }
+        return null;
     }
 
     @EventMapping
@@ -57,7 +59,7 @@ public class HandwrittenRecognitionBot {
         return rec.convertImageToString(urlImage);
     }
 
-    private void sendMessage(String replyToken, String result) {
+    private TextMessage sendMessage(String replyToken, String result) {
         TextMessage message = new TextMessage(result);
         try{
             lineMessagingClient
@@ -66,5 +68,10 @@ public class HandwrittenRecognitionBot {
         } catch (Exception e){
             System.out.println("ERROR");
         }
+        return message;
+    }
+
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
     }
 }
