@@ -40,7 +40,7 @@ public class BillboardNewAgeControllerTest {
     @Test
     void testHandleTextMessageEvent() {
         MessageEvent<TextMessageContent> event =
-                EventTestUtil.createDummyTextMessage("/billboard tropical One Direction");
+                EventTestUtil.createDummyTextMessage("/billboard newage One Direction");
 
         TextMessage reply = billboardNewAgeController.handleTextMessageEvent(event);
 
