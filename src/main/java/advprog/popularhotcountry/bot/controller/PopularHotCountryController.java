@@ -33,6 +33,7 @@ public class PopularHotCountryController {
     }
 
     public String listHotCountry() {
+
         return "";
     }
 }
