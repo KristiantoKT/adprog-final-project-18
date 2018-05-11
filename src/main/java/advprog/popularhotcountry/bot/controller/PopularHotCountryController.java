@@ -16,6 +16,8 @@ import java.util.logging.Logger;
 public class PopularHotCountryController {
 
     private static final Logger LOGGER = Logger.getLogger(PopularHotCountryController.class.getName());
+    private String url;
+
 
     @EventMapping
     public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
@@ -23,8 +25,14 @@ public class PopularHotCountryController {
         TextMessageContent content = event.getMessage();
         String contentText = content.getText();
 
-        String replyText = contentText.replace("/billboard hotcountry", listHotCountry()); //ambil 10 list pertama dari api
-        return new TextMessage(replyText);
+        url = "https://www.billboard.com/charts/country-songs";
+        HotCountry topTen = new HotCountry(url);
+
+        String replyText = contentText.replace("/billboard hotcountry", "");
+
+        topTen.setHotCountryTopTenLists(url);
+        String result = topTen.listTopTen();
+        return new TextMessage(result);
     }
 
     @EventMapping

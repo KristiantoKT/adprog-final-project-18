@@ -33,7 +33,7 @@ public class HotCountry {
     }
 
 
-    private void setHotCountryTopTenLists(String url) {
+    public void setHotCountryTopTenLists(String url) {
         try {
             Document  billboard = Jsoup.connect(url).get();
             Elements check = billboard.getElementsByClass("chart-row");
