@@ -26,8 +26,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 public class EchoControllerTest {
 
     static {
-        System.setProperty("line.bot.channelSecret", "SECRET");
-        System.setProperty("line.bot.channelToken", "TOKEN");
+        System.setProperty("line.bot.channelSecret", "0114ad213310d43cfd73d265ebc5292c");
+        System.setProperty("line.bot.channelToken", "pnsYfzh3MlyPet4DpGv679B6Sp+l099hL5GGS6W"
+                + "Y2KhXT3CkXR/1FbSF739dwD+yzV1QoEM3/lOpkdhv5soypGvA/evruHlbHXzcnC72ifvaRWTtak"
+                + "RywiIxz0VwC3H0exnBKeMUYfKm6ukyR8Xw6AdB04t89/1O/w1cDnyilFU=");
     }
 
     @Autowired

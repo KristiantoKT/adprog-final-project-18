@@ -8,25 +8,40 @@ import org.junit.Test;
 
 public class SimiliarityCheckerTest {
 
-    private String text1;
-    private String text2;
-    private String result;
+    private String param1;
+    private String param2;
 
     @Test
     public void testCheckerWithSameText() {
-        text1 = "Hello everybody how are you today boi!";
-        text2 = "Hello everybody how are you today boi!";
+        param1 = "Hello everybody how are you today boy!";
+        param2 = "Hello everybody how are you today boy!";
 
-        assertEquals(100.0, SimiliartyChecker.checkSimiliarity(text1,text2),0.001);
+        assertEquals(100.0, SimiliartyChecker.checkSimiliarity(param1, param2),0.001);
 
     }
 
     @Test
     public void testCheckerWithDifferentText() {
-        text1 = "Hello everybody how are you today boi!!";
-        text2 = "Ich guten morgen italy";
+        param1 = "Hello everybody how are you today boi!!";
+        param2 = "Burger is expensive eat coca cola instead";
 
-        assertEquals(0.0, SimiliartyChecker.checkSimiliarity(text1,text2),0.01);
+        assertEquals(0.0, SimiliartyChecker.checkSimiliarity(param1, param2),0.01);
+    }
+
+    @Test
+    public void testCheckerWithUrlInput() {
+        param1 =  "https://en.wikipedia.org/wiki/Wikipedia";
+        param2 = "https://en.wikipedia.org/wiki/Kenn_Whitaker";
+
+        assertEquals(17.22,SimiliartyChecker.checkSimiliarity(param1,param2), 0.01);
+    }
+
+    @Test
+    public void testCheckerWithUrlInputWithInvalidLanguage() {
+        param1 =  "https://de.wikipedia.org/wiki/Wikipedia:Hauptseite";
+        param2 = "https://de.wikipedia.org/wiki/Kenn_Whitaker";
+
+        assertEquals(-1,SimiliartyChecker.checkSimiliarity(param1,param2), 0.01);
     }
 
     @Test
