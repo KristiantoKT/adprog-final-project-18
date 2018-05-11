@@ -9,6 +9,7 @@ import static org.mockito.Mockito.verify;
 
 import advprog.example.bot.EventTestUtil;
 
+import advprog.favoriteHotCountry.bot.controller.FavoriteHotCountryController;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
@@ -34,17 +35,18 @@ public class FavoriteControllerTest {
     }
 
     @Autowired
-    private FavoriteController favoriteController;
+    private FavoriteHotCountryController favoriteController;
 
     @Test
     void testContextLoads() {
+
         assertNotNull(favoriteController);
     }
 
     @Test
     void testHandleTextMessageEvent() {
         MessageEvent<TextMessageContent> event =
-                EventTestUtil.createDummyTextMessage("/echo Lorem Ipsum");
+                EventTestUtil.createDummyTextMessage("/billboard hotcountry Lorem Ipsum");
 
         TextMessage reply = favoriteController.handleTextMessageEvent(event);
 

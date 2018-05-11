@@ -22,7 +22,7 @@ public class FavoriteHotCountryController {
         String contentText = content.getText();
 
         String replyText = contentText.replace("/billboard hotcountry ", "");
-        return new TextMessage(replyText.substring(1));
+        return new TextMessage(replyText);
     }
 
     @EventMapping
@@ -31,5 +31,12 @@ public class FavoriteHotCountryController {
                 event.getTimestamp(), event.getSource()));
     }
 
-    public String listS
+    public String artistInfo(String artist) {
+        String tempArtist = "";
+        if (artist.matches("[a-zA-Z0-9]")) {
+            tempArtist += artist;
+        }
+
+        return tempArtist;
+    }
 }
