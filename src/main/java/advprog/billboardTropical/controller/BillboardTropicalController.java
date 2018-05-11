@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 @LineMessageHandler
 public class BillboardTropicalController {
-	private static final Logger LOGGER = Logger.getLogger(EchoController.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(BillboardTropicalController.class.getName());
 
     @EventMapping
     public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
