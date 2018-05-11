@@ -112,7 +112,7 @@ public class ScrapperTest {
     }
 
     @Test
-    public void testFail() throws IOException{
+    public void testFail() throws IOException {
         scrapOut = scrapper.scrap(sampleFailUrl);
         assertEquals(failure,scrapOut);
     }
