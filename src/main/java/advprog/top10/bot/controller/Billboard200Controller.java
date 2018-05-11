@@ -24,9 +24,9 @@ public class Billboard200Controller {
         Billboard200App billboard200 = new Billboard200App(url);
 
         TextMessageContent content = event.getMessage();
-        String contextText = content.getText()
+        String contextText = content.getText();
 
-        String replyText = contentText.replace("/billboard bill200", "");
+        String replyText = contextText.replace("/billboard bill200", "");
         return new TextMessage(billboard200.printTop10());
     }
 
