@@ -1,4 +1,4 @@
-package advprog.HandwrittenIntoText;
+package advprog.handwrittenintotext;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

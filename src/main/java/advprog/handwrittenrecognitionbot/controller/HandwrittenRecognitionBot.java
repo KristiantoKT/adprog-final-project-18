@@ -1,6 +1,6 @@
-package advprog.HandwrittenRecognitionBot.controller;
+package advprog.handwrittenrecognitionbot.controller;
 
-import advprog.HandwrittenIntoText.HandwrittingRecognition;
+import advprog.handwrittenintotext.HandwrittingRecognition;
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.event.MessageEvent;

@@ -1,11 +1,10 @@
-package advprog.HandwrittenIntoText;
+package advprog.handwrittenintotext;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Lines {
+public class Words {
     private int[] boundingBox;
-    private Words[] words;
     private String text;
 
     public int[] getBoundingBox() {
@@ -14,14 +13,6 @@ public class Lines {
 
     public void setBoundingBox(int[] boundingBox) {
         this.boundingBox = boundingBox;
-    }
-
-    public Words[] getWords() {
-        return words;
-    }
-
-    public void setWords(Words[] words) {
-        this.words = words;
     }
 
     public String getText() {

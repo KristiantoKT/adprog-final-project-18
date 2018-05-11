@@ -1,9 +1,9 @@
-package advprog.HandwrittingIntoText;
+package advprog.handwrittingIntotext;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import advprog.HandwrittenIntoText.HandwrittingRecognition;
+import advprog.handwrittenintotext.HandwrittingRecognition;
 import org.junit.Test;
 
 public class HandwrittingRecognitionTest {

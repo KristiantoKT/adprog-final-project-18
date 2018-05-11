@@ -1,4 +1,4 @@
-package advprog.HandwrittenRecognitionBot;
+package advprog.handwrittenrecognitionbot;
 
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
