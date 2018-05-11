@@ -23,6 +23,7 @@ public class BillboardTropicalController {
         String replyText = contentText.replace("/billboard tropical One Direction", "");
         return new TextMessage(replyText.substring(1));
     }
+
 }
 
 
