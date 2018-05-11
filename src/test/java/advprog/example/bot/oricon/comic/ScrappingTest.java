@@ -1,11 +1,11 @@
-package advprog.example.bot.comic;
+package advprog.example.bot.oricon.comic;
+
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-
-import org.junit.jupiter.api.Test;
 
 public class ScrappingTest {
     Scrapping scrapping;

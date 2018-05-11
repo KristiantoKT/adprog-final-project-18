@@ -1,13 +1,13 @@
-package advprog.example.bot.comic;
-
-import java.io.IOException;
-import java.util.stream.Collectors;
+package advprog.example.bot.oricon.comic;
 
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import java.io.IOException;
+import java.util.stream.Collectors;
 
 
 

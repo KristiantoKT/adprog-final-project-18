@@ -1,4 +1,4 @@
-package advprog.example.bot.comic;
+package advprog.example.bot.oricon.comic;
 
 import org.junit.jupiter.api.Assertions;
 

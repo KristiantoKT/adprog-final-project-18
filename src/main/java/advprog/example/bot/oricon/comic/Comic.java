@@ -1,4 +1,4 @@
-package advprog.example.bot.comic;
+package advprog.example.bot.oricon.comic;
 
 public class Comic {
     private String title;
