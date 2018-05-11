@@ -52,7 +52,8 @@ public class EchoControllerTest {
         assertEquals("Invalid command", reply.getText());
 
         event = EventTestUtil.createDummyTextMessage(
-                "/docs_sim Hello everybody how are you today boy!' 'Burger is expensive eat coca cola instead");
+                "/docs_sim Hello everybody how are you today boy!'"
+        + " 'Burger is expensive eat coca cola instead");
         reply = echoController.handleTextMessageEvent(event);
         assertEquals("Incorrect input or maybe your language is not supported."
                 + " Try using english and fix your input", reply.getText());

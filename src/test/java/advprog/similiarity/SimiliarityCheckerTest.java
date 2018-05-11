@@ -20,12 +20,13 @@ public class SimiliarityCheckerTest {
 
     @Test
     public void testCheckerWithDifferentAndInvalidText() {
-        param = "'Hello everybody how are you today boy!' 'Burger is expensive eat coca cola instead'";
+        param = "'Hello everybody how are you today boy!'"
+            + " 'Burger is expensive eat coca cola instead'";
 
         assertEquals(0.0, SimiliartyChecker.checkSimiliarity(param),0.01);
 
-
-        param = "Hello everybody how are you today boy!' 'Burger is expensive eat coca cola instead";
+        param = "Hello everybody how are you today boy!'"
+            + " 'Burger is expensive eat coca cola instead";
 
         assertEquals(-1.0, SimiliartyChecker.checkSimiliarity(param),0.01);
     }
@@ -69,7 +70,8 @@ public class SimiliarityCheckerTest {
 
     @Test
     public void testValidInputWhenParsing() {
-        param = "'Hello everybody how are you today boy!' 'Burger is expensive eat coca cola instead'";
+        param = "'Hello everybody how are you today boy!'"
+                + " 'Burger is expensive eat coca cola instead'";
 
         String[] parsed = SimiliartyChecker.parseInput(param);
         assertEquals("text", parsed[0]);
