@@ -24,9 +24,11 @@ public class HotCountry {
     }
 
     public String getUrl() {
+
         return url;
     }
     public ArrayList<Charts> getHotCountryTopTen() {
+
         return hotCountryTopTen;
     }
 
@@ -54,10 +56,10 @@ public class HotCountry {
 
     public String listTopTen() {
         StringBuilder str = new StringBuilder();
-        int counter = 1;
+        int number = 1;
         for (Charts chart : hotCountryTopTen) {
-            str.append(format("(%d) %s\n", counter, chart.toString()));
-            counter++;
+            str.append(format("(%d) %s\n", number, chart.toString()));
+            number++;
         }
         return str.toString();
     }
