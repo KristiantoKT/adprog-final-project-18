@@ -22,4 +22,14 @@ public class Handwritting {
     public void setRecognitionResult(RecognitionResult recognitionResult) {
         this.recognitionResult = recognitionResult;
     }
+
+    @Override
+    public String toString(){
+        String result = "";
+        Lines[] rec = recognitionResult.getLines();
+        for(int i = 0; i<rec.length; i++) {
+            result += rec[i].getText() + "\n";
+        }
+        return result;
+    }
 }

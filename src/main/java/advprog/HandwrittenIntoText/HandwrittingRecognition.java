@@ -1,127 +1,71 @@
-/**package advprog.HandwrittenIntoText;
+package advprog.HandwrittenIntoText;
 
-import java.net.URI;
+import java.util.Arrays;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.client;
-import org.apache.http.client.methods.HttpGet;
-import org.springframework.http.H.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
-import org.apache.http.Header;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.springframework.http.ResponseEntity;
 
-public class HandwrittingRecognition {
+import org.springframework.web.client.RestTemplate;
+
+public class HandwrittingRecognitionController {
+    private RestTemplate rest = new RestTemplate();
+    private HttpHeaders defaultHeader;
     private final String subscriptionKey = "f2cd37b7c976497ea4c98031f7e32767";
-    public static final String uriBase = "https://westcentralus.api.cognitive.microsoft.com/vision/v1.0/recognizeText?handwriting=true";
+    private static final String uriBase = "https://westcentralus.api.cognitive.microsoft.com/vision/v1.0/recognizeText?handwriting=true";
 
-    public HandwrittingRecognition() {
+    public HandwrittingRecognitionController() {
+        defaultHeader = new HttpHeaders();
+        defaultHeader.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        defaultHeader.setContentType(MediaType.APPLICATION_JSON);
+        defaultHeader.set("Ocp-Apim-Subscription-Key", subscriptionKey);
     }
 
     public String convertImageToString(String urlImage) {
-        try{
-            String operationLocation = submitImage(urlImage);
-            if(operationLocation == null) {
-                return "[ERROR] Can't Recognize The Image.";
-            }
-            Thread.sleep(8000);
-            JSONObject resultJson = retrieveText(operationLocation);
-            if(resultJson == null) {
-                return "[ERROR] Can't Recognize The Image.";
-            }
-            return convertResultFromJson(resultJson);
-
-        } catch (InterruptedException e){
-            return "[ERROR] Process Interrupted";
-        }
-    }
-
-    private String convertResultFromJson(JSONObject json) {
-        JSONArray lines = json.getJSONObject("recognitionResult").getJSONArray("lines");
-        String hasil = "";
-        for (int i = 0; i < lines.length(); i++) {
-            JSONObject jsonobject = lines.getJSONObject(i);
-            hasil += jsonobject.getString("text") + "\n";
-        }
-        return hasil;
-    }
-
-    private String submitImage(String urlImage) {
-        HttpClient textClient = new DefaultHttpClient();
-
         try {
-            // Begin the REST API call to submit the image for processing.
-            URI uri = new URI(uriBase);
-            HttpPost textRequest = new HttpPost(uri);
-
-            // Request headers. Another valid content type is "application/octet-stream".
-            textRequest.setHeader("Content-Type", "application/json");
-            textRequest.setHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
-
-            // Request body.
-            StringEntity requestEntity =
-                    new StringEntity("{\"url\":\"" + urlImage + "\"}");
-            textRequest.setEntity(requestEntity);
-
-            // Execute the first REST API call to detect the text.
-            HttpResponse textResponse = textClient.execute(textRequest);
-
-            // Check for success.
-            if (textResponse.getStatusLine().getStatusCode() != 202)
-            {
-                // Format and display the JSON error message.
-                HttpEntity entity = textResponse.getEntity();
-                String jsonString = EntityUtils.toString(entity);
-                JSONObject json = new JSONObject(jsonString);
-                System.out.println(json.toString(2));
-                return null;
-            }
-
-            String operationLocation = null;
-
-            // The 'Operation-Location' in the response contains the URI to retrieve the recognized text.
-            Header[] responseHeaders = textResponse.getAllHeaders();
-            for(Header header : responseHeaders) {
-                if(header.getName().equals("Operation-Location"))
-                {
-                    // This string is the URI where you can get the text recognition operation result.
-                    operationLocation = header.getValue();
-                    break;
-                }
-            }
-            return operationLocation;
+            String operationLocation = submitImage(urlImage);
+            Handwritting result = retrieveText(operationLocation);
+            return result.toString();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
+            return e.getMessage();
         }
     }
 
-    private JSONObject retrieveText(String operationLocation){
-        HttpClient resultClient = new DefaultHttpClient();
-
-        try{
-            // Execute the second REST API call and get the response.
-            HttpGet resultRequest = new HttpGet(operationLocation);
-            resultRequest.setHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
-
-            HttpResponse resultResponse = resultClient.execute(resultRequest);
-            HttpEntity responseEntity = resultResponse.getEntity();
-
-            if (responseEntity != null)
-            {
-                // Format and display the JSON response.
-                String jsonString = EntityUtils.toString(responseEntity);
-                JSONObject json = new JSONObject(jsonString);
-                return json;
-            } else{
-                return null;
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
+    private String submitImage(String urlImage) throws Exception {
+        String stringEntity = "{\"url\":\"" + urlImage + "\"}";
+        HttpEntity<String> entity = new HttpEntity<String>(stringEntity, this.defaultHeader);
+        ResponseEntity<String> postEntity = rest.postForEntity(uriBase, entity, String.class);
+        if(postEntity.getStatusCodeValue() != 202) {
+            throw new Exception("[ERROR]" + postEntity.getStatusCodeValue());
         }
+
+        String operationLocation = postEntity.getHeaders().get("Operation-Location").get(0);
+        return operationLocation;
+    }
+
+    private Handwritting retrieveText(String operationLocation) throws Exception {
+        HttpEntity<String> entityResult = new HttpEntity<String>(defaultHeader);
+        ResponseEntity<Handwritting> resultResponseEntity= rest.exchange(operationLocation, HttpMethod.GET, entityResult, Handwritting.class);
+        String status = resultResponseEntity.getBody().getStatus();
+        while(status.equals("Running")) {
+            if(resultResponseEntity.getStatusCodeValue() != 200) {
+                throw new Exception("[ERROR] " + + resultResponseEntity.getStatusCodeValue());
+            }
+            resultResponseEntity= rest.exchange(operationLocation, HttpMethod.GET, entityResult, Handwritting.class);
+            status = resultResponseEntity.getBody().getStatus();
+            Thread.sleep(1000);
+        }
+        if(!status.equals("Succeeded")) {
+            throw new Exception("[ERROR] "+ status);
+        }
+        return resultResponseEntity.getBody();
+    }
+
+    public static void main(String[] args) {
+        HandwrittingRecognitionController test = new HandwrittingRecognitionController();
+        String hasil = test.convertImageToString("http://www.fki.inf.unibe.ch/databases/iam-on-line-handwriting-database/images/processed-strokes.png");
+        System.out.println(hasil);
     }
 }
- */
