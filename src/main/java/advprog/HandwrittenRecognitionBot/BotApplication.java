@@ -1,0 +1,19 @@
+package advprog.HandwrittenRecognitionBot;
+
+import advprog.HandwrittenRecognitionBot.controller.HandwrittenRecognitionBot;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+
+@SpringBootApplication
+public class BotApplication extends SpringBootServletInitializer{
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return builder.sources(HandwrittenRecognitionBot.class);
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(HandwrittenRecognitionBot.class, args);
+    }
+}
