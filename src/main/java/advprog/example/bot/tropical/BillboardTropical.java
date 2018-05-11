@@ -13,7 +13,7 @@ import org.jsoup.parser.Parser;
 import org.jsoup.select.Elements;
 
 /**
- * BillboardTropical is an implementation of Top 10 Billboard's Tropical Songs.
+ * BillboardTropical is an implementation of Top 10 Tropical Songs from Billboard.com.
  * @author Kristianto
  */
 public class BillboardTropical {
