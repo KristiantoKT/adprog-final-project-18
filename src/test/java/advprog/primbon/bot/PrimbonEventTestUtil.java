@@ -6,9 +6,9 @@ import com.linecorp.bot.model.event.source.UserSource;
 
 import java.time.Instant;
 
-public class EventTestUtil {
+public class PrimbonEventTestUtil {
 
-    private EventTestUtil() {
+    private PrimbonEventTestUtil() {
         // Default private constructor
     }
 

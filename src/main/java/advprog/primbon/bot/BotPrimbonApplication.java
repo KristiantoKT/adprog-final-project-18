@@ -1,3 +1,5 @@
+package advprog.primbon.bot;
+
 import java.util.logging.Logger;
 
 import org.springframework.boot.SpringApplication;

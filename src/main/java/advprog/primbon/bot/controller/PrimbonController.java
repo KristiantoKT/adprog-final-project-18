@@ -39,7 +39,7 @@ public class PrimbonController {
         }
     }
 
-    private String tanggalJawa(String tanggal) throws ParseException {
+    public String tanggalJawa(String tanggal) throws ParseException {
         String dataK = "1901-01-01";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date hari = sdf.parse(tanggal);
@@ -52,7 +52,7 @@ public class PrimbonController {
         return days(hariKe) + " " + weton(diffDay);
     }
 
-    private String weton(long a) {
+    public String weton(long a) {
         if (a % 5 == 0) {
             return "Pon";
         } else if (a % 5 == 1) {
@@ -66,7 +66,7 @@ public class PrimbonController {
         }
     }
 
-    private String days(int a) {
+    public String days(int a) {
         if (a == 1) {
             return "Minggu";
         } else if (a == 2) {

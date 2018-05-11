@@ -8,7 +8,7 @@ import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-import advprog.example.bot.EventTestUtil;
+import advprog.example.bot.PrimbonEventTestUtil;
 
 
 import com.linecorp.bot.model.event.Event;
@@ -44,7 +44,7 @@ public class PrimbonControllerTest {
     @Test
     void testHandleTextMessageEvent() {
         MessageEvent<TextMessageContent> event =
-                EventTestUtil.createDummyTextMessage("/primbon 1981-09-12");
+                PrimbonEventTestUtil.createDummyTextMessage("/primbon 1981-09-12");
 
         TextMessage reply = primbonController.handleTextMessageEvent(event);
 
