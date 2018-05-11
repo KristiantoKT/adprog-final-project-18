@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 @LineMessageHandler
 
-public class BillboardTheHot100ControllerStub {
+public class BillboardTheHot100ControllerStub extends BillboardTheHot100Controller{
 	@EventMapping
 	public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event){
 		String str = "This is a test message";
