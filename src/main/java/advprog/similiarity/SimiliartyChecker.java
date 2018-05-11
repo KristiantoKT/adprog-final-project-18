@@ -7,7 +7,7 @@ import org.springframework.web.client.RestTemplate;
 
 public class SimiliartyChecker {
 
-    public static double checkSimiliarity(String param1, String param2) {
+    public static double checkSimiliarity(String param) {
         // default value is 0
         double result = 0;
 
@@ -17,16 +17,16 @@ public class SimiliartyChecker {
         // link of my api token
         String token = "d94d7f89ffb74f21bbde0ea160e9364a";
 
-        // type of data inserted, url or plain text
-        String type;
+        // parse the input
+        String[] data = parseInput(param);
 
-        // decide type of input, if it can connect, it's an url, if not it's a text.
-        // even if its a broken url, it'll be treated as text
-        type = checkUrlValidity(param1,param2) ? "url" : "text";
+        if (data[0].equals("error")) {
+            return -1;
+        }
 
         // generate link to the api with the input content
-        String target = link + type
-                + "1=" + param1 + "&" + type + "2=" + param2 + "&token=" + token;
+        String target = link + data[0]
+                + "1=" + data[1] + "&" + data[0] + "2=" + data[2] + "&token=" + token;
 
         // some language besides english cannot be processed, causing error
         // if so, result will be -1, will be processed as error
@@ -56,5 +56,30 @@ public class SimiliartyChecker {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    // method to parse the input
+    // return according to text sent by user
+    public static String[] parseInput(String input) {
+        String[] parsed = new String[3];
+        parsed[0] = "error";
+
+        String[] temp = input.split("' '");
+        if (temp.length == 2) { // it's a text
+            if (temp[0].charAt(0) == '\'' && temp[1].charAt(temp[1].length() - 1) == '\'') {
+                // and completely enclosed
+                parsed[0] = "text";
+                parsed[1] = temp[0].substring(1);
+                parsed[2] = temp[1].substring(0,temp[1].length() - 1);
+            }
+        } else { // it's an url
+            temp = input.split(" ");
+            if (temp.length == 2 && checkUrlValidity(temp[0],temp[1])) {
+                parsed[0] = "url";
+                parsed[1] = temp[0];
+                parsed[2] = temp[1];
+            }
+        }
+        return parsed;
     }
 }

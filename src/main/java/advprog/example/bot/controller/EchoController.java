@@ -32,18 +32,17 @@ public class EchoController {
 
             case "/docs_sim":
                 temp = contentText.replace("/docs_sim ","");
-                double sameness = SimiliartyChecker.checkSimiliarity(
-                        temp.split(" ")[0],temp.split(" ")[1]);
+                double sameness = SimiliartyChecker.checkSimiliarity(temp);
                 if (sameness >= 0) {
                     reply = Double.toString(sameness) + "%";
                 }  else {
                     reply = "Incorrect input or maybe your language is not supported."
-                        + "try using english";
+                        + " Try using english and fix your input";
                 }
                 break;
 
             default:
-                reply = "Invalid input";
+                reply = "Invalid command";
         }
         return new TextMessage(reply);
     }

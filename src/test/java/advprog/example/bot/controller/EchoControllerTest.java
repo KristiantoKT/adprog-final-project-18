@@ -44,10 +44,24 @@ public class EchoControllerTest {
     void testHandleTextMessageEvent() {
         MessageEvent<TextMessageContent> event =
                 EventTestUtil.createDummyTextMessage("/echo Lorem Ipsum");
-
         TextMessage reply = echoController.handleTextMessageEvent(event);
-
         assertEquals("Lorem Ipsum", reply.getText());
+
+        event = EventTestUtil.createDummyTextMessage("wadidaw");
+        reply = echoController.handleTextMessageEvent(event);
+        assertEquals("Invalid command", reply.getText());
+
+        event = EventTestUtil.createDummyTextMessage(
+                "/docs_sim Hello everybody how are you today boy!' 'Burger is expensive eat coca cola instead");
+        reply = echoController.handleTextMessageEvent(event);
+        assertEquals("Incorrect input or maybe your language is not supported."
+                + " Try using english and fix your input", reply.getText());
+
+
+        event = EventTestUtil.createDummyTextMessage(
+                "/docs_sim https://en.wikipedia.org/wiki/Wikipedia https://en.wikipedia.org/wiki/Kenn_Whitaker");
+        reply = echoController.handleTextMessageEvent(event);
+        assertEquals("17.22%", reply.getText());
     }
 
     @Test
