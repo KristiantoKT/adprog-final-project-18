@@ -1,4 +1,4 @@
-package oriconcommand;
+package advprog.example.bot.oricon.oriconcommand;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

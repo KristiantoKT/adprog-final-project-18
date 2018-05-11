@@ -1,4 +1,4 @@
-package oriconsingle;
+package advprog.example.bot.oricon.oriconsingle;
 
 import java.io.IOException;
 import java.util.stream.Collectors;
@@ -11,6 +11,11 @@ import org.jsoup.select.Elements;
 
 
 public class Scrapper {
+
+    public static void main(String[] args) throws IOException {
+        Scrapper py = new Scrapper();
+        System.out.println(py.scrap("https://www.oricon.co.jp/rank/js/y/2017/"));
+    }
 
     public Scrapper(){
 

@@ -1,4 +1,4 @@
-package oriconsingle;
+package advprog.example.bot.oricon.oriconsingle;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package oriconsingle;
+package advprog.example.bot.oricon.oriconsingle;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

@@ -1,4 +1,4 @@
-package oriconcommand;
+package advprog.example.bot.oricon.oriconcommand;
 
 import com.linecorp.bot.model.message.TextMessage;
 
