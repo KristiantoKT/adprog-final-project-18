@@ -7,8 +7,6 @@ import org.junit.jupiter.api.Test;
 
 
 
-
-
 class ComicTest {
     Comic comic;
 
