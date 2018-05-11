@@ -31,7 +31,7 @@ public class ComicTest {
 
     @Test
     void setAuthor() {
-        comic.setArtist("ヤマザキコレ");
+        comic.setAuthor("ヤマザキコレ");
         assertEquals("ヤマザキコレ", comic.getAuthor());
     }
 
