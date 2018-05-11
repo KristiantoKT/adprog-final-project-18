@@ -12,6 +12,10 @@ import org.jsoup.nodes.Element;
 import org.jsoup.parser.Parser;
 import org.jsoup.select.Elements;
 
+/**
+ * BillboardTropical is an implementation of Top 10 Billboard's Tropical Songs.
+ * @author Kristianto
+ */
 public class BillboardTropical {
     private String billboardUrl;
     private List<Song> topTenTropicalList;
@@ -22,6 +26,11 @@ public class BillboardTropical {
         setTopTenTropicalSongs(billboardUrl);
     }
 
+    /**
+     * Set top ten Tropical Songs from Billboard.com. &nbsp;
+     * It uses web scraping method and Jsoup API to get the data.
+     * @param url of Billboard's chart
+     */
     private void setTopTenTropicalSongs(String url) {
         try {
             Document doc = Jsoup.connect(url).get();
@@ -42,6 +51,10 @@ public class BillboardTropical {
         }
     }
 
+    /**
+     * Set output for 10 top Tropical Songs from Billboard.com
+     * @return 10 top Tropical Songs
+     */
     public String printTopTenList() {
         StringBuilder sb = new StringBuilder();
         int counter = 1;
