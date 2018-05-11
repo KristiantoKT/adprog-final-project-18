@@ -10,7 +10,7 @@ import java.time.Instant;
 
 public class EventTestUtil {
 
-    public EventTestUtil(){
+    public EventTestUtil() {
 
     }
 

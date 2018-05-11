@@ -21,7 +21,7 @@ public class FakeJSONController {
                 event.getTimestamp(), event.getMessage()));
         TextMessageContent content = event.getMessage();
         try {
-            if (content.getText().equals("/fake_json")){
+            if (content.getText().equals("/fake_json")) {
                 String uri = "https://jsonplaceholder.typicode.com/posts/";
 
                 Random random = new Random();
@@ -33,10 +33,10 @@ public class FakeJSONController {
                 RestTemplate restTemplate = new RestTemplate();
                 String result = restTemplate.getForObject(uri, String.class);
                 return new TextMessage(result);
-            }else{
+            } else {
                 throw new IllegalArgumentException();
             }
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             return new TextMessage("Command not found!");
         }
     }

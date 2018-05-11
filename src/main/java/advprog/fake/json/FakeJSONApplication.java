@@ -3,6 +3,7 @@ package advprog.fake.json;
 import org.springframework.boot.SpringApplication;
 
 import java.util.logging.Logger;
+
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
