@@ -23,7 +23,7 @@ public class YoutubeInfoController {
 
     private static final Logger LOGGER = Logger.getLogger(YoutubeInfoController.class.getName());
 
-//    @EventMapping
+    @EventMapping
     public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws IOException {
         LOGGER.fine(String.format("TextMessageContent(timestamp='%s',content='%s')",
                 event.getTimestamp(), event.getMessage()));
@@ -39,15 +39,11 @@ public class YoutubeInfoController {
             Element body = doc.body();
 
             String title = getTitle(doc, body);
-            String channel = getChannel(doc, body);
-            String viewers = getViewersCount(doc, body);
-            String likesdislike = getLikes(doc, body) + " & " + getDislikes(doc, body);
-
-            String replyText = String.format("Title : %s %n Channel : %s %n Viewers : %s %n " +
-                            "Likes and Dislikes : %s", title, channel, viewers, likesdislike);
+            String replyText = String.format("Title : " + title);
 
 
             return new TextMessage(replyText);
+
 
 
         } else {
