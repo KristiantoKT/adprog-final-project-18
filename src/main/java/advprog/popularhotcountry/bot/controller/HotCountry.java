@@ -36,16 +36,16 @@ public class HotCountry {
     private void setHotCountryTopTenLists(String url) {
         try {
             Document  billboard = Jsoup.connect(url).get();
-            Elements links = billboard.getElementsByClass("chart-row");
+            Elements check = billboard.getElementsByClass("chart-row");
             for (int i = 0; i < 10; i++) {
-                Element element = links.get(i);
-                String name = element.getElementsByClass("chart-row__song").html();
+                Element element = check.get(i);
+                String songTitle = element.getElementsByClass("chart-row__song").html();
                 String artist = element.getElementsByClass("chart-row__artist").html();
 
-                String formattedName = Parser.unescapeEntities(name, false);
-                String formattedArtist = Parser.unescapeEntities(artist, false);
+                String songTitleChart = Parser.unescapeEntities(songTitle, false);
+                String artistChart = Parser.unescapeEntities(artist, false);
 
-                Charts chart = new Charts(formattedName, formattedArtist);
+                Charts chart = new Charts(songTitleChart, artistChart);
                 hotCountryTopTen.add(chart);
             }
         } catch (IOException e) {

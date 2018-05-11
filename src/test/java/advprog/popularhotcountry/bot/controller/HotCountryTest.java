@@ -11,7 +11,7 @@ import org.junit.Test;
 
 public class HotCountryTest {
     HotCountry hotCountry;
-    String url = "https://www.billboard.com/charts/country-songs"
+    String url = "https://www.billboard.com/charts/country-songs";
 
     @Before
     public void SetUp() {
@@ -20,7 +20,7 @@ public class HotCountryTest {
 
     @Test
     public void urlNotValidTest() {
-        new HotCountry("https://haduh.ac.id/")
+        new HotCountry("https://haduh.ac.id/");
     }
 
     @Test
