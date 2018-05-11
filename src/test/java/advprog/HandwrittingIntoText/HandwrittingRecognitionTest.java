@@ -13,6 +13,8 @@ public class HandwrittingRecognitionTest {
     public void convertImageToStringTest() {
         HandwrittingRecognition test = new HandwrittingRecognition();
         String hasil = test.convertImageToString(url);
+        String expected = "dog\nThe quick brown fox jumps over the lazy\nPack my box with five dozen liquor jugs\n";
         assertTrue(hasil.contains("dog"));
+        assertEquals(hasil, expected);
     }
 }
