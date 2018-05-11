@@ -23,10 +23,5 @@ public class EventTestUtil {
     @Test
     public void applicationContextLoaded() {
     }
-
-    @Test
-    public void applicationContextTest() {
-        FakeJSONApplication.main(new String[]{});
-    }
 }
 
