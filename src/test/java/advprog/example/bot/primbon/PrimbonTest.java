@@ -14,6 +14,8 @@ import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
 
+import java.text.ParseException;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,23 +24,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.text.ParseException;
 
 public class PrimbonTest {
     Primbon primbon;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         primbon = new Primbon("2018-05-11");
     }
 
     @Test
-    void getTanggal(){
+    void getTanggal() {
         assertEquals("2018-05-11", primbon.getTanggal());
     }
 
     @Test
-    void setTanggal(){
+    void setTanggal() {
         primbon.setTanggal("2018-05-12");
         assertEquals("2018-05-12", primbon.getTanggal());
     }
@@ -49,12 +50,12 @@ public class PrimbonTest {
     }
 
     @Test
-    void weton(){
+    void weton() {
         assertEquals("Pon", primbon.weton(0));
     }
 
     @Test
-    void hari(){
+    void hari() {
         assertEquals("Minggu", primbon.days(1));
     }
 }
