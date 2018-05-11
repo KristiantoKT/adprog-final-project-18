@@ -30,7 +30,7 @@ public class Scrapper {
             return output;
         }
         catch (HttpStatusException e) {
-            return "Invalid url";
+            return "Invalid URL";
         }
     }
 
