@@ -1,12 +1,10 @@
 package advprog.fake.json;
 
-import advprog.example.bot.BotExampleApplication;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.event.source.UserSource;
-import org.junit.jupiter.api.Test;
-
 import java.time.Instant;
+import org.junit.jupiter.api.Test;
 
 public class EventTestUtil {
 

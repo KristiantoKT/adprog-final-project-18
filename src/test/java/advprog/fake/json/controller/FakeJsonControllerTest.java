@@ -9,7 +9,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 import advprog.fake.json.EventTestUtil;
-import advprog.fake.json.FakeJSONApplication;
+import advprog.fake.json.FakeJsonApplication;
 
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
@@ -25,7 +25,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @SpringBootTest(properties = "line.bot.handler.enabled=false")
 @ExtendWith(SpringExtension.class)
-public class FakeJSONControllerTest {
+public class FakeJsonControllerTest {
 
     static {
         System.setProperty("line.bot.channelSecret", "SECRET");
@@ -33,11 +33,11 @@ public class FakeJSONControllerTest {
     }
 
     @Autowired
-    private FakeJSONController fakeJSONController;
+    private FakeJsonController fakeJsonController;
 
     @Test
     void testContextLoads() {
-        assertNotNull(fakeJSONController);
+        assertNotNull(fakeJsonController);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class FakeJSONControllerTest {
         MessageEvent<TextMessageContent> event =
                 EventTestUtil.createDummyTextMessage("/fake_json");
 
-        TextMessage reply = fakeJSONController.handleTextMessageEvent(event);
+        TextMessage reply = fakeJsonController.handleTextMessageEvent(event);
 
         assertTrue(reply.getText().contains("title"));
     }
@@ -55,7 +55,7 @@ public class FakeJSONControllerTest {
         MessageEvent<TextMessageContent> event =
                 EventTestUtil.createDummyTextMessage("/wawiwu");
 
-        TextMessage reply = fakeJSONController.handleTextMessageEvent(event);
+        TextMessage reply = fakeJsonController.handleTextMessageEvent(event);
 
         assertEquals(reply.getText(), "Command not found!");
     }
@@ -64,7 +64,7 @@ public class FakeJSONControllerTest {
     void testHandleDefaultMessage() {
         Event event = mock(Event.class);
 
-        fakeJSONController.handleDefaultMessage(event);
+        fakeJsonController.handleDefaultMessage(event);
 
         verify(event, atLeastOnce()).getSource();
         verify(event, atLeastOnce()).getTimestamp();
@@ -72,6 +72,6 @@ public class FakeJSONControllerTest {
 
     @Test
     public void applicationContextTest() {
-        FakeJSONApplication.main(new String[]{});
+        FakeJsonApplication.main(new String[]{});
     }
 }

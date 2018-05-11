@@ -6,14 +6,15 @@ import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
-import org.springframework.web.client.RestTemplate;
-
 import java.util.Random;
 import java.util.logging.Logger;
+import org.springframework.web.client.RestTemplate;
+
+
 
 @LineMessageHandler
-public class FakeJSONController {
-    private static final Logger LOGGER = Logger.getLogger(FakeJSONController.class.getName());
+public class FakeJsonController {
+    private static final Logger LOGGER = Logger.getLogger(FakeJsonController.class.getName());
 
     @EventMapping
     public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {

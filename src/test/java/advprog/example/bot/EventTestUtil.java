@@ -1,13 +1,5 @@
 package advprog.example.bot;
 
-import advprog.fake.json.FakeJSONApplication;
-import com.linecorp.bot.model.event.MessageEvent;
-import com.linecorp.bot.model.event.message.TextMessageContent;
-import com.linecorp.bot.model.event.source.UserSource;
-import org.junit.jupiter.api.Test;
-
-import java.time.Instant;
-
 //public class EventTestUtil {
 //
 //    private EventTestUtil() {
