@@ -1,8 +1,8 @@
 package advprog.example.bot.oricon.oriconcommand;
 
+import advprog.example.bot.oricon.oriconsingle.Scrapper;
 import com.linecorp.bot.model.message.TextMessage;
 import java.io.IOException;
-import advprog.example.bot.oricon.oriconsingle.Scrapper;
 
 
 public class YearlyRankCommand implements RankCommand {
