@@ -1,12 +1,22 @@
-package advprog.favoriteHotCountry.bot.controller;
+package advprog.favoritehotcountry.bot.controller;
 
 public class Charts {
     private String song;
     private String artist;
+    private int position;
 
-    public Charts(String song, String artist) {
+    public Charts(String song, String artist, int position) {
         this.song = song;
         this.artist = artist;
+        this.position = position;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     public String getSong() {
@@ -25,8 +35,5 @@ public class Charts {
         this.artist = artist;
     }
 
-    @Override
-    public String toString() {
-        return artist + " - " + song;
-    }
+
 }
