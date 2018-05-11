@@ -51,7 +51,7 @@ public class HandwrittingRecognition {
         String status = resultResponseEntity.getBody().getStatus();
         while(status.equals("Running")) {
             if(resultResponseEntity.getStatusCodeValue() != 200) {
-                throw new Exception("[ERROR] " + + resultResponseEntity.getStatusCodeValue());
+                throw new Exception("[ERROR] " + resultResponseEntity.getStatusCodeValue());
             }
             resultResponseEntity= rest.exchange(operationLocation, HttpMethod.GET, entityResult, Handwritting.class);
             status = resultResponseEntity.getBody().getStatus();
