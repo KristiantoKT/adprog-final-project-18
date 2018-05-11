@@ -3,7 +3,7 @@ package advprog.HandwrittingIntoText;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import advprog.HandwrittenIntoText.HandwrittingRecognitionController;
+import advprog.HandwrittenIntoText.HandwrittingRecognition;
 import org.junit.Test;
 
 public class HandwrittingRecognitionTest {
@@ -11,7 +11,7 @@ public class HandwrittingRecognitionTest {
 
     @Test
     public void convertImageToStringTest() {
-        HandwrittingRecognitionController test = new HandwrittingRecognitionController();
+        HandwrittingRecognition test = new HandwrittingRecognition();
         String hasil = test.convertImageToString(url);
         assertTrue(hasil.contains("dog"));
     }
