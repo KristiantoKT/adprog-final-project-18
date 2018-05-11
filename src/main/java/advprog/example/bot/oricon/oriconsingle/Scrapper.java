@@ -29,7 +29,7 @@ public class Scrapper {
             output += songs.stream().map(js -> scrap(js)).collect(Collectors.joining("\n"));
             return output;
         } catch (HttpStatusException e) {
-            return "Invalid URL";
+            return "Invalid URL broh";
         }
     }
 
