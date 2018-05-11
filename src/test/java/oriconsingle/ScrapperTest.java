@@ -1,11 +1,12 @@
 package oriconsingle;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import java.io.IOException;
 
 import org.junit.Test;
 
-import java.io.IOException;
 
 //@RunWith(SpringJUnit4ClassRunner.class)
 //@ContextConfiguration(classes = {ScrapperConfig.class})
@@ -14,7 +15,6 @@ public class ScrapperTest {
 
     //@Autowired
     private Scrapper scrapper;
-
 
     private String sampleDailyUrl = "https://www.oricon.co.jp/rank/js/d/2018-05-09/";
     private String sampleWeeklyUrl = "https://www.oricon.co.jp/rank/js/w/2018-05-07/";
@@ -75,8 +75,10 @@ public class ScrapperTest {
             + "(10) Doors 〜勇気の軌跡〜 - 嵐 - 2017-11-08";
 
     private String scrapOut;
+    private String failure = "Invalid URL";
+    private String sampleFailUrl = "https://www.oricon.co.jp/rank/js/y/2020/";
 
-    public ScrapperTest() throws IOException{
+    public ScrapperTest() throws IOException {
         scrapper = new Scrapper();
     }
 
@@ -86,27 +88,33 @@ public class ScrapperTest {
     }
 
     @Test
-    public void testSampleDaily() throws IOException{
+    public void testSampleDaily() throws IOException {
         scrapOut = scrapper.scrap(sampleDailyUrl);
         assertEquals(sampleDailyOutput,scrapOut);
     }
 
     @Test
-    public void testSampleWeekly() throws IOException{
+    public void testSampleWeekly() throws IOException {
         scrapOut = scrapper.scrap(sampleWeeklyUrl);
         assertEquals(sampleWeeklyOutput,scrapOut);
     }
 
     @Test
-    public void testSampleMonthly() throws IOException{
+    public void testSampleMonthly() throws IOException {
         scrapOut = scrapper.scrap(sampleMonthlyUrl);
         assertEquals(sampleMonthlyOutput,scrapOut);
     }
 
     @Test
-    public void testSampleYearly() throws IOException{
+    public void testSampleYearly() throws IOException {
         scrapOut = scrapper.scrap(sampleYearlyUrl);
         assertEquals(sampleYearlyOutput,scrapOut);
+    }
+
+    @Test
+    public void testFail() throws IOException{
+        scrapOut = scrapper.scrap(sampleFailUrl);
+        assertEquals(failure,scrapOut);
     }
 
 }

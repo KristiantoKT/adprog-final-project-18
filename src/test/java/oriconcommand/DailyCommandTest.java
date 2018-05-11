@@ -32,7 +32,7 @@ public class DailyCommandTest {
             + "(10) Crosswalk/リワインド - 鈴木みのり - 2018-05-09";
 
     @Test
-    public void testInstanceOf(){
+    public void testInstanceOf() {
         assertTrue(command instanceof DailyRankCommand);
     }
 

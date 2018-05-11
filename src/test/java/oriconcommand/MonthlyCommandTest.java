@@ -28,7 +28,7 @@ public class MonthlyCommandTest {
             + "(10) Shanana ここにおいで - B2takes! - 2018-04-11";
 
     @Test
-    public void testInstanceOf(){
+    public void testInstanceOf() {
         assertTrue(command instanceof MonthlyRankCommand);
     }
 

@@ -14,7 +14,7 @@ public class YearlyCommandTest {
     private String failDate = "2019";
     private RankCommand command = new YearlyRankCommand();
     private TextMessage reply;
-    
+
     private String sampleYearlyOutput = "Top 10!"
             + "\n(1) 願いごとの持ち腐れ - AKB48 - 2017-05-31\n"
             + "(2) #好きなんだ - AKB48 - 2017-08-30\n"
@@ -28,7 +28,7 @@ public class YearlyCommandTest {
             + "(10) Doors 〜勇気の軌跡〜 - 嵐 - 2017-11-08";
 
     @Test
-    public void testInstanceOf(){
+    public void testInstanceOf() {
         assertTrue(command instanceof YearlyRankCommand);
     }
 

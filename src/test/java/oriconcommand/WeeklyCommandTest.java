@@ -31,7 +31,7 @@ public class WeeklyCommandTest {
             + "(10) 鍵穴 - the Raid. - 2018-04-25";
 
     @Test
-    public void testInstanceOf(){
+    public void testInstanceOf() {
         assertTrue(command instanceof WeeklyRankCommand);
     }
 

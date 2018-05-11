@@ -12,11 +12,6 @@ import org.jsoup.select.Elements;
 
 public class Scrapper {
 
-    //public static void main(String[] args) throws IOException{
-    //    Scrapper py= new Scrapper();
-    //    System.out.println(py.scrap("https://www.oricon.co.jp/rank/js/y/2017/"));
-    //}
-
     public Scrapper(){
 
     }
@@ -28,8 +23,7 @@ public class Scrapper {
             String output = "Top 10!\n";
             output += songs.stream().map(js -> scrap(js)).collect(Collectors.joining("\n"));
             return output;
-        }
-        catch (HttpStatusException e) {
+        } catch (HttpStatusException e) {
             return "Invalid URL";
         }
     }
