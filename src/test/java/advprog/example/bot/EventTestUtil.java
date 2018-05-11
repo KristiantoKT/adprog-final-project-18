@@ -1,8 +1,10 @@
 package advprog.example.bot;
 
+import advprog.fake.json.FakeJSONApplication;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.event.source.UserSource;
+import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 
@@ -17,4 +19,14 @@ public class EventTestUtil {
                 new TextMessageContent("id", text),
                 Instant.parse("2018-01-01T00:00:00.000Z"));
     }
+    @Test
+    public void applicationContextLoaded() {
+    }
+
+    @Test
+    public void applicationContextTest() {
+        BotExampleApplication.main(new String[]{});
+    }
 }
+
+

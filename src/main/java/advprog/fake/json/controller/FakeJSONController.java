@@ -1,16 +1,17 @@
 package advprog.fake.json.controller;
 
-import advprog.example.bot.controller.EchoController;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
+import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Random;
 import java.util.logging.Logger;
 
+@LineMessageHandler
 public class FakeJSONController {
     private static final Logger LOGGER = Logger.getLogger(FakeJSONController.class.getName());
 
