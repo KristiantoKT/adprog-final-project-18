@@ -10,13 +10,13 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.client.RestTemplate;
 
-public class HandwrittingRecognitionController {
+public class HandwrittingRecognition {
     private RestTemplate rest = new RestTemplate();
     private HttpHeaders defaultHeader;
     private final String subscriptionKey = "f2cd37b7c976497ea4c98031f7e32767";
     private static final String uriBase = "https://westcentralus.api.cognitive.microsoft.com/vision/v1.0/recognizeText?handwriting=true";
 
-    public HandwrittingRecognitionController() {
+    public HandwrittingRecognition() {
         defaultHeader = new HttpHeaders();
         defaultHeader.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         defaultHeader.setContentType(MediaType.APPLICATION_JSON);
@@ -64,7 +64,7 @@ public class HandwrittingRecognitionController {
     }
 
     public static void main(String[] args) {
-        HandwrittingRecognitionController test = new HandwrittingRecognitionController();
+        HandwrittingRecognition test = new HandwrittingRecognition();
         String hasil = test.convertImageToString("http://www.fki.inf.unibe.ch/databases/iam-on-line-handwriting-database/images/processed-strokes.png");
         System.out.println(hasil);
     }
