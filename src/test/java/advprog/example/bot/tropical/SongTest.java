@@ -35,4 +35,9 @@ class SongTest {
         song.setArtist("Various Artist");
         assertEquals("Various Artist", song.getArtist());
     }
+
+    @Test
+    void toStringTest() {
+        assertEquals("Various Artis - Carrie", song.toString());
+    }
 }
