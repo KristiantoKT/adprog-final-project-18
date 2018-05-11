@@ -10,11 +10,11 @@ import java.io.IOException;
 import org.junit.Test;
 
 public class YearlyCommandTest {
-    private String testDate = "2014";
-    private String failDate = "2015";
+    private String testDate = "2017";
+    private String failDate = "2019";
     private RankCommand command = new YearlyRankCommand();
     private TextMessage reply;
-
+    
     private String sampleYearlyOutput = "Top 10!"
             + "\n(1) 願いごとの持ち腐れ - AKB48 - 2017-05-31\n"
             + "(2) #好きなんだ - AKB48 - 2017-08-30\n"
