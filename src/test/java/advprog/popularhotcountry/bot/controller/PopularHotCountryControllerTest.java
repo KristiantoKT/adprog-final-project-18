@@ -44,11 +44,11 @@ public class PopularHotCountryControllerTest {
     @Test
     void testHandleTextMessageEvent() {
         MessageEvent<TextMessageContent> event =
-                EventTestUtil.createDummyTextMessage("/echo Lorem Ipsum");
+                EventTestUtil.createDummyTextMessage("/billboard hotcountry");
 
         TextMessage reply = popularController.handleTextMessageEvent(event);
 
-        assertEquals("Lorem Ipsum", reply.getText());
+        assertEquals("Hot Country", reply.getText());
     }
 
     @Test
@@ -58,6 +58,5 @@ public class PopularHotCountryControllerTest {
         popularController.handleDefaultMessage(event);
 
         verify(event, atLeastOnce()).getSource();
-        verify(event, atLeastOnce()).getTimestamp();
     }
 }

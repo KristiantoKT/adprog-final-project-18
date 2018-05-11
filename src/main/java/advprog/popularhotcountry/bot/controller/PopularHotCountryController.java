@@ -7,6 +7,7 @@ import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 
@@ -18,12 +19,20 @@ public class PopularHotCountryController {
 
     @EventMapping
     public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
+        LOGGER.fine(String.format("TextMessageContent(content='%s')", event.getMessage()));
+        TextMessageContent content = event.getMessage();
+        String contentText = content.getText();
 
-        return "";
+        String replyText = contentText.replace("/billboard hotcountry", listHotCountry()); //ambil 10 list pertama dari api
+        return new TextMessage(replyText);
     }
 
     @EventMapping
     public void handleDefaultMessage(Event event) {
+        LOGGER.fine(String.format("Event(content='%s')", event.getSource()));
+    }
+
+    public String listHotCountry() {
         return "";
     }
 }
