@@ -1,11 +1,15 @@
 package advprog.example.bot.comic;
 
+import org.junit.jupiter.api.Assertions;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ComicTest {
+
+
+
+class ComicTest {
     Comic comic;
 
     @BeforeEach
@@ -15,29 +19,23 @@ public class ComicTest {
 
     @Test
     void getTitle() {
-        assertEquals("魔法使いの嫁 9", comic.getTitle());
+        Assertions.assertEquals("魔法使いの嫁 9", comic.getTitle());
     }
 
     @Test
-    void setTitle() {
+    void setName() {
         comic.setTitle("Dave");
-        assertEquals("Dave", comic.getTitle());
+        Assertions.assertEquals("Dave", comic.getTitle());
     }
 
     @Test
     void getAuthor() {
-        assertEquals("ヤマザキコレ", comic.getAuthor());
+        Assertions.assertEquals("ヤマザキコレ", comic.getAuthor());
     }
 
     @Test
     void setAuthor() {
         comic.setAuthor("ヤマザキコレ");
-        assertEquals("ヤマザキコレ", comic.getAuthor());
+        Assertions.assertEquals("ヤマザキコレ", comic.getAuthor());
     }
-
-
-
-
-
-
 }
