@@ -1,9 +1,9 @@
 package advprog.example.bot.comic;
 
-import advprog.example.bot.comic.Comic;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ComicTest {
     Comic comic;
