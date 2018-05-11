@@ -1,5 +1,6 @@
 package advprog.example.bot.controller;
 
+import advprog.similiarity.SimiliartyChecker;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
@@ -21,8 +22,30 @@ public class EchoController {
         TextMessageContent content = event.getMessage();
         String contentText = content.getText();
 
-        String replyText = contentText.replace("/echo", "");
-        return new TextMessage(replyText.substring(1));
+        String reply;
+        String temp;
+        switch (contentText.split(" ")[0]) {
+            case "/echo":
+                temp = contentText.replace("/echo", "");
+                reply = temp.substring(1);
+                break;
+
+            case "/docs_sim":
+                temp = contentText.replace("/docs_sim ","");
+                double sameness = SimiliartyChecker.checkSimiliarity(
+                        temp.split(" ")[0],temp.split(" ")[1]);
+                if (sameness >= 0) {
+                    reply = Double.toString(sameness) + "%";
+                }  else {
+                    reply = "Incorrect input or maybe your language is not supported."
+                        + "try using english";
+                }
+                break;
+
+            default:
+                reply = "Invalid input";
+        }
+        return new TextMessage(reply);
     }
 
     @EventMapping
