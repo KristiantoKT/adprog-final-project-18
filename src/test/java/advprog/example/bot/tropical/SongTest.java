@@ -38,6 +38,6 @@ class SongTest {
 
     @Test
     void toStringTest() {
-        assertEquals("Various Artis - Carrie", song.toString());
+        assertEquals("Europe - The Final Countdown", song.toString());
     }
 }

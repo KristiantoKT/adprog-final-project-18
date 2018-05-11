@@ -33,6 +33,6 @@ public class Song {
 
     @Override
     public String toString() {
-
+        return artist + " - " + name;
     }
 }
