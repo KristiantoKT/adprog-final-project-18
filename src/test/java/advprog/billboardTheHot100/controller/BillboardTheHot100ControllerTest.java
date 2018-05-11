@@ -46,5 +46,15 @@ public class BillboardTheHot100ControllerTest {
 
         assertEquals("One Direction \nBest Song Ever \n1st", reply.getText());
     }
+    
+    @Test
+    void testHandleDefaultMessage() {
+        Event event = mock(Event.class);
+
+        billboardTheHot100Controller.handleDefaultMessage(event);
+
+        verify(event, atLeastOnce()).getSource();
+        verify(event, atLeastOnce()).getTimestamp();
+    }
 }
 
