@@ -1,5 +1,6 @@
 package advprog.example.bot.controller;
 
+import advprog.example.bot.tropical.BillboardTropical;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
@@ -20,9 +21,13 @@ public class EchoController {
                 event.getTimestamp(), event.getMessage()));
         TextMessageContent content = event.getMessage();
         String contentText = content.getText();
-
-        String replyText = contentText.replace("/echo", "");
-        return new TextMessage(replyText.substring(1));
+        String replyText = "";
+        if (contentText.contains("/billboard tropical")) {
+            BillboardTropical billboardTropical =
+                    new BillboardTropical("https://www.billboard.com/charts/tropical-songs");
+            replyText = billboardTropical.printTopTenList();
+        }
+        return new TextMessage(replyText);
     }
 
     @EventMapping

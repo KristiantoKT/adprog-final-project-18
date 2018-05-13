@@ -1,7 +1,7 @@
 package advprog.example.bot.controller;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
@@ -41,11 +41,11 @@ public class EchoControllerTest {
     @Test
     void testHandleTextMessageEvent() {
         MessageEvent<TextMessageContent> event =
-                EventTestUtil.createDummyTextMessage("/echo Lorem Ipsum");
+                EventTestUtil.createDummyTextMessage("/billboard tropical");
 
         TextMessage reply = echoController.handleTextMessageEvent(event);
 
-        assertEquals("Lorem Ipsum", reply.getText());
+        assertTrue(reply.getText().contains("Oye Mujer"));
     }
 
     @Test
