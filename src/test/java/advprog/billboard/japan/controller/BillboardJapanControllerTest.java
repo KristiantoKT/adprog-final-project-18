@@ -8,8 +8,8 @@ import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-import advprog.billboard.japan.EventTestUtil;
 import advprog.billboard.japan.BillboardJapanApplication;
+import advprog.billboard.japan.EventTestUtil;
 
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;

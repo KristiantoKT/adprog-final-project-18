@@ -1,6 +1,5 @@
 package advprog.billboard.japan;
 
-
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.event.source.UserSource;
