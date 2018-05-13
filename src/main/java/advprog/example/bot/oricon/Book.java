@@ -12,27 +12,34 @@ public class Book {
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
 
     public Book(String name, String author, String date, int estimatedSales) {
-
+        this.name = name;
+        this.author = author;
+        this.estimatedSales = estimatedSales;
+        try {
+            this.date = dateFormat.parse(date);
+        } catch (ParseException e) {
+            this.date = null;
+        }
     }
 
     public String getName() {
-        return null;
+        return name;
     }
 
     public String getAuthor() {
-        return null;
+        return author;
     }
 
     public Date getDate() {
-        return null;
+        return date;
     }
 
     public int getEstimatedSales() {
-        return -1;
+        return estimatedSales;
     }
 
     @Override
     public String toString() {
-        return null;
+        return name + " - " + author + " - " + dateFormat.format(date) + " - " + estimatedSales;
     }
 }
