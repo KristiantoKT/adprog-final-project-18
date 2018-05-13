@@ -37,4 +37,5 @@ public class SongTest {
         String artistNew = song.getArtist();
         assertEquals(artistNew, "Dead");
     }
+
 }
