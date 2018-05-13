@@ -13,29 +13,29 @@ import org.jsoup.select.Elements;
 import static java.lang.String.format;
 
 public class Billboard200App {
-    private String billboard200;
+    private String bill200Url;
     private List<Song> top10;
 
 
-    public Billboard200App(String rss) {
-        this.billboard200 = billboard200;
+    public Billboard200App(String bill200Url) {
+        this.bill200Url = bill200Url;
         top10 = new ArrayList<>();
-        getTop10(billboard200);
+        setTop10(bill200Url);
     }
 
-    private void getTop10(String rss){
+    private void setTop10(String url){
         try {
-            Document doc = Jsoup.connect(rss).get();
-            Elements chart = doc.getElementsByClass("chart-row");
+            Document docs = Jsoup.connect(url).get();
+            Elements links = docs.getElementsByClass("chart-row");
             for (int i = 0; i < 10; i++) {
-                Element e = chart.get(i);
-                String title = e.getElementsByClass("chart-row__song").html();
-                String artist = e.getElementsByClass("chart-row__artist").html();
+                Element elem = links.get(i);
+                String name = elem.getElementsByClass("chart-row__song").html();
+                String artist = elem.getElementsByClass("chart-row__artist").html();
 
-                String unescapedTitle = Parser.unescapeEntities(title, false);
-                String unescapedArtist = Parser.unescapeEntities(artist, false);
+                String formattedNames = Parser.unescapeEntities(name, false);
+                String formattedArtists = Parser.unescapeEntities(artist, false);
 
-                Song song = new Song(unescapedTitle, unescapedArtist);
+                Song song = new Song(formattedNames, formattedArtists);
                 top10.add(song);
             }
         } catch (IOException e) {
@@ -47,6 +47,9 @@ public class Billboard200App {
         return top10;
     }
 
+    public String getBillboardUrl() {
+        return bill200Url;
+    }
 
     public String printTop10(){
         StringBuilder output = new StringBuilder();

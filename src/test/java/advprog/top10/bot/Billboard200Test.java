@@ -11,16 +11,27 @@ import java.util.List;
 
 public class Billboard200Test {
     Billboard200App billboard200;
-    String rss ="https://www.billboard.com/rss/charts/billboard-200";
+    String url ="https://www.billboard.com/charts/billboard-200";
 
     @Before
     public void setUp() {
-        billboard200 = new Billboard200App(rss);
+        billboard200 = new Billboard200App(url);
+    }
+
+    @Test
+    public void urlErrorTest() {
+        new Billboard200App("https://hehe.id/");
+    }
+
+    @Test
+    public void getBillboardUrl() {
+        assertEquals(url, billboard200.getBillboardUrl());
     }
 
     @Test
     public void getTop10(){
         String output = billboard200.printTop10();
+        System.out.println(output);
         assertTrue(output.contains("Post Malone"));
     }
 
