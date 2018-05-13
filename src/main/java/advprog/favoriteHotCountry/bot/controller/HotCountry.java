@@ -1,6 +1,5 @@
 package advprog.favoritehotcountry.bot.controller;
 
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -10,27 +9,18 @@ import org.jsoup.nodes.Element;
 import org.jsoup.parser.Parser;
 import org.jsoup.select.Elements;
 
+
 public class HotCountry {
 
     private  String artistName;
     private String url;
     private ArrayList<Charts> artistSongs;
 
-    public HotCountry(String url) {
+    public HotCountry(String artistName, String url) {
         this.url = url;
         this.artistName = artistName;
         artistSongs = new ArrayList<>();
         setHotCountryArtist(artistName, url);
-    }
-
-    public String getUrl() {
-
-        return url;
-    }
-
-    public String getArtistName() {
-
-        return artistName;
     }
 
     public ArrayList<Charts> getArtistSongs() {
@@ -38,7 +28,7 @@ public class HotCountry {
     }
 
 
-    public void setHotCountryArtist(String artistName, String url) {
+    private void setHotCountryArtist(String artistName, String url) {
         try {
             Document  billboard = Jsoup.connect(url).get();
             Elements check = billboard.getElementsByClass("chart-row");
@@ -50,7 +40,7 @@ public class HotCountry {
                 String songTitleChart = Parser.unescapeEntities(songTitle, false);
                 String artistChart = Parser.unescapeEntities(artist, false);
 
-                if(artistChart.equalsIgnoreCase(artistName)) {
+                if (artistChart.equalsIgnoreCase(artistName)) {
                     Charts chart = new Charts(songTitleChart, artistChart, i + 1);
                     artistSongs.add(chart);
                 }
@@ -63,7 +53,7 @@ public class HotCountry {
 
 
     public String infoArtist() {
-        if(artistSongs.size() == 0){
+        if (artistSongs.size() == 0) {
             return "The artist isn't on weekly Billboard Hot Country Chart";
         }
 
@@ -71,12 +61,22 @@ public class HotCountry {
         int number = 1;
         for (Charts chart : artistSongs) {
             str.append(chart.getArtist() + "\n" + chart.getSong() + "\n" + chart.getPosition());
-            if(number < artistSongs.size()) {
+            if (number < artistSongs.size()) {
                 number++;
                 str.append("\n");
             }
         }
         return str.toString();
+    }
+
+    public String getUrl() {
+
+        return url;
+    }
+
+    public String getArtistName() {
+
+        return artistName;
     }
 
 

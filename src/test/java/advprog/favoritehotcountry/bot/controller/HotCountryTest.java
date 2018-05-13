@@ -8,16 +8,18 @@ import org.junit.Test;
 
 public class HotCountryTest {
     HotCountry hotCountry;
+    String url = "https://www.billboard.com/charts/country-songs";
+    String artist = "Mason Ramsey";
 
 
     @Before
-    public void SetUp() {
-        hotCountry = new HotCountry("https://www.billboard.com/charts/tropical-songs");
+    public void setUp() {
+        hotCountry = new HotCountry(artist, url);
     }
 
     @Test
     public void urlNotValidTest() {
-        new HotCountry("https://haduh.ac.id/");
+        new HotCountry("budi","https://haduh.ac.id/");
     }
 
     @Test
@@ -28,8 +30,7 @@ public class HotCountryTest {
 
     @Test
     public void getUrlTest() {
-
-        assertEquals("https://www.billboard.com/charts/tropical-songs", hotCountry.getUrl());
+        assertEquals(url, hotCountry.getUrl());
     }
 
 }
