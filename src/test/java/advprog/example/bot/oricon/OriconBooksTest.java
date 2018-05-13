@@ -1,9 +1,10 @@
 package advprog.example.bot.oricon;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 class OriconBooksTest {
     private OriconBooks oriconBooks;
