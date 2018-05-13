@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 
 class SongTest {
-    Song song;
+    private Song song;
 
     @BeforeEach
     void setUp() {
