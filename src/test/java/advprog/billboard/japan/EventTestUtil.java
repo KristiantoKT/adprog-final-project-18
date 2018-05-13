@@ -4,7 +4,9 @@ package advprog.billboard.japan;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.event.source.UserSource;
+
 import java.time.Instant;
+
 import org.junit.jupiter.api.Test;
 
 public class EventTestUtil {
