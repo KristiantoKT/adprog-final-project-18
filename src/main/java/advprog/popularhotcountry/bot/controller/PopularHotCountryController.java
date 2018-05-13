@@ -1,5 +1,7 @@
 package advprog.popularhotcountry.bot.controller;
 
+import advprog.popularhotcountry.bot.controller.HotCountry;
+
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.event.Event;
@@ -34,9 +36,9 @@ public class PopularHotCountryController {
         TextMessageContent content = event.getMessage();
         String contentText = content.getText();
 
-        String replyText = contentText.replace("/billboard hotcountry", "");
+        String replyTextFix = contentText.replace("/billboard hotcountry", "");
 
-        switch (replyText.substring(1)) {
+        switch (replyTextFix.substring(1)) {
             case "":
                 HotCountry topTen = new HotCountry("https://www.billboard.com/charts/country-songs");
                 String result = topTen.listTopTen();
@@ -50,7 +52,7 @@ public class PopularHotCountryController {
                 break;
         }
 
-        return new TextMessage(replyText.substring(1));
+        return new TextMessage(replyTextFix.substring(1));
     }
 
     @EventMapping
