@@ -38,7 +38,7 @@ public class PopularHotCountryController {
 
         String replyTextFix = contentText.replace("/billboard hotcountry", "true");
 
-        switch (replyTextFix.substring(1)) {
+        switch (replyTextFix) {
             case "true":
                 HotCountry topTen = new HotCountry("https://www.billboard.com/charts/country-songs");
                 String result = topTen.listTopTen();
@@ -46,13 +46,13 @@ public class PopularHotCountryController {
                 replyText(result, replyToken);
                 break;
             default:
-                result = "Please use a correct input E.g /echo billboard hotcountry";
+                result = "Please use a correct input E.g /billboard hotcountry";
                 replyToken = event.getReplyToken();
                 replyText(result, replyToken);
                 break;
         }
 
-        return new TextMessage(replyTextFix.substring(1));
+        return new TextMessage(replyTextFix);
     }
 
     @EventMapping
