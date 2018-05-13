@@ -7,8 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class BillboardJapanApplication {
-    private static final Logger LOGGER = Logger.
-            getLogger(BillboardJapanApplication.class.getName());
+    private static final Logger LOGGER = Logger
+            .getLogger(BillboardJapanApplication.class.getName());
 
     public static void main(String[] args) {
         LOGGER.info("Application starting ...");
