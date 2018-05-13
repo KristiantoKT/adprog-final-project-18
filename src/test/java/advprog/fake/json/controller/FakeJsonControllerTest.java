@@ -29,9 +29,9 @@ public class FakeJsonControllerTest {
 
     static {
         System.setProperty("line.bot.channelSecret", "594f30c554eb4fd226841c1f6ce9d41e");
-        System.setProperty("line.bot.channelToken", "og0DgJjZLiCq4aNWSwpU9kCL5QP6v3VygBd2vjiT21sQL8QJCFCHxoAICxY/L/" +
-                "oebhEYQlAaX+aUAc9zdZfu80xiAdo7JN7+yNver+1zxvWYrOOHXgLBpkAnhG6w6iCLw/4/" +
-                "SRFYOYznD26VS7e9NwdB04t89/1O/w1cDnyilFU=");
+        System.setProperty("line.bot.channelToken", "og0DgJjZLiCq4aNWSwpU9kCL5QP6v3VygBd2vjiT"
+                + "21sQL8QJCFCHxoAICxY/L/oebhEYQlAaX+aUAc9zdZfu80xiAdo7JN7+yNver+1zxvWYrOO"
+                + "HXgLBpkAnhG6w6iCLw/4/SRFYOYznD26VS7e9NwdB04t89/1O/w1cDnyilFU=");
     }
 
     @Autowired
