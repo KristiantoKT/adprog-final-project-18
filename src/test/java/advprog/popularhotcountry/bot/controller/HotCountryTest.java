@@ -1,6 +1,5 @@
 package advprog.popularhotcountry.bot.controller;
 
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -13,7 +12,7 @@ public class HotCountryTest {
     String url = "https://www.billboard.com/charts/country-songs";
 
     @Before
-    public void SetUp() {
+    public void setUp() {
         hotCountry = new HotCountry(url);
     }
 

@@ -6,11 +6,12 @@ import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
-import java.util.logging.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+
 
 
 

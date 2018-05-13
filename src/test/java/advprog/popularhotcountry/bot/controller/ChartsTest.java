@@ -1,7 +1,7 @@
 package advprog.popularhotcountry.bot.controller;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,6 +10,7 @@ public class ChartsTest {
 
     @BeforeEach
     void setUp() {
+
         chart = new Charts("Heaven", "Kane Brown");
     }
 
