@@ -30,7 +30,7 @@ DeployProduction:
     - gem install dpl
     - wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
   script:
-    - dpl --provider=heroku --app=$HEROKU_APP_NAME --api-key=$HEROKU_API_KEY
+    - dpl --provider=heroku --app=chat-bot-advprogr --api-key=chat-bot-advprogr 
   when: manual
   environment:
     name: production

@@ -39,7 +39,7 @@ public class BillboardJapanController {
         }
     }
 
-    private String getChartBillboard() throws IOException{
+    public String getChartBillboard() throws IOException{
         Document document = Jsoup.connect("https://www.billboard.com/charts/japan-hot-100").get();
         Elements elements = document.select(".chart-row__title");
         StringBuilder stringBuilder = new StringBuilder();

@@ -9,6 +9,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 import advprog.billboard.japan.EventTestUtil;
+import advprog.billboard.japan.BillboardJapanApplication;
 
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
@@ -26,8 +27,11 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ExtendWith(SpringExtension.class)
 public class    BillboardJapanControllerTest {
     static {
-        System.setProperty("line.bot.channelSecret", "SECRET");
-        System.setProperty("line.bot.channelToken", "TOKEN");
+        System.setProperty("line.bot.channelSecret", "594f30c554eb4fd226841c1f6ce9d41e");
+        System.setProperty("line.bot.channelToken", "og0DgJjZLiCq4aNWSwpU9kCL5QP6v3VygBd2vjiT"
+                + "21sQL8QJCFCHxoAICxY/L/oebhEYQlAaX+aUAc9zdZfu80xiAdo7JN7+yNver+1zxvWYrOO"
+                + "HXgLBpkAnhG6w6iCLw/4/SRFYOYznD26VS7e9NwdB04t89/1O/w1cDnyilFU=");
+
     }
 
     @Autowired
@@ -45,7 +49,7 @@ public class    BillboardJapanControllerTest {
 
         TextMessage reply = billboardJapanController.handleTextMessageEvent(event);
 
-        assertTrue(reply.getText().contains("title"));
+        assertTrue(reply.getText().contains("(1)") && reply.getText().contains("(10)"));
     }
 
     @Test
@@ -68,9 +72,9 @@ public class    BillboardJapanControllerTest {
         verify(event, atLeastOnce()).getTimestamp();
     }
 
-//    @Test
-//    public void applicationContextTest() {
-//        billboardJapanApplication.main(new String[]{});
-//    }
+    @Test
+    public void applicationContextTest() {
+       BillboardJapanApplication.main(new String[]{});
+    }
 
 }
