@@ -36,10 +36,10 @@ public class PopularHotCountryController {
         TextMessageContent content = event.getMessage();
         String contentText = content.getText();
 
-        String replyTextFix = contentText.replace("/billboard hotcountry", "");
+        String replyTextFix = contentText.replace("/echo", "");
 
         switch (replyTextFix.substring(1)) {
-            case "":
+            case "billboard hotcountry":
                 HotCountry topTen = new HotCountry("https://www.billboard.com/charts/country-songs");
                 String result = topTen.listTopTen();
                 String replyToken = event.getReplyToken();
