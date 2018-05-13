@@ -17,11 +17,9 @@ import org.jsoup.select.Elements;
  * @author Kristianto
  */
 public class BillboardTropical {
-    private String billboardUrl;
     private List<Song> topTenTropicalList;
 
     public BillboardTropical(String billboardUrl) {
-        this.billboardUrl = billboardUrl;
         topTenTropicalList = new ArrayList<>();
         setTopTenTropicalSongs(billboardUrl);
     }
@@ -47,7 +45,9 @@ public class BillboardTropical {
                 topTenTropicalList.add(song);
             }
         } catch (IOException e) {
-            System.out.println("Illegal IO ");
+            System.out.println("Illegal IO");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Malformed URL");
         }
     }
 
@@ -63,13 +63,5 @@ public class BillboardTropical {
             counter++;
         }
         return sb.toString();
-    }
-
-    public String getBillboardUrl() {
-        return billboardUrl;
-    }
-
-    public List<Song> getTopTenTropicalList() {
-        return topTenTropicalList;
     }
 }
