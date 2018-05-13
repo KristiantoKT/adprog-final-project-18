@@ -1,14 +1,15 @@
 package advprog.billboard.japan.controller;
 
-
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
+
 import java.io.IOException;
 import java.util.logging.Logger;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -44,7 +45,8 @@ public class BillboardJapanController {
         for (int urutan = 0; urutan < 10; urutan++) {
             Element element = elements.get(urutan);
             stringBuilder.append("(").append(urutan + 1).append(")")
-                    .append(element.select(".chart-row__artist").text()).append("  -  ").append(element.select(".chart-row__song").text())
+                    .append(element.select(".chart-row__artist").text())
+                    .append("  -  ").append(element.select(".chart-row__song").text())
                     .append("\n");
         }
         LOGGER.info(stringBuilder.toString());
