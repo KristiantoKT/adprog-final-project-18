@@ -1,4 +1,4 @@
-package advprog.youTube.bot;
+package advprog.example.bot;
 
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
@@ -6,9 +6,9 @@ import com.linecorp.bot.model.event.source.UserSource;
 
 import java.time.Instant;
 
-public class YoutubeInfoAppTest {
+public class EventTestUtil {
 
-    private YoutubeInfoAppTest() {
+    private EventTestUtil() {
         // Default private constructor
     }
 

@@ -1,20 +1,17 @@
-package advprog.youTube.bot;
+package advprog.example.bot;
 
-import java.io.IOException;
 import java.util.logging.Logger;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class YoutubeInfoApplication {
+public class YoutubeBotApplication {
 
-    private static final Logger LOGGER = Logger.getLogger(YoutubeInfoApplication.class.getName());
-
+    private static final Logger LOGGER = Logger.getLogger(YoutubeBotApplication.class.getName());
 
     public static void main(String[] args) {
         LOGGER.info("Application starting ...");
-        SpringApplication.run(YoutubeInfoApplication.class, args);
-
+        SpringApplication.run(YoutubeBotApplication.class, args);
     }
 }

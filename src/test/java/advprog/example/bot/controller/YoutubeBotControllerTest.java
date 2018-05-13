@@ -1,4 +1,4 @@
-package advprog.youTube.bot.controller;
+package advprog.example.bot.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -7,7 +7,8 @@ import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-import advprog.youTube.bot.YoutubeInfoAppTest;
+import advprog.example.bot.EventTestUtil;
+
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
@@ -20,11 +21,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.io.IOException;
-
 @SpringBootTest(properties = "line.bot.handler.enabled=false")
 @ExtendWith(SpringExtension.class)
-public class YoutubeInfoControllerTest {
+public class YoutubeBotControllerTest {
 
     static {
         System.setProperty("line.bot.channelSecret", "SECRET");
@@ -32,31 +31,28 @@ public class YoutubeInfoControllerTest {
     }
 
     @Autowired
-    private YoutubeInfoController youTubeInfoController;
+    private YoutubeBotController echoController;
 
     @Test
     void testContextLoads() {
-        assertNotNull(youTubeInfoController);
+        assertNotNull(echoController);
     }
 
     @Test
-    void testHandleTextMessageEvent() throws IOException {
+    void testHandleTextMessageEvent() {
         MessageEvent<TextMessageContent> event =
-                YoutubeInfoAppTest.createDummyTextMessage("youtube.com/watch?v=qonMgEaU0ZQ");
+                EventTestUtil.createDummyTextMessage("/echo Lorem Ipsum");
 
-        TextMessage reply = youTubeInfoController.handleTextMessageEvent(event);
+        TextMessage reply = echoController.handleTextMessageEvent(event);
 
-        assertEquals("Title : SUCRD - NGOMONGIN INSTAGRAM" + "\n" +
-                "Channel : Raditya Dika " + "\n" +
-                "Viewers : 4,483,237 views " + "\n" +
-                "Likes and Dislikes : 106K & 1.5K", reply.getText());
+        assertEquals("Lorem Ipsum", reply.getText());
     }
 
     @Test
     void testHandleDefaultMessage() {
         Event event = mock(Event.class);
 
-        youTubeInfoController.handleDefaultMessage(event);
+        echoController.handleDefaultMessage(event);
 
         verify(event, atLeastOnce()).getSource();
         verify(event, atLeastOnce()).getTimestamp();
