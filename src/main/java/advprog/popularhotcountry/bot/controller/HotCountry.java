@@ -59,6 +59,7 @@ public class HotCountry {
 
         return url;
     }
+
     public ArrayList<Charts> getHotCountryTopTen() {
 
         return hotCountryTopTen;
