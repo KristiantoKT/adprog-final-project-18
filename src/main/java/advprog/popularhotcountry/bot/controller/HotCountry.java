@@ -23,17 +23,8 @@ public class HotCountry {
         setHotCountryTopTenLists(url);
     }
 
-    public String getUrl() {
 
-        return url;
-    }
-    public ArrayList<Charts> getHotCountryTopTen() {
-
-        return hotCountryTopTen;
-    }
-
-
-    public void setHotCountryTopTenLists(String url) {
+    private void setHotCountryTopTenLists(String url) {
         try {
             Document  billboard = Jsoup.connect(url).get();
             Elements check = billboard.getElementsByClass("chart-row");
@@ -64,5 +55,13 @@ public class HotCountry {
         return str.toString();
     }
 
+    public String getUrl() {
+
+        return url;
+    }
+    public ArrayList<Charts> getHotCountryTopTen() {
+
+        return hotCountryTopTen;
+    }
 
 }

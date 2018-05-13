@@ -7,7 +7,8 @@ import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-import advprog.example.bot.EventTestUtil;
+import advprog.popularhotcountry.bot.EventTestUtil;
+import advprog.popularhotcountry.bot.controller.HotCountry;
 
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
@@ -24,10 +25,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @SpringBootTest(properties = "line.bot.handler.enabled=false")
 @ExtendWith(SpringExtension.class)
-
 public class PopularHotCountryControllerTest {
-
-
     static {
         System.setProperty("line.bot.channelSecret", "SECRET");
         System.setProperty("line.bot.channelToken", "TOKEN");
@@ -37,26 +35,8 @@ public class PopularHotCountryControllerTest {
     private PopularHotCountryController popularController;
 
     @Test
-    void testContextLoads() {
+    void  textContextLoads() {
         assertNotNull(popularController);
     }
 
-    @Test
-    void testHandleTextMessageEvent() {
-        MessageEvent<TextMessageContent> event =
-                EventTestUtil.createDummyTextMessage("/billboard hotcountry");
-
-        TextMessage reply = popularController.handleTextMessageEvent(event);
-
-        assertEquals("Hot Country", reply.getText());
-    }
-
-    @Test
-    void testHandleDefaultMessage() {
-        Event event = mock(Event.class);
-
-        popularController.handleDefaultMessage(event);
-
-        verify(event, atLeastOnce()).getSource();
-    }
 }

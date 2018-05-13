@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
-import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,11 +25,13 @@ public class HotCountryTest {
     @Test
     public void listTopTenTest() {
         String expected = hotCountry.listTopTen();
+        System.out.println(expected);
         assertTrue(expected.contains("Famous"));
     }
 
     @Test
     public void getUrlTest() {
+
         assertEquals(url, hotCountry.getUrl());
     }
 

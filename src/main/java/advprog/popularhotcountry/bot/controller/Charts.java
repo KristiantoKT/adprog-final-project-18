@@ -10,10 +10,12 @@ public class Charts {
     }
 
     public String getSong() {
+
         return song;
     }
 
     public void setSong(String song) {
+
         this.song = song;
     }
 

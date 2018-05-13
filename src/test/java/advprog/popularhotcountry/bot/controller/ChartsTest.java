@@ -2,38 +2,43 @@ package advprog.popularhotcountry.bot.controller;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class ChartsTest {
     Charts chart;
 
+    @BeforeEach
     void setUp() {
-        cahrt = new Charts("Heaven", "Kane Brown");
+        chart = new Charts("Heaven", "Kane Brown");
     }
 
     @Test
     void getSong() {
-        assertEquals("Heaven", chart.getName());
+
+        assertEquals("Heaven", chart.getSong());
     }
 
     @Test
     void setSong() {
-        song.setName("Famous");
-        assertEquals("Famous", chart.getName());
+        chart.setSong("Famous");
+        assertEquals("Famous", chart.getSong());
     }
 
     @Test
     void getArtist() {
+
         assertEquals("Kane Brown", chart.getArtist());
     }
 
     @Test
     void setArtist() {
-        song.setArtist("Luke Combs");
+        chart.setArtist("Luke Combs");
         assertEquals("Luke Combs", chart.getArtist());
     }
 
     @Test
     void toStringTest() {
-        assertEquals("Kane Brown - Heaven", song.toString());
+        assertEquals("Kane Brown - Heaven", chart.toString());
     }
 }
