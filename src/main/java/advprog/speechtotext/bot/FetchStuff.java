@@ -24,7 +24,7 @@ public class FetchStuff {
         return kembalian;
     }
 
-    public static Text getTextFromSpeech() throws IOException {
+    public static Text getTextFromSpeech(File soundFile) throws IOException {
         if(token.length() == 0) {
             token = getTokenFromAPI();
         }
@@ -33,10 +33,8 @@ public class FetchStuff {
         headers.add("Authorization", "Bearer " + token);
         headers.set("Content-Type", "audio/wav; codec=\"audio/pcm\"; samplerate=\"16000\"");
         headers.set("Transfer-Encoding", "chunked");
-        String path = "soundfile/soundtest.wav";
-        File fileSuara = new File(path);
-        FileInputStream fileStream = new FileInputStream(fileSuara);
-        byte[] bytes = new byte[(int) fileSuara.length()];
+        FileInputStream fileStream = new FileInputStream(soundFile);
+        byte[] bytes = new byte[(int) soundFile.length()];
         fileStream.read(bytes);
         fileStream.close();
         HttpEntity<byte[]> entityBytes = new HttpEntity<byte[]>(bytes, headers);

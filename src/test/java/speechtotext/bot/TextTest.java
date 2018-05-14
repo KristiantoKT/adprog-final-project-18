@@ -20,6 +20,7 @@ public class TextTest {
         assertTrue("Gang gang".equals(text.getSpeechText()));
     }
 
+    @Test
     public void setTest() {
         text.setSpeechText("Gung gung");
         assertTrue("Gung gung".equals(text.getSpeechText()));
