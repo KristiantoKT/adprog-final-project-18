@@ -42,6 +42,7 @@ public class BillboardJapanController {
         Document document = Jsoup.connect("https://www.billboard.com/charts/japan-hot-100").get();
         Elements elements = document.select(".chart-row__title");
         StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Top 10 Popular Track in Japan 100 Billboard\n");
         for (int urutan = 0; urutan < 10; urutan++) {
             Element element = elements.get(urutan);
             stringBuilder.append("(").append(urutan + 1).append(")")
