@@ -42,7 +42,7 @@ public class FavoriteHotCountryController {
             replyText(result, replyToken);
             return new TextMessage(replyTextFix.substring(1));
         } else {
-            String result = "Please use a correct input E.g /billboard hotcountry [artistname]";
+            String result = "Please use a correct input E.g /billboard hotcountry artistname";
             String replyToken = event.getReplyToken();
             replyText(result, replyToken);
             return new TextMessage(result);
