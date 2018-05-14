@@ -39,7 +39,7 @@ public class YoutubeController {
             String channel = "Channel : " + getChannel(body) + "\n";
             String viewers = "Viewers : " + getViewers(body) + "\n";
             String likesDislikes = "Likes and Dislikes : "
-                    + getLikes(body) + "&" + getDislikes(body) + "\n";
+                    + getLikes(body) + " & " + getDislikes(body) + "\n";
 
             return new TextMessage(title + channel + viewers + likesDislikes);
 
@@ -75,12 +75,12 @@ public class YoutubeController {
 
     public String getLikes(Element body) {
         return body.getElementsByClass("yt-uix-button-content")
-                .get(18).text();
+                .get(19).text();
     }
 
     public String getDislikes(Element body) {
         return body.getElementsByClass("yt-uix-button-content")
-                .get(19).text();
+                .get(20).text();
     }
 
     public boolean validUrl(String url) {
