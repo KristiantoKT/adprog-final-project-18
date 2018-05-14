@@ -28,23 +28,20 @@ public class YoutubeController {
         TextMessageContent content = event.getMessage();
         String contentText = content.getText();
 
-
         String removeTag = contentText.replace("/youtube", "");
         String youtubeLink = removeTag.substring(1);
 
         if (validUrl(youtubeLink)) {
             Element body = youtubeHtml(youtubeLink);
-            if (!privateOrNonExist(body)) {
-                String title = "Title : " + getTitle(body) + "\n";
-                String channel = "Channel : " + getChannel(body) + "\n";
-                String viewers = "Viewers : " + getViewers(body) + "\n";
-                String likesDislikes = "Likes and Dislikes : "
-                        + getLikes(body) + " & " + getDislikes(body) + "\n";
 
-                return new TextMessage(title + channel + viewers + likesDislikes);
-            } else {
-                return new TextMessage("Maaf, video tidak ada atau di private:(");
-            }
+            String title = "Title : " + getTitle(body) + "\n";
+            String channel = "Channel : " + getChannel(body) + "\n";
+            String viewers = "Viewers : " + getViewers(body) + "\n";
+            String likesDislikes = "Likes and Dislikes : "
+                    + getLikes(body) + " & " + getDislikes(body) + "\n";
+
+            return new TextMessage(title + channel + viewers + likesDislikes);
+
         } else {
             return returnErrorMessage();
         }
@@ -87,13 +84,6 @@ public class YoutubeController {
 
     public boolean validUrl(String url) {
         return url.contains("http") || url.contains("https");
-    }
-
-    public boolean privateOrNonExist(Element body) {
-        return body.getElementsByClass("yt-alert-message")
-                .get(1)
-                .text()
-                .equals("Terjadi kesalahan saat validasi berlangsung.");
     }
 
     @EventMapping
