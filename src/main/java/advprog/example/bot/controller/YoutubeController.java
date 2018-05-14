@@ -54,7 +54,7 @@ public class YoutubeController {
     }
 
     public TextMessage returnErrorMessage() {
-        return new TextMessage("Link anda bermasalah");
+        return new TextMessage("Mohon tulis link youtube dengan benar ya friends!");
     }
 
     public String getTitle(Element body) {
