@@ -7,8 +7,6 @@ import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-import advprog.example.bot.EventTestUtil;
-
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
@@ -23,38 +21,11 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @SpringBootTest(properties = "line.bot.handler.enabled=false")
 @ExtendWith(SpringExtension.class)
-public class EchoControllerTest {
+public class Bill200ControllerTest {
 
     static {
         System.setProperty("line.bot.channelSecret", "SECRET");
         System.setProperty("line.bot.channelToken", "TOKEN");
     }
 
-    @Autowired
-    private EchoController echoController;
-
-    @Test
-    void testContextLoads() {
-        assertNotNull(echoController);
-    }
-
-    @Test
-    void testHandleTextMessageEvent() {
-        MessageEvent<TextMessageContent> event =
-                EventTestUtil.createDummyTextMessage("/echo Lorem Ipsum");
-
-        TextMessage reply = echoController.handleTextMessageEvent(event);
-
-        assertEquals("Lorem Ipsum", reply.getText());
-    }
-
-    @Test
-    void testHandleDefaultMessage() {
-        Event event = mock(Event.class);
-
-        echoController.handleDefaultMessage(event);
-
-        verify(event, atLeastOnce()).getSource();
-        verify(event, atLeastOnce()).getTimestamp();
-    }
 }
