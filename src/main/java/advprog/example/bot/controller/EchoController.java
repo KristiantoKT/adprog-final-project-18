@@ -29,9 +29,7 @@ public class EchoController extends SpringBootServletInitializer {
         return builder.sources(EchoController.class);
     }
 
-    public static void main(String[] args) {
-        SpringApplication.run(EchoController.class, args);
-    }
+    
 
     @EventMapping
     public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
