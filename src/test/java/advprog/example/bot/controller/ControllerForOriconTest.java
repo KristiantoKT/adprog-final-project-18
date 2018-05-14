@@ -1,21 +1,22 @@
 package advprog.example.bot.controller;
 
+
+import java.io.IOException;
+
 import advprog.example.bot.EventTestUtil;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
+import org.mockito.internal.verification.VerificationModeFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.*;
 
 
 @SpringBootTest(properties = "line.bot.handler.enabled=false")
@@ -44,7 +45,7 @@ public class ControllerForOriconTest {
 
     @Test
     void testContextLoads() {
-        assertNotNull(controllerForOricon);
+        Assert.assertNotNull(controllerForOricon);
     }
 
     @Test
@@ -54,16 +55,16 @@ public class ControllerForOriconTest {
 
         TextMessage reply = controllerForOricon.handleTextMessageEvent(event);
 
-        assertEquals(sampleWeeklyOutput, reply.getText());
+        Assert.assertEquals(sampleWeeklyOutput, reply.getText());
     }
 
     @Test
     void testHandleDefaultMessage() {
-        Event event = mock(Event.class);
+        Event event = Mockito.mock(Event.class);
 
         controllerForOricon.handleDefaultMessage(event);
 
-        verify(event, atLeastOnce()).getSource();
-        verify(event, atLeastOnce()).getTimestamp();
+        Mockito.verify(event, VerificationModeFactory.atLeastOnce()).getSource();
+        Mockito.verify(event, VerificationModeFactory.atLeastOnce()).getTimestamp();
     }
 }

@@ -1,11 +1,11 @@
 package advprog.example.bot.oricon.command;
 
-import com.linecorp.bot.model.message.TextMessage;
-import org.junit.Assert;
-import org.junit.Test;
 
 import java.io.IOException;
 
+import com.linecorp.bot.model.message.TextMessage;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class WeeklyCommandTest {
     private String testDate = "2018-05-07";

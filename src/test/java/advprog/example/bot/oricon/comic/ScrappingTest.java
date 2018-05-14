@@ -1,10 +1,10 @@
 package advprog.example.bot.oricon.comic;
 
+import java.io.IOException;
+
 import org.junit.Assert;
 
 import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
 
 public class ScrappingTest {
     Scrapping scrapping;

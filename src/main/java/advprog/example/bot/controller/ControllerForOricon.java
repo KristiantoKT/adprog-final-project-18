@@ -30,9 +30,9 @@ public class ControllerForOricon {
         String[] splitDetail =  splitText[2].split("-");
 
         if (splitText[0].equals("/oricon")) {
-            if (splitDetail.length==2) {
+            if (splitDetail.length == 2) {
                 return mrc.execute(splitText[2]);
-            } else if (splitDetail.length==3) {
+            } else if (splitDetail.length == 3) {
                 return wrc.execute(splitText[2]);
             } else {
                 return new TextMessage("Oricon command not found");
