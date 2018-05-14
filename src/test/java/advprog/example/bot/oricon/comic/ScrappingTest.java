@@ -1,11 +1,10 @@
 package advprog.example.bot.oricon.comic;
 
+import org.junit.Assert;
+
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 public class ScrappingTest {
     Scrapping scrapping;
@@ -31,13 +30,14 @@ public class ScrappingTest {
 
     @Test
     public void constructorTest() {
-        assertNotNull(scrapping);
+
+        Assert.assertNotNull(scrapping);
     }
 
     @Test
     public void sampleTest() throws IOException {
         scrapOut = scrapping.scrap(testUrl);
-        assertEquals(monthlyApril,scrapOut);
+        Assert.assertEquals(monthlyApril,scrapOut);
     }
 
 }
