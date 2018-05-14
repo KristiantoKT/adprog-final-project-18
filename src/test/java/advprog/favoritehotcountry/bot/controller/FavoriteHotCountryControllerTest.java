@@ -56,6 +56,13 @@ public class FavoriteHotCountryControllerTest {
         reply = favoriteController.handleTextMessageEvent(event);
 
         assertNotNull(reply);
+
+        event = EventTestUtil.createDummyTextMessage("/blahblahblah ini test salah hehe");
+
+        reply = favoriteController.handleTextMessageEvent(event);
+
+        assertEquals("Please use a correct input E.g /billboard hotcountr [artistname]",
+                reply.getText());
     }
 
     @Test

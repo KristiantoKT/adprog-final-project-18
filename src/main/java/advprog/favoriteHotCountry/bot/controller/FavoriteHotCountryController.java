@@ -31,15 +31,23 @@ public class FavoriteHotCountryController {
                 event.getTimestamp(), event.getMessage()));
         TextMessageContent content = event.getMessage();
         String contentText = content.getText();
+        String cekInput = contentText;
 
-        String replyTextFix = contentText.replace("/billboard hotcountry", "");
-        String artistName = replyTextFix.substring(1);
+        if (contentText.contains("/billboard hotcountry")) {
+            String replyTextFix = contentText.replace("/billboard hotcountry", "");
+            String artistName = replyTextFix.substring(1);
+            HotCountry artistChart = new HotCountry(artistName,"https://www.billboard.com/charts/country-songs");
+            String result = artistChart.infoArtist();
+            String replyToken = event.getReplyToken();
+            replyText(result, replyToken);
+            return new TextMessage(replyTextFix.substring(1));
+        } else {
+            String result = "Please use a correct input E.g /billboard hotcountr [artistname]";
+            String replyToken = event.getReplyToken();
+            replyText(result, replyToken);
+            return new TextMessage(result);
+        }
 
-        HotCountry artistChart = new HotCountry(artistName,"https://www.billboard.com/charts/country-songs");
-        String result = artistChart.infoArtist();
-        String replyToken = event.getReplyToken();
-        replyText(result, replyToken);
-        return new TextMessage(replyTextFix.substring(1));
     }
 
     @EventMapping
