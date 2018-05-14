@@ -1,13 +1,11 @@
 package advprog.handwrittenintotext;
 
 import java.util.Arrays;
-
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.client.RestTemplate;
 
 public class HandwrittingRecognition {
@@ -38,31 +36,29 @@ public class HandwrittingRecognition {
         HttpEntity<String> entity = new HttpEntity<String>(stringEntity, this.defaultHeader);
         ResponseEntity<String> postEntity = rest.postForEntity(uriBase, entity, String.class);
 
-        if(postEntity.getStatusCodeValue() != 202) {
+        if (postEntity.getStatusCodeValue() != 202) {
             throw new Exception("[ERROR]" + postEntity.getStatusCodeValue());
         }
-
         String operationLocation = postEntity.getHeaders().get("Operation-Location").get(0);
         return operationLocation;
     }
 
     private Handwritting retrieveText(String operationLocation) throws Exception {
         HttpEntity<String> entityResult = new HttpEntity<String>(defaultHeader);
-        ResponseEntity<Handwritting> resultResponseEntity= rest.exchange(operationLocation,
+        ResponseEntity<Handwritting> resultResponseEntity = rest.exchange(operationLocation,
                 HttpMethod.GET, entityResult, Handwritting.class);
         String status = resultResponseEntity.getBody().getStatus();
-
-        while(status.equals("Running")) {
-            if(resultResponseEntity.getStatusCodeValue() != 200) {
+        while (status.equals("Running")) {
+            if (resultResponseEntity.getStatusCodeValue() != 200) {
                 throw new Exception("[ERROR] " + resultResponseEntity.getStatusCodeValue());
             }
-            resultResponseEntity= rest.exchange(operationLocation, HttpMethod.GET, entityResult, Handwritting.class);
+            resultResponseEntity = rest.exchange(operationLocation, HttpMethod.GET,
+                    entityResult, Handwritting.class);
             status = resultResponseEntity.getBody().getStatus();
             Thread.sleep(1000);
         }
-
-        if(!status.equals("Succeeded")) {
-            throw new Exception("[ERROR] "+ status);
+        if (!status.equals("Succeeded")) {
+            throw new Exception("[ERROR] " + status);
         }
         return resultResponseEntity.getBody();
     }

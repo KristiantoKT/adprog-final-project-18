@@ -4,8 +4,8 @@ import advprog.handwrittenintotext.HandwrittingRecognition;
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.event.MessageEvent;
-import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.event.message.ImageMessageContent;
+import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
@@ -29,8 +29,7 @@ public class HandwrittenRecognitionBot {
         TextMessageContent content = event.getMessage();
         String contentText = content.getText();
         String[] arrContentText = contentText.split(" ");
-
-        if(arrContentText.length == 2 && arrContentText[0].equalsIgnoreCase("ocr")
+        if (arrContentText.length == 2 && arrContentText[0].equalsIgnoreCase("ocr")
                 && arrContentText[1].equalsIgnoreCase("this")) {
             String message = getStringFromImage();
             String replyToken = event.getReplyToken();
@@ -48,7 +47,7 @@ public class HandwrittenRecognitionBot {
         urlImage = image.getOriginalContentUrl();
     }
 
-    /**
+    /*
     @EventMapping
     public void handleDefaultMessage(Event event) {
         LOGGER.fine(String.format("Event(timestamp='%s',source='%s')",
