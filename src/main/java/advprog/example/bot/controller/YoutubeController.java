@@ -37,8 +37,9 @@ public class YoutubeController {
 
             String title = "Title : " + getTitle(body) + "\n";
             String channel = "Channel : " + getChannel(body) + "\n";
+            String viewers = "Viewers : " + getViewers(body) + "\n";
 
-            return new TextMessage(title + channel);
+            return new TextMessage(title + channel + viewers);
 
         } else {
             return returnErrorMessage();

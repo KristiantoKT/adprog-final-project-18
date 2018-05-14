@@ -61,13 +61,14 @@ public class YoutubeControllerTest {
         String title = "Title : Gordon Ramsay Answers Cooking Questions "
                 + "From Twitter | Tech Support | WIRED" + "\n";
         String channel = "Channel : " + yt.getChannel(body) + "\n";
+        String viewers = "Viewers : " + yt.getViewers(body) + "\n";
 
         MessageEvent<TextMessageContent> event =
                 EventTestUtil.createDummyTextMessage("/youtube https://www.youtube.com/watch?v=kJ5PCbtiCpk");
 
         TextMessage reply = youtubeController.handleTextMessageEvent(event);
 
-        assertEquals(title + channel, reply.getText());
+        assertEquals(title + channel + viewers, reply.getText());
     }
 
     @Test
