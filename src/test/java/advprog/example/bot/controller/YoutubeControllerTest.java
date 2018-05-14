@@ -69,6 +69,7 @@ public class YoutubeControllerTest {
 
         // untuk kasus error
         TextMessage errorMessage = yt.returnErrorMessage();
+
         MessageEvent<TextMessageContent> event2 =
                 EventTestUtil.createDummyTextMessage("/error message");
         TextMessage reply2 = youtubeController.handleTextMessageEvent(event2);
@@ -79,7 +80,6 @@ public class YoutubeControllerTest {
         TextMessage reply3 = youtubeController.handleTextMessageEvent(event3);
         assertEquals(errorMessage.getText(), reply3.getText());
     }
-
 
     @Test
     void testHandleDefaultMessage() {
