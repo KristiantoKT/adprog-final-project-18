@@ -30,8 +30,8 @@ DeployProduction:
     - gem install dpl
     - wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
   script:
-    - dpl --provider=heroku --app=$HEROKU_APP_NAME --api-key=$HEROKU_API_KEY
+    - dpl --provider=heroku --app=laksamana-line-bot --api-key=3ea1ee9c-cc18-452b-821f-4cdf7571ebc8
   when: manual
   environment:
     name: production
-    url: $HEROKU_APP_HOST
+    url: https://laksamana-line-bot.herokuapp.com
