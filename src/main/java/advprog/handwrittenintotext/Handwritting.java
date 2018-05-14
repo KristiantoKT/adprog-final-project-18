@@ -24,10 +24,10 @@ public class Handwritting {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         String result = "";
         Lines[] rec = recognitionResult.getLines();
-        for(int i = 0; i<rec.length; i++) {
+        for(int i = 0; i < rec.length; i++) {
             result += rec[i].getText() + "\n";
         }
         return result;

@@ -29,6 +29,7 @@ public class HandwrittenRecognitionBot {
         TextMessageContent content = event.getMessage();
         String contentText = content.getText();
         String[] arrContentText = contentText.split(" ");
+
         if(arrContentText.length == 2 && arrContentText[0].equalsIgnoreCase("ocr")
                 && arrContentText[1].equalsIgnoreCase("this")) {
             String message = getStringFromImage();
@@ -42,7 +43,7 @@ public class HandwrittenRecognitionBot {
     public void handleImageMessageEvent(MessageEvent<ImageMessageContent> event) {
         ImageMessageContent content = event.getMessage();
         String id = content.getId();
-        String url = "https://api.line.me/v2/bot/message/"+id+"/content";
+        String url = "https://api.line.me/v2/bot/message/" + id + "/content";
         ImageFromLine image = rest.getForObject(url, ImageFromLine.class);
         urlImage = image.getOriginalContentUrl();
     }
@@ -61,11 +62,11 @@ public class HandwrittenRecognitionBot {
 
     private TextMessage sendMessage(String replyToken, String result) {
         TextMessage message = new TextMessage(result);
-        try{
+        try {
             lineMessagingClient
                     .replyMessage(new ReplyMessage(replyToken, message))
                     .get();
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("ERROR");
         }
         return message;

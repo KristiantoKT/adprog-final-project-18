@@ -37,9 +37,11 @@ public class HandwrittingRecognition {
         String stringEntity = "{\"url\":\"" + urlImage + "\"}";
         HttpEntity<String> entity = new HttpEntity<String>(stringEntity, this.defaultHeader);
         ResponseEntity<String> postEntity = rest.postForEntity(uriBase, entity, String.class);
+
         if(postEntity.getStatusCodeValue() != 202) {
             throw new Exception("[ERROR]" + postEntity.getStatusCodeValue());
         }
+
         String operationLocation = postEntity.getHeaders().get("Operation-Location").get(0);
         return operationLocation;
     }
@@ -49,6 +51,7 @@ public class HandwrittingRecognition {
         ResponseEntity<Handwritting> resultResponseEntity= rest.exchange(operationLocation,
                 HttpMethod.GET, entityResult, Handwritting.class);
         String status = resultResponseEntity.getBody().getStatus();
+
         while(status.equals("Running")) {
             if(resultResponseEntity.getStatusCodeValue() != 200) {
                 throw new Exception("[ERROR] " + resultResponseEntity.getStatusCodeValue());
@@ -57,6 +60,7 @@ public class HandwrittingRecognition {
             status = resultResponseEntity.getBody().getStatus();
             Thread.sleep(1000);
         }
+
         if(!status.equals("Succeeded")) {
             throw new Exception("[ERROR] "+ status);
         }
