@@ -75,6 +75,18 @@ public class YoutubeControllerTest {
                 + likesDislikes, reply.getText());
     }
 
+    void testHandleErrorMessage() throws IOException {
+        YoutubeController yt = new YoutubeController();
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/error message");
+
+        TextMessage reply = youtubeController.handleTextMessageEvent(event);
+
+        TextMessage errorMessage = yt.returnErrorMessage();
+
+        assertEquals(errorMessage.getText(), reply.getText());
+    }
+
     @Test
     void testHandleDefaultMessage() {
         Event event = mock(Event.class);
