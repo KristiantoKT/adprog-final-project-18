@@ -49,7 +49,7 @@ public class FakeJsonControllerTest {
 
         TextMessage reply = fakeJsonController.handleTextMessageEvent(event);
 
-        assertTrue(reply.getText().contains("title"));
+        assertTrue(reply.getText().contains("id"));
     }
 
     @Test
