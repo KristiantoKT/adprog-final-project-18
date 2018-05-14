@@ -60,7 +60,9 @@ public class HotCountry {
         StringBuilder str = new StringBuilder();
         int number = 1;
         for (Charts chart : artistSongs) {
-            str.append(chart.getArtist() + "\n" + chart.getSong() + "\n" + chart.getPosition());
+            str.append("Artist : " + chart.getArtist()
+                    + "\n" + "Title Song : " + chart.getSong()
+                    + "\n" + "Position : " + chart.getPosition());
             if (number < artistSongs.size()) {
                 number++;
                 str.append("\n");

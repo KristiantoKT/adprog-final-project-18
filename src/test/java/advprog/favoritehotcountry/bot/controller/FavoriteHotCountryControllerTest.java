@@ -7,6 +7,9 @@ import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+import advprog.favoritehotcountry.bot.EventTestUtil;
+import advprog.favoritehotcountry.bot.controller.FavoriteHotCountryController;
+
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
@@ -39,6 +42,31 @@ public class FavoriteHotCountryControllerTest {
         assertNotNull(favoriteController);
     }
 
+    @Test
+    void testHandleTextMessageEvent() {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/billboard hotcountry ArtisNya");
+
+        TextMessage reply = favoriteController.handleTextMessageEvent(event);
+
+        assertEquals("ArtisNya", reply.getText());
+
+        event = EventTestUtil.createDummyTextMessage("/billboard hotcountry LANCO");
+
+        reply = favoriteController.handleTextMessageEvent(event);
+
+        assertNotNull(reply);
+    }
+
+    @Test
+    void testHandleDefaultMessage() {
+        Event event = mock(Event.class);
+
+        favoriteController.handleDefaultMessage(event);
+
+        verify(event, atLeastOnce()).getSource();
+        verify(event, atLeastOnce()).getTimestamp();
+    }
 
 }
 
