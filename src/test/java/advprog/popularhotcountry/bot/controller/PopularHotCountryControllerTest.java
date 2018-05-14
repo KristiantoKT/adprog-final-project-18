@@ -39,4 +39,33 @@ public class PopularHotCountryControllerTest {
         assertNotNull(popularController);
     }
 
+    @Test
+    void testHandleTextMessageEvent() {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/billboard bill200");
+
+        TextMessage replyFix = popularController.handleTextMessageEvent(event);
+        assertNotNull(replyFix);
+    }
+
+    @Test
+    void testHandleDefaultMessage() {
+        Event event = mock(Event.class);
+
+        popularController.handleDefaultMessage(event);
+
+        verify(event, atLeastOnce()).getSource();
+        verify(event, atLeastOnce()).getTimestamp();
+    }
+
+    @Test
+    void testInswitch() {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/billboard bill200");
+        TextMessage replyFix = popularController.handleTextMessageEvent(event);
+        assertNotNull(replyFix);
+
+    }
+
+
 }
