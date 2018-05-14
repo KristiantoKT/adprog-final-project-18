@@ -1,10 +1,10 @@
 package advprog.photonearby;
 
-import advprog.photonearby.PhotoNearby;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -31,23 +31,32 @@ public class PhotoNearbyTest {
 
     @Test
     public void testGet5ImageURLThatAreTakenNearby(){
-        when(searchService.getImg("-6", "106")).thenReturn(NORMAL_IMG_SET);
-        assertEquals(NORMAL_IMG_SET, searchService.getImg("-6", "106"));
-        verify(searchService).getImg("-6", "106");
+        when(searchService.searchImg("-6", "106")).thenReturn(NORMAL_IMG_SET);
+        assertEquals(NORMAL_IMG_SET, searchService.searchImg("-6", "106"));
+        verify(searchService).searchImg("-6", "106");
     }
 
     @Test
     public void testLessThan5ImageThatareTakenNearby(){
-        when(searchService.getImg("-5", "100")).thenReturn(LESS_THAN_5_IMG_SET);
-        assertEquals(LESS_THAN_5_IMG_SET, searchService.getImg("-5", "100"));
-        verify(searchService).getImg("-5", "100");
+        when(searchService.searchImg("-5", "100")).thenReturn(LESS_THAN_5_IMG_SET);
+        assertEquals(LESS_THAN_5_IMG_SET, searchService.searchImg("-5", "100"));
+        verify(searchService).searchImg("-5", "100");
 
     }
 
     @Test
     public void testNoImageThatAreTakenNearby() {
-        when(searchService.getImg("0", "0")).thenReturn(ERROR_MESSAGE);
-        assertEquals(ERROR_MESSAGE, searchService.getImg("0", "0"));
-        verify(searchService).getImg("0", "0");
+        when(searchService.searchImg("0", "0")).thenReturn(ERROR_MESSAGE);
+        assertEquals(ERROR_MESSAGE, searchService.searchImg("0", "0"));
+        verify(searchService).searchImg("0", "0");
+    }
+
+    @Test
+    public void searchMethodisWorking() {
+        PhotoNearby test = new PhotoNearby();
+        String[] result = test.searchImg("6.36469","106.82873");
+        for (String img : result) {
+            System.out.println(img);
+        }
     }
 }
