@@ -48,7 +48,6 @@ public class YoutubeControllerTest {
         YoutubeController yt = new YoutubeController();
         Element body = null;
 
-
         try {
             body = yt.youtubeHtml("https://www.youtube.com/watch?v=kJ5PCbtiCpk");
 
@@ -65,20 +64,20 @@ public class YoutubeControllerTest {
 
         MessageEvent<TextMessageContent> event1 =
                 EventTestUtil.createDummyTextMessage("/youtube https://www.youtube.com/watch?v=kJ5PCbtiCpk");
-
         TextMessage reply1 = youtubeController.handleTextMessageEvent(event1);
+        assertEquals(title + channel + viewers + likesDislikes, reply1.getText());
 
-        assertEquals(title + channel + viewers
-                + likesDislikes, reply1.getText());
-
+        // untuk kasus error
+        TextMessage errorMessage = yt.returnErrorMessage();
         MessageEvent<TextMessageContent> event2 =
                 EventTestUtil.createDummyTextMessage("/error message");
-
         TextMessage reply2 = youtubeController.handleTextMessageEvent(event2);
-
-        TextMessage errorMessage = yt.returnErrorMessage();
-
         assertEquals(errorMessage.getText(), reply2.getText());
+
+        MessageEvent<TextMessageContent> event3 =
+                EventTestUtil.createDummyTextMessage("/youtube https://google.com/");
+        TextMessage reply3 = youtubeController.handleTextMessageEvent(event3);
+        assertEquals(errorMessage.getText(), reply3.getText());
     }
 
 
