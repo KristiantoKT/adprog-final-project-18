@@ -38,7 +38,7 @@ public class YoutubeController {
             String channel = "Channel : " + getChannel(body) + "\n";
             String viewers = "Viewers : " + getViewers(body) + "\n";
             String likesDislikes = "Likes and Dislikes : "
-                    + getLikes(body) + " & " + getDislikes(body) + "\n";
+                    + getLikes(body) + " & " + getDislikes(body);
 
             return new TextMessage(title + channel + viewers + likesDislikes);
 

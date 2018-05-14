@@ -64,7 +64,7 @@ public class YoutubeControllerTest {
         String channel = "Channel : " + yt.getChannel(body) + "\n";
         String viewers = "Viewers : " + yt.getViewers(body) + "\n";
         String likesDislikes = "Likes and Dislikes : "
-                + yt.getLikes(body) + " & " + yt.getDislikes(body) + "\n";
+                + yt.getLikes(body) + " & " + yt.getDislikes(body);
 
         MessageEvent<TextMessageContent> event =
                 EventTestUtil.createDummyTextMessage("/youtube https://www.youtube.com/watch?v=kJ5PCbtiCpk");
