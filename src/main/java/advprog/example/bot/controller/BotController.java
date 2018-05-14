@@ -27,24 +27,24 @@ public class BotController {
         TextMessageContent content = event.getMessage();
         String contentText = content.getText();
 
-        String replyText = contentText.replace("/echo", "");
+        String replyTextFix = contentText.replace("/billboard hotcountry", "true");
 
-        switch (replyText.substring(1)) {
-            case "billboard bill200":
-                Billboard200App top10 = new Billboard200App("https://www.billboard.com/charts/billboard-200");
-                String toReply = top10.printTop10();
+        switch (replyTextFix) {
+            case "true":
+                Billboard200App topTen = new Billboard200App("https://www.billboard.com/charts/country-songs");
+                String result = topTen.printTop10();
                 String replyToken = event.getReplyToken();
-
-                reply(toReply, replyToken);
+                reply(result, replyToken);
                 break;
             default:
-                toReply = "Please Use a good input. E.g. /echo billboard bill200";
+                result = "Please use a correct input E.g /billboard hotcountry";
                 replyToken = event.getReplyToken();
-                reply(toReply, replyToken);
+                reply(result, replyToken);
                 break;
         }
-        return new TextMessage(replyText.substring(1));
+        return new TextMessage(replyTextFix);
     }
+
 
     @EventMapping
     public void handleDefaultMessage(Event event) {
