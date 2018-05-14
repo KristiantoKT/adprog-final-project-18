@@ -11,20 +11,20 @@ import org.jsoup.parser.Parser;
 import org.jsoup.select.Elements;
 
 public class ArtistBill200 {
-    private String billboard200;
+    private String billboardUrl;
     private List<Song> songByArtist;
 
-    public ArtistBill200(String billboard200){
-        this.billboard200 = billboard200;
+    public ArtistBill200(String billboardUrl){
+        this.billboardUrl = billboardUrl;
         songByArtist = new ArrayList<>();
     }
 
-    public String findArtistInChart(String artistToFind, String url) {
+    public String findArtistInChart(String artistToFind) {
         try {
-            Document doc = Jsoup.connect(url).get();
+            Document doc = Jsoup.connect(billboardUrl).get();
             Elements links = doc.getElementsByClass("chart-row");
 
-            for (int i = 0; i < 50; i++) {
+            for (int i = 0; i < 200; i++) {
                 Element e = links.get(i);
                 String title = e.getElementsByClass("chart-row__song").html();
                 String artist = e.getElementsByClass("chart-row__artist").html();
@@ -53,12 +53,15 @@ public class ArtistBill200 {
 
         int counter = 1;
         for (Song song : songByArtist) {
-            stringBuilder.append(song.getArtist() + "\n" + song.getTitle() + "\n" + song.getPosition());
+            stringBuilder.append(song.getArtist()
+                    + "\n" + song.getTitle() + "\n" + song.getPosition());
             if (counter < songByArtist.size()) {
                 counter++;
                 stringBuilder.append("\n");
             }
         }
+
+        songByArtist.clear();
 
         return stringBuilder.toString();
     }
