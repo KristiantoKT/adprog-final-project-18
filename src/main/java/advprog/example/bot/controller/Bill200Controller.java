@@ -1,6 +1,6 @@
 package advprog.example.bot.controller;
 
-import advprog.favArtist.bot.ArtistBill200;
+import advprog.favartist.bot.ArtistBill200;
 
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.model.ReplyMessage;

@@ -1,4 +1,4 @@
-package advprog.favArtist.bot;
+package advprog.favartist.bot;
 
 public class Song {
     private String title;

@@ -1,4 +1,4 @@
-package advprog.favArtist.bot;
+package advprog.favartist.bot;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -49,6 +49,6 @@ class SongTest {
 
     @Test
     void toStringTest() {
-        assertEquals("Europe - The Final Countdown", song.toString());
+        assertEquals("Post Malone - beerbongs & bentleys", song.toString());
     }
 }

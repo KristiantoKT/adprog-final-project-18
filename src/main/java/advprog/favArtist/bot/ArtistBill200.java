@@ -1,4 +1,4 @@
-package advprog.favArtist.bot;
+package advprog.favartist.bot;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ public class ArtistBill200 {
     private String billboardUrl;
     private List<Song> songByArtist;
 
-    public ArtistBill200(String billboardUrl){
+    public ArtistBill200(String billboardUrl) {
         this.billboardUrl = billboardUrl;
         songByArtist = new ArrayList<>();
     }
@@ -46,7 +46,8 @@ public class ArtistBill200 {
 
     public String printSong() {
         if (songByArtist.size() == 0) {
-            return "Error! The artist isn't on the Billboard 200 List!";
+            return "Error! The artist you are looking for isn't"
+                    + " on the Billboard 200 List!";
         }
 
         StringBuilder stringBuilder = new StringBuilder();

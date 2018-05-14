@@ -7,6 +7,8 @@ import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+import advprog.example.bot.EventTestUtil;
+
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
@@ -28,4 +30,39 @@ public class Bill200ControllerTest {
         System.setProperty("line.bot.channelToken", "TOKEN");
     }
 
+    @Autowired
+    private Bill200Controller bill200Controller;
+
+    @Test
+    void testContextLoads() {
+        assertNotNull(bill200Controller);
+    }
+
+    @Test
+    void testHandleTextMessageEvent() {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/billboard bill200 ArtistRandom");
+
+        TextMessage reply = bill200Controller.handleTextMessageEvent(event);
+
+        assertEquals("Error! The artist you are looking for isn't"
+                + " on the Billboard 200 List!", reply.getText());
+
+        event = EventTestUtil.createDummyTextMessage("/billboard bill200 Post Malone");
+
+        reply = bill200Controller.handleTextMessageEvent(event);
+
+        assertEquals("Post Malone\n" + "beerbongs & bentleys\n"
+                + "1\n" + "Post Malone\n" + "Stoney\n" + "9", reply.getText());
+    }
+
+    @Test
+    void testHandleDefaultMessage() {
+        Event event = mock(Event.class);
+
+        bill200Controller.handleDefaultMessage(event);
+
+        verify(event, atLeastOnce()).getSource();
+        verify(event, atLeastOnce()).getTimestamp();
+    }
 }
