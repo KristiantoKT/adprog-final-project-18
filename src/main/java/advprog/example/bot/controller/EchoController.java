@@ -21,7 +21,15 @@ public class EchoController {
         TextMessageContent content = event.getMessage();
         String contentText = content.getText();
 
-        String replyText = contentText.replace("/echo", "");
+        String replyText = "";
+        if(contentText.contains("/echo")) {
+            replyText = contentText.replace("/echo", "");
+        }
+
+        else if(contentText.contains("/speech-to-text")) {
+            content.getId();
+            event.getReplyToken();
+        }
         return new TextMessage(replyText.substring(1));
     }
 
