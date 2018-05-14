@@ -84,7 +84,6 @@ compileJava {
     options.compilerArgs.add("-Werror")
     options.compilerArgs.add("-Xlint:-processing")
     options.compilerArgs.add("-parameters")
-    options.compilerArgs.("-XDignore.symbol.file=true")
 }
 
 // Configure Gradle test to use JUnit 5 platform

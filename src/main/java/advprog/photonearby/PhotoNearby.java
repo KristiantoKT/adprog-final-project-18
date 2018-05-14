@@ -1,5 +1,16 @@
 package advprog.photonearby;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -14,17 +25,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringReader;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class PhotoNearby {
 
     private static final String ENDPOINT = "https://api.flickr.com/services/rest/";
@@ -32,6 +32,7 @@ public class PhotoNearby {
 
     public String[] searchImg(String latitude, String longtitude) {
         //Create map of paramaters
+        // TODO: Optimize search parameter
         Map<String, String> params = new HashMap<String,String>();
         params.put("method","flickr.photos.search");
         params.put("api_key",API_KEY);
@@ -40,14 +41,19 @@ public class PhotoNearby {
 
         //Post request to flick api
         String[] result;
-        try{
+        try {
             String xml = post(params);
-            result = parseXML(xml);
-            return result;
-        }catch(Exception e){
-            e.printStackTrace();
+            ArrayList<String> searchedImg = parseImageUrl(xml);
+            if (searchedImg.size() == 0) {
+                return new String[] {"No image was taken near your location"};
+            } else if (searchedImg.size() < 5) {
+                return searchedImg.toArray(new String[searchedImg.size()]);
+            } else {
+                return searchedImg.subList(0, 5).toArray(new String[5]);
+            }
+        } catch (Exception e) {
+            return new String[] {"Cannot access Flickr API"};
         }
-        return null;
     }
 
     private static String post(Map<String,String> params) throws IOException {
@@ -68,32 +74,31 @@ public class PhotoNearby {
         return IOUtils.toString(resultStream, String.valueOf(StandardCharsets.UTF_8));
     }
 
-    private static String[] parseXML(String xml)throws Exception{
-        String[] result = new String[5];
+    private static ArrayList<String> parseImageUrl(String xml)throws Exception {
+        ArrayList<String> urls = new ArrayList<String>();
         DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         InputSource src = new InputSource();
         src.setCharacterStream(new StringReader(xml));
 
         Document doc = builder.parse(src);
-
-        NodeList rsp = doc.getElementsByTagName("rsp").item(0).getChildNodes();
-        NodeList photoList = rsp.item(1).getChildNodes();
-        int counter = 0;
-        for(int i = 0; i<photoList.getLength(); i++){
+        NodeList rsp = doc.getElementsByTagName("rsp")
+                        .item(0)
+                        .getChildNodes();
+        NodeList photoList = rsp.item(1)
+                                .getChildNodes();
+        for (int i = 0; i < photoList.getLength(); i++) {
             Node node = photoList.item(i);
             if (node.getNodeType() == Node.ELEMENT_NODE) {
+                // get image url based on flickr URL
                 NamedNodeMap photo = node.getAttributes();
                 String id = photo.getNamedItem("id").getNodeValue();
                 String secret = photo.getNamedItem("secret").getNodeValue();
                 String server = photo.getNamedItem("server").getNodeValue();
                 String farm = photo.getNamedItem("farm").getNodeValue();
-                if(counter<5){
-                    result[counter] = String.format("https://farm%s.staticflickr.com/%s/%s_%s.jpg",
-                            farm, server, id, secret);
-                }
-                counter++;
+                urls.add(String.format("https://farm%s.staticflickr.com/%s/%s_%s.jpg",
+                        farm, server, id, secret));
             }
         }
-        return result;
+        return urls;
     }
 }
