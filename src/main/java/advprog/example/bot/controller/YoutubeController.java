@@ -32,7 +32,7 @@ public class YoutubeController {
             String removeTag = contentText.replace("/youtube", "");
             String youtubeLink = removeTag.substring(1);
 
-            if (validUrl(youtubeLink)) {
+            if (validUrl(youtubeLink) && (youtubeLink.contains("youtube") || youtubeLink.contains("youtu.be"))) {
                 Element body = youtubeHtml(youtubeLink);
 
                 String title = "Title : " + getTitle(body) + "\n";
