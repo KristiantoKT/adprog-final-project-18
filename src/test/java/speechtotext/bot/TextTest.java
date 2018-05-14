@@ -1,10 +1,10 @@
 package speechtotext.bot;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import advprog.speechtotext.bot.Text;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TextTest {
 

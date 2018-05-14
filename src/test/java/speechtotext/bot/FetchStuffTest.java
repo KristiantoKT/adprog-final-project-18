@@ -1,17 +1,17 @@
 package speechtotext.bot;
 
-import advprog.speechtotext.bot.FetchStuff;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import advprog.speechtotext.bot.FetchStuff;
 import java.io.File;
 import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.Before;
+import org.junit.Test;
 
 public class FetchStuffTest {
 
     private File soundFile;
+
     @Before
     public void setUp() {
         soundFile = new File("soundfile/soundtest.wav");
@@ -19,7 +19,7 @@ public class FetchStuffTest {
 
     @Test
     public void tokenIsString() {
-        String namaClass = FetchStuff.getTokenFromAPI().getClass().getSimpleName();
+        String namaClass = FetchStuff.getTokenFromApi().getClass().getSimpleName();
         assertTrue(namaClass.equals("String"));
     }
 

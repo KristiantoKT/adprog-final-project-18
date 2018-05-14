@@ -22,11 +22,9 @@ public class EchoController {
         String contentText = content.getText();
 
         String replyText = "";
-        if(contentText.contains("/echo")) {
+        if (contentText.contains("/echo")) {
             replyText = contentText.replace("/echo", "");
-        }
-
-        else if(contentText.contains("/speech-to-text")) {
+        } else if (contentText.contains("/speech-to-text")) {
             content.getId();
             event.getReplyToken();
         }

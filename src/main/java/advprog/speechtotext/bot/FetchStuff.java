@@ -1,13 +1,13 @@
 package advprog.speechtotext.bot;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
 import org.springframework.boot.json.JacksonJsonParser;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.client.RestTemplate;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 
 public class FetchStuff {
 
@@ -15,18 +15,20 @@ public class FetchStuff {
     static String subscriptionKey = "afc6af61d93a4d798378d287919ae9cb";
     static String token = "";
 
-    public static String getTokenFromAPI() {
+    public static String getTokenFromApi() {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Ocp-Apim-Subscription-Key", subscriptionKey);
         headers.set("Content-Type", "application/x-www-form-urlencoded");
-        String kembalian = restTemplate.postForObject(fetchURL, new HttpEntity<String>("", headers), String.class);
+        String kembalian = restTemplate.postForObject(fetchURL
+                , new HttpEntity<String>("", headers)
+                , String.class);
         return kembalian;
     }
 
     public static Text getTextFromSpeech(File soundFile) throws IOException {
         if(token.length() == 0) {
-            token = getTokenFromAPI();
+            token = getTokenFromApi();
         }
         HttpHeaders headers = new HttpHeaders();
         headers.add("Ocp-Apim-Subscription-Key", subscriptionKey);
@@ -39,8 +41,8 @@ public class FetchStuff {
         fileStream.close();
         HttpEntity<byte[]> entityBytes = new HttpEntity<byte[]>(bytes, headers);
         RestTemplate restTemplate = new RestTemplate();
-        String kembalian = restTemplate.postForObject("https://speech.platform.bing.com/speech/recognition/conversation" +
-                "/cognitiveservices/v1?language=en-US", entityBytes, String.class);
+        String kembalian = restTemplate.postForObject("https://speech.platform.bing.com/speech/recognition/conversation"
+                + "/cognitiveservices/v1?language=en-US", entityBytes, String.class);
         JacksonJsonParser jacksonJsonParser = new JacksonJsonParser();
         Text text = new Text((String) jacksonJsonParser.parseMap(kembalian).get("DisplayText"));
         return text;
