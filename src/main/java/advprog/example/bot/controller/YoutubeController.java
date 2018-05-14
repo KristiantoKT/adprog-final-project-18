@@ -32,8 +32,7 @@ public class YoutubeController {
             String removeTag = contentText.replace("/youtube", "");
             String youtubeLink = removeTag.substring(1);
 
-            if (validUrl(youtubeLink) && (youtubeLink.contains("youtube")
-                    || youtubeLink.contains("youtu.be"))) {
+            if (validUrl(youtubeLink)) {
                 Element body = youtubeHtml(youtubeLink);
 
                 String title = "Title : " + getTitle(body) + "\n";
@@ -89,7 +88,9 @@ public class YoutubeController {
     }
 
     public boolean validUrl(String url) {
-        return url.contains("http") || url.contains("https");
+        boolean httpExist = url.contains("http") || url.contains("https");
+        boolean youtubeLink = url.contains("youtube") || url.contains("youtu.be");
+        return  httpExist && youtubeLink;
     }
 
     @EventMapping
