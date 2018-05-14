@@ -20,14 +20,14 @@ public class FetchStuff {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Ocp-Apim-Subscription-Key", subscriptionKey);
         headers.set("Content-Type", "application/x-www-form-urlencoded");
-        String kembalian = restTemplate.postForObject(fetchURL
-                , new HttpEntity<String>("", headers)
-                , String.class);
+        String kembalian = restTemplate.postForObject(fetchURL,
+                new HttpEntity<String>("", headers),
+                String.class);
         return kembalian;
     }
 
     public static Text getTextFromSpeech(File soundFile) throws IOException {
-        if(token.length() == 0) {
+        if (token.length() == 0) {
             token = getTokenFromApi();
         }
         HttpHeaders headers = new HttpHeaders();
