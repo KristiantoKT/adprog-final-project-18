@@ -8,12 +8,10 @@ import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.IOException;
 import java.util.logging.Logger;
 
-@SpringBootApplication
 @LineMessageHandler
 public class ControllerForOricon {
     private static final Logger LOGGER = Logger.getLogger(ControllerForOricon.class.getName());
