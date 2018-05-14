@@ -80,7 +80,7 @@ public class YoutubeController {
 
     public String getDislikes(Element body) {
         return body.getElementsByClass("yt-uix-button-content")
-                .get(21).text();
+                .get(22).text();
     }
 
     public boolean validUrl(String url) {
