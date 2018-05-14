@@ -49,7 +49,8 @@ public class HandwrittenRecognitionBotTest {
                 EventTestUtil.createDummyTextMessage("ocr this");
 
         TextMessage reply = handwrittenRecognitionBot.handleTextMessageEvent(event);
-        String expected = "dog\nThe quick brown fox jumps over the lazy\nPack my box with five dozen liquor jugs\n";
+        String expected = "dog\nThe quick brown fox jumps over the lazy\nPack "
+                + "my box with five dozen liquor jugs\n";
         assertEquals(expected, reply.getText());
     }
 }
