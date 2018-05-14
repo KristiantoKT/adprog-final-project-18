@@ -1,16 +1,20 @@
 package advprog.example.bot.controller;
 
-import advprog.example.bot.oricon.command.MonthlyCommand;
-import advprog.example.bot.oricon.command.WeeklyCommand;
+import java.io.IOException;
+
+import advprog.example.bot.EventTestUtil;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
-import com.linecorp.bot.spring.boot.annotation.EventMapping;
-import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
-
-import java.io.IOException;
-import java.util.logging.Logger;
+import org.junit.Assert;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
+import org.mockito.internal.verification.VerificationModeFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @LineMessageHandler
 public class ControllerForOricon {

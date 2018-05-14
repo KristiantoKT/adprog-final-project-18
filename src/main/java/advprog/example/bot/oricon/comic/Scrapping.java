@@ -6,10 +6,12 @@ import java.util.stream.Collectors;
 
 import org.jsoup.HttpStatusException;
 
+import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
 
 
 public class Scrapping {
@@ -36,6 +38,6 @@ public class Scrapping {
 
     public static void main(String[] args) throws IOException {
         Scrapping s = new Scrapping();
-        System.out.println(s.scrap("https://www.oricon.co.jp/rank/cbm/m/2018-04"));
+        System.out.println(s.scrap("https://www.oricon.co.jp/rank/cbm/m/2018-04/"));
     }
 }
