@@ -27,7 +27,7 @@ public class ControllerForOricon {
         TextMessageContent content = event.getMessage();
         String contentText = content.getText();
         String[] splitText = contentText.split(" ");
-        String[] splitDetail =  splitText[2].split("-")
+        String[] splitDetail =  splitText[2].split("-");
 
         if (splitText[0].equals("/oricon")) {
             if (splitDetail.length==2) {

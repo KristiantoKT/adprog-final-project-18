@@ -1,25 +1,21 @@
 package advprog.example.bot.controller;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
 import advprog.example.bot.EventTestUtil;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
-
-import java.io.IOException;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.*;
 
 
 @SpringBootTest(properties = "line.bot.handler.enabled=false")
@@ -44,19 +40,19 @@ public class ControllerForOriconTest {
             + "(10) 花のち晴れ〜花男 Next Season〜 - (画)神尾葉子";
 
     @Autowired
-    private OriconController oriconController;
+    private ControllerForOricon controllerForOricon;
 
     @Test
     void testContextLoads() {
-        assertNotNull(oriconController);
+        assertNotNull(controllerForOricon);
     }
 
     @Test
     void testHandleTextMessageEvent() throws IOException {
         MessageEvent<TextMessageContent> event =
-                EventTestUtil.createDummyTextMessage("/oricon comic weekly 2018-05-07");
+                EventTestUtil.createDummyTextMessage("/oricon comic 2018-05-07");
 
-        TextMessage reply = oriconController.handleTextMessageEvent(event);
+        TextMessage reply = controllerForOricon.handleTextMessageEvent(event);
 
         assertEquals(sampleWeeklyOutput, reply.getText());
     }
@@ -65,7 +61,7 @@ public class ControllerForOriconTest {
     void testHandleDefaultMessage() {
         Event event = mock(Event.class);
 
-        oriconController.handleDefaultMessage(event);
+        controllerForOricon.handleDefaultMessage(event);
 
         verify(event, atLeastOnce()).getSource();
         verify(event, atLeastOnce()).getTimestamp();
