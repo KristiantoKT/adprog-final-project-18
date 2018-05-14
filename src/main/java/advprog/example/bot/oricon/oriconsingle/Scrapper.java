@@ -29,7 +29,7 @@ public class Scrapper {
             output += songs.stream().map(js -> scrap(js)).collect(Collectors.joining("\n"));
             return output;
         } catch (HttpStatusException e) {
-            return "Invalid URL broh";
+            return "Invalid URL";
         }
     }
 
@@ -39,7 +39,18 @@ public class Scrapper {
         String title = info.select("h2.title").text();
         String artist = info.select("p.name").text();
         String date = fixDate(info.select("li").first().text());
-        return String.format("(%s) %s - %s - %s",rank,title,artist,date);
+        String estimateSales = "";
+        try {
+            estimateSales = info.select("li").text().substring(24,31);
+            if (estimateSales.contains("枚")) {
+                estimateSales = estimateSales.replace("枚","");
+            } else {
+                estimateSales = "Not Available";
+            }
+        } catch (StringIndexOutOfBoundsException e) {
+            estimateSales = "Not Available";
+        }
+        return String.format("(%s) %s - %s - %s - %s",rank,title,artist,date,estimateSales);
     }
 
     private String fixDate(String date) {
