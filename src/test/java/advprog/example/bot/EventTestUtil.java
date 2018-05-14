@@ -18,8 +18,4 @@ public class EventTestUtil {
                 new TextMessageContent("id", text),
                 Instant.parse("2018-01-01T00:00:00.000Z"));
     }
-
-    public static ImageRecognition createEmptyImageRecognitionTest(){
-        return null;
-    }
 }
