@@ -54,7 +54,7 @@ public class ControllerForOriconTest {
     @Test
     void testHandleTextMessageEvent() throws IOException {
         MessageEvent<TextMessageContent> event =
-                EventTestUtil.createDummyTextMessage("/oricon jpsingles weekly 2018-05-07");
+                EventTestUtil.createDummyTextMessage("/oricon comic weekly 2018-05-07");
 
         TextMessage reply = oriconController.handleTextMessageEvent(event);
 
