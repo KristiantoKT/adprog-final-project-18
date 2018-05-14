@@ -42,11 +42,10 @@ public class BotControllerTest {
     @Test
     void testHandleTextMessageEvent() {
         MessageEvent<TextMessageContent> event =
-                EventTestUtil.createDummyTextMessage("/echo Lorem Ipsum");
+                EventTestUtil.createDummyTextMessage("/billboard bill200");
 
         TextMessage reply = botController.handleTextMessageEvent(event);
-
-        assertEquals("Lorem Ipsum", reply.getText());
+        assertNotNull(reply);
     }
 
     @Test
@@ -62,7 +61,7 @@ public class BotControllerTest {
     @Test
     void testInswitch() {
         MessageEvent<TextMessageContent> event =
-                EventTestUtil.createDummyTextMessage("/echo billboard bill200");
+                EventTestUtil.createDummyTextMessage("/billboard bill200");
         TextMessage reply = botController.handleTextMessageEvent(event);
         assertNotNull(reply);
 

@@ -27,24 +27,23 @@ public class BotController {
         TextMessageContent content = event.getMessage();
         String contentText = content.getText();
 
-        String replyTextFix = contentText.replace("/billboard hotcountry", "true");
+        String replyText = contentText.replace("/billboard bill200", "true");
 
-        switch (replyTextFix) {
+        switch (replyText) {
             case "true":
-                Billboard200App topTen = new Billboard200App("https://www.billboard.com/charts/country-songs");
-                String result = topTen.printTop10();
+                Billboard200App top10 = new Billboard200App("https://www.billboard.com/charts/billboard-200");
+                String toReply = top10.printTop10();
                 String replyToken = event.getReplyToken();
-                reply(result, replyToken);
+                reply(toReply, replyToken);
                 break;
             default:
-                result = "Please use a correct input E.g /billboard hotcountry";
+                toReply = "Please Use a good input. E.g. /billboard bill200";
                 replyToken = event.getReplyToken();
-                reply(result, replyToken);
+                reply(toReply, replyToken);
                 break;
         }
-        return new TextMessage(replyTextFix);
+        return new TextMessage(replyText);
     }
-
 
     @EventMapping
     public void handleDefaultMessage(Event event) {
