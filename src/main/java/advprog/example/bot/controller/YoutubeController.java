@@ -9,6 +9,8 @@ import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 
 import java.io.IOException;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

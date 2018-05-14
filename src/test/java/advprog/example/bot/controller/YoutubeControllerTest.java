@@ -3,7 +3,6 @@ package advprog.example.bot.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import static org.mockito.ArgumentMatchers.doubleThat;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -25,8 +24,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-
 
 
 @SpringBootTest(properties = "line.bot.handler.enabled=false")
@@ -66,26 +63,24 @@ public class YoutubeControllerTest {
         String likesDislikes = "Likes and Dislikes : "
                 + yt.getLikes(body) + " & " + yt.getDislikes(body);
 
-        MessageEvent<TextMessageContent> event =
+        MessageEvent<TextMessageContent> event1 =
                 EventTestUtil.createDummyTextMessage("/youtube https://www.youtube.com/watch?v=kJ5PCbtiCpk");
 
-        TextMessage reply = youtubeController.handleTextMessageEvent(event);
+        TextMessage reply1 = youtubeController.handleTextMessageEvent(event1);
 
         assertEquals(title + channel + viewers
-                + likesDislikes, reply.getText());
-    }
+                + likesDislikes, reply1.getText());
 
-    void testHandleErrorMessage() throws IOException {
-        YoutubeController yt = new YoutubeController();
-        MessageEvent<TextMessageContent> event =
+        MessageEvent<TextMessageContent> event2 =
                 EventTestUtil.createDummyTextMessage("/error message");
 
-        TextMessage reply = youtubeController.handleTextMessageEvent(event);
+        TextMessage reply2 = youtubeController.handleTextMessageEvent(event2);
 
         TextMessage errorMessage = yt.returnErrorMessage();
 
-        assertEquals(errorMessage.getText(), reply.getText());
+        assertEquals(errorMessage.getText(), reply2.getText());
     }
+
 
     @Test
     void testHandleDefaultMessage() {
