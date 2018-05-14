@@ -16,12 +16,15 @@ import com.linecorp.bot.model.message.TextMessage;
 
 import java.io.IOException;
 
+import org.jsoup.nodes.Element;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
 
 
 
@@ -44,12 +47,27 @@ public class YoutubeControllerTest {
 
     @Test
     void testHandleTextMessageEvent() throws IOException {
+        YoutubeController yt = new YoutubeController();
+        Element body = null;
+
+
+        try {
+            body = yt.youtubeHtml("https://www.youtube.com/watch?v=kJ5PCbtiCpk");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String title = "Title : Gordon Ramsay Answers Cooking Questions "
+                + "From Twitter | Tech Support | WIRED" + "\n";
+        String channel = "Channel : " + yt.getChannel(body) + "\n";
+
         MessageEvent<TextMessageContent> event =
-                EventTestUtil.createDummyTextMessage("/youtube https://www.youtube.com/watch?v=ffxKSjUwKdU");
+                EventTestUtil.createDummyTextMessage("/youtube https://www.youtube.com/watch?v=kJ5PCbtiCpk");
 
         TextMessage reply = youtubeController.handleTextMessageEvent(event);
 
-        assertEquals("Ariana Grande - No Tears Left To Cry", reply.getText());
+        assertEquals(title + channel, reply.getText());
     }
 
     @Test

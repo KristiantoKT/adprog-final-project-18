@@ -32,16 +32,63 @@ public class YoutubeController {
         String removeTag = contentText.replace("/youtube", "");
         String youtubeLink = removeTag.substring(1);
 
-        Document doc = Jsoup.connect(youtubeLink).header("User-Agent", "Chrome").get();
-        Element body = doc.body();
-        String title = getTitle(body);
+        if (validUrl(youtubeLink)) {
+            Element body = youtubeHtml(youtubeLink);
 
-        return new TextMessage(title);
+            String title = "Title : " + getTitle(body) + "\n";
+            String channel = "Channel : " + getChannel(body) + "\n";
+
+            return new TextMessage(title + channel);
+
+        } else {
+            return returnErrorMessage();
+        }
     }
 
-    private String getTitle(Element body) {
+    public Element youtubeHtml(String url) throws IOException {
+        Document doc = Jsoup.connect(url).header("User-Agent", "Chrome").get();
+        return doc.body();
+    }
+
+    public TextMessage returnErrorMessage() {
+        return new TextMessage("Link anda bermasalah");
+    }
+
+    public String getTitle(Element body) {
         return body.getElementById("eow-title")
                 .attr("title");
+    }
+
+    public String getViewers(Element body) {
+        return body.getElementsByClass("watch-view-count")
+                .text();
+    }
+
+    public String getChannel(Element body) {
+        return body.getElementById("watch7-user-header")
+                .getElementsByClass("yt-user-info")
+                .get(0).child(0).wholeText();
+    }
+
+    public String getLikes(Element body) {
+        return body.getElementsByAttributeValue("title", "I like this")
+                .get(0).text();
+    }
+
+    public String getDislikes(Element body) {
+        return body.getElementsByAttributeValue("title", "I dislike this")
+                .get(0).text();
+    }
+
+    public boolean validUrl(String url) {
+        return url.contains("http") || url.contains("https");
+    }
+
+    public boolean privateOrNonExist(Element body) {
+        return body.getElementsByClass("yt-alert-message")
+                .get(1)
+                .text()
+                .equals("Terjadi kesalahan saat validasi berlangsung.");
     }
 
     @EventMapping
