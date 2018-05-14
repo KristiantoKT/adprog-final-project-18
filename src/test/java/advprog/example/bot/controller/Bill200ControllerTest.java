@@ -54,6 +54,12 @@ public class Bill200ControllerTest {
 
         assertEquals("Post Malone\n" + "beerbongs & bentleys\n"
                 + "1\n" + "Post Malone\n" + "Stoney\n" + "9", reply.getText());
+
+        event = EventTestUtil.createDummyTextMessage("oi");
+
+        reply = bill200Controller.handleTextMessageEvent(event);
+
+        assertEquals("Please use a correct input E.g /billboard bill200 ARTIST", reply.getText());
     }
 
     @Test

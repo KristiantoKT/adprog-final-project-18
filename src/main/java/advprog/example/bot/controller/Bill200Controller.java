@@ -36,9 +36,15 @@ public class Bill200Controller {
         TextMessageContent content = event.getMessage();
         String contentText = content.getText();
 
-        String replyText = contentText.replace("/billboard bill200 ", "");
-
-        return new TextMessage(billboard200.findArtistInChart(replyText));
+        if (contentText.contains("/billboard bill200")) {
+            String replyText = contentText.replace("/billboard bill200 ", "");
+            return new TextMessage(billboard200.findArtistInChart(replyText));
+        } else {
+            String result = "Please use a correct input E.g /billboard bill200 ARTIST";
+            String replyToken = event.getReplyToken();
+            reply(result, replyToken);
+            return new TextMessage(result);
+        }
     }
 
     @EventMapping
