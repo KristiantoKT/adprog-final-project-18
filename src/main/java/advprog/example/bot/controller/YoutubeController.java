@@ -38,8 +38,10 @@ public class YoutubeController {
             String title = "Title : " + getTitle(body) + "\n";
             String channel = "Channel : " + getChannel(body) + "\n";
             String viewers = "Viewers : " + getViewers(body) + "\n";
+            String likesDislikes = "Likes and Dislikes : "
+                    + getLikes(body) + "&" + getDislikes(body) + "\n";
 
-            return new TextMessage(title + channel + viewers);
+            return new TextMessage(title + channel + viewers + likesDislikes);
 
         } else {
             return returnErrorMessage();
@@ -72,13 +74,13 @@ public class YoutubeController {
     }
 
     public String getLikes(Element body) {
-        return body.getElementsByAttributeValue("title", "I like this")
-                .get(0).text();
+        return body.getElementsByClass("yt-uix-button-content")
+                .get(18).text();
     }
 
     public String getDislikes(Element body) {
-        return body.getElementsByAttributeValue("title", "I dislike this")
-                .get(0).text();
+        return body.getElementsByClass("yt-uix-button-content")
+                .get(19).text();
     }
 
     public boolean validUrl(String url) {

@@ -3,6 +3,7 @@ package advprog.example.bot.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import static org.mockito.ArgumentMatchers.doubleThat;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -62,13 +63,16 @@ public class YoutubeControllerTest {
                 + "From Twitter | Tech Support | WIRED" + "\n";
         String channel = "Channel : " + yt.getChannel(body) + "\n";
         String viewers = "Viewers : " + yt.getViewers(body) + "\n";
+        String likesDislikes = "Likes and Dislikes : "
+                + yt.getLikes(body) + "&" + yt.getDislikes(body) + "\n";
 
         MessageEvent<TextMessageContent> event =
                 EventTestUtil.createDummyTextMessage("/youtube https://www.youtube.com/watch?v=kJ5PCbtiCpk");
 
         TextMessage reply = youtubeController.handleTextMessageEvent(event);
 
-        assertEquals(title + channel + viewers, reply.getText());
+        assertEquals(title + channel + viewers
+                + likesDislikes, reply.getText());
     }
 
     @Test
