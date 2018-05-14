@@ -61,7 +61,7 @@ public class FavoriteHotCountryControllerTest {
 
         reply = favoriteController.handleTextMessageEvent(event);
 
-        assertEquals("Please use a correct input E.g /billboard hotcountr [artistname]",
+        assertEquals("Please use a correct input E.g /billboard hotcountry [artistname]",
                 reply.getText());
     }
 
