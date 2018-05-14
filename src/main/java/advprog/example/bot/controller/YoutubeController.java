@@ -9,8 +9,6 @@ import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 
 import java.io.IOException;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -30,20 +28,24 @@ public class YoutubeController {
         TextMessageContent content = event.getMessage();
         String contentText = content.getText();
 
-        String removeTag = contentText.replace("/youtube", "");
-        String youtubeLink = removeTag.substring(1);
+        if (contentText.contains("/youtube")) {
+            String removeTag = contentText.replace("/youtube", "");
+            String youtubeLink = removeTag.substring(1);
 
-        if (validUrl(youtubeLink)) {
-            Element body = youtubeHtml(youtubeLink);
+            if (validUrl(youtubeLink)) {
+                Element body = youtubeHtml(youtubeLink);
 
-            String title = "Title : " + getTitle(body) + "\n";
-            String channel = "Channel : " + getChannel(body) + "\n";
-            String viewers = "Viewers : " + getViewers(body) + "\n";
-            String likesDislikes = "Likes and Dislikes : "
-                    + getLikes(body) + " & " + getDislikes(body);
+                String title = "Title : " + getTitle(body) + "\n";
+                String channel = "Channel : " + getChannel(body) + "\n";
+                String viewers = "Viewers : " + getViewers(body) + "\n";
+                String likesDislikes = "Likes and Dislikes : "
+                        + getLikes(body) + " & " + getDislikes(body);
 
-            return new TextMessage(title + channel + viewers + likesDislikes);
+                return new TextMessage(title + channel + viewers + likesDislikes);
 
+            } else {
+                return returnErrorMessage();
+            }
         } else {
             return returnErrorMessage();
         }
@@ -55,7 +57,8 @@ public class YoutubeController {
     }
 
     public TextMessage returnErrorMessage() {
-        return new TextMessage("Mohon tulis link youtube dengan benar ya friends!");
+        return new TextMessage("Mohon tulis link youtube dan format dengan benar ya friends! "
+                + "contoh : /youtube <link>");
     }
 
     public String getTitle(Element body) {
