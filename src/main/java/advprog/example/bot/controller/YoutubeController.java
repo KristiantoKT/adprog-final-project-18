@@ -34,15 +34,17 @@ public class YoutubeController {
 
         if (validUrl(youtubeLink)) {
             Element body = youtubeHtml(youtubeLink);
+            if (!privateOrNonExist(body)) {
+                String title = "Title : " + getTitle(body) + "\n";
+                String channel = "Channel : " + getChannel(body) + "\n";
+                String viewers = "Viewers : " + getViewers(body) + "\n";
+                String likesDislikes = "Likes and Dislikes : "
+                        + getLikes(body) + " & " + getDislikes(body) + "\n";
 
-            String title = "Title : " + getTitle(body) + "\n";
-            String channel = "Channel : " + getChannel(body) + "\n";
-            String viewers = "Viewers : " + getViewers(body) + "\n";
-            String likesDislikes = "Likes and Dislikes : "
-                    + getLikes(body) + " & " + getDislikes(body) + "\n";
-
-            return new TextMessage(title + channel + viewers + likesDislikes);
-
+                return new TextMessage(title + channel + viewers + likesDislikes);
+            } else {
+                return new TextMessage("Maaf, video tidak ada atau di private:(");
+            }
         } else {
             return returnErrorMessage();
         }
