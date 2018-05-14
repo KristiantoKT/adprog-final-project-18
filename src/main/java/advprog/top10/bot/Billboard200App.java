@@ -1,5 +1,7 @@
 package advprog.top10.bot;
 
+import static java.lang.String.format;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +11,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.parser.Parser;
 import org.jsoup.select.Elements;
-
-import static java.lang.String.format;
 
 public class Billboard200App {
     private String bill200Url;
@@ -23,7 +23,7 @@ public class Billboard200App {
         setTop10(bill200Url);
     }
 
-    private void setTop10(String url){
+    private void setTop10(String url) {
         try {
             Document docs = Jsoup.connect(url).get();
             Elements links = docs.getElementsByClass("chart-row");
@@ -51,7 +51,7 @@ public class Billboard200App {
         return bill200Url;
     }
 
-    public String printTop10(){
+    public String printTop10() {
         StringBuilder output = new StringBuilder();
         int chartCounter = 1;
         for (Song song : top10) {

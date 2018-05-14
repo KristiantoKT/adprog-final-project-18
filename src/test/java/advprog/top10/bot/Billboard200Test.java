@@ -3,15 +3,15 @@ package advprog.top10.bot;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
 
 
 public class Billboard200Test {
     Billboard200App billboard200;
-    String url ="https://www.billboard.com/charts/billboard-200";
+    String url = "https://www.billboard.com/charts/billboard-200";
 
     @Before
     public void setUp() {
@@ -29,7 +29,7 @@ public class Billboard200Test {
     }
 
     @Test
-    public void getTop10(){
+    public void getTop10() {
         String output = billboard200.printTop10();
         System.out.println(output);
         assertTrue(output.contains("Post Malone"));

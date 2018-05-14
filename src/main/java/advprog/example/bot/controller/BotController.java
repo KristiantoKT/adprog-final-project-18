@@ -9,9 +9,9 @@ import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
-import org.springframework.beans.factory.annotation.Autowired;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @LineMessageHandler
 public class BotController {
@@ -29,7 +29,7 @@ public class BotController {
 
         String replyText = contentText.replace("/echo", "");
 
-        switch (replyText.substring(1)){
+        switch (replyText.substring(1)) {
             case "billboard bill200":
                 Billboard200App top10 = new Billboard200App("https://www.billboard.com/charts/billboard-200");
                 String toReply = top10.printTop10();
@@ -52,11 +52,11 @@ public class BotController {
                 event.getTimestamp(), event.getSource()));
     }
 
-    private void reply(String replies, String token){
+    private void reply(String replies, String token) {
         TextMessage textMessage = new TextMessage(replies);
         try {
             lineMessagingClient.replyMessage(new ReplyMessage(token, textMessage)).get();
-        } catch (InterruptedException |ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             System.out.println("Error");
         }
     }
