@@ -8,9 +8,17 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,11 +39,11 @@ public class PhotoNearby {
         params.put("lon", longtitude);
 
         //Post request to flick api
-        String result;
+        String[] result;
         try{
-            result = post(params);
-//            parseXML(result);
-            return new String[] {result};
+            String xml = post(params);
+            result = parseXML(xml);
+            return result;
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -58,5 +66,34 @@ public class PhotoNearby {
         HttpResponse response = httpClient.execute(httpPost);
         InputStream resultStream = response.getEntity().getContent();
         return IOUtils.toString(resultStream, String.valueOf(StandardCharsets.UTF_8));
+    }
+
+    private static String[] parseXML(String xml)throws Exception{
+        String[] result = new String[5];
+        DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+        InputSource src = new InputSource();
+        src.setCharacterStream(new StringReader(xml));
+
+        Document doc = builder.parse(src);
+
+        NodeList rsp = doc.getElementsByTagName("rsp").item(0).getChildNodes();
+        NodeList photoList = rsp.item(1).getChildNodes();
+        int counter = 0;
+        for(int i = 0; i<photoList.getLength(); i++){
+            Node node = photoList.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                NamedNodeMap photo = node.getAttributes();
+                String id = photo.getNamedItem("id").getNodeValue();
+                String secret = photo.getNamedItem("secret").getNodeValue();
+                String server = photo.getNamedItem("server").getNodeValue();
+                String farm = photo.getNamedItem("farm").getNodeValue();
+                if(counter<5){
+                    result[counter] = String.format("https://farm%s.staticflickr.com/%s/%s_%s.jpg",
+                            farm, server, id, secret);
+                }
+                counter++;
+            }
+        }
+        return result;
     }
 }
