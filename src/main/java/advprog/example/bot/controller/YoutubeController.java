@@ -6,12 +6,13 @@ import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 
 import java.io.IOException;
 import java.util.logging.Logger;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 @LineMessageHandler
 public class YoutubeController {
@@ -19,7 +20,8 @@ public class YoutubeController {
     private static final Logger LOGGER = Logger.getLogger(YoutubeController.class.getName());
 
     @EventMapping
-    public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws IOException {
+    public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent>
+                                                          event) throws IOException {
         LOGGER.fine(String.format("TextMessageContent(timestamp='%s',content='%s')",
                 event.getTimestamp(), event.getMessage()));
         TextMessageContent content = event.getMessage();
@@ -34,7 +36,7 @@ public class YoutubeController {
         return new TextMessage(title);
     }
 
-    private String getTitle (Element body){
+    private String getTitle(Element body) {
         return body.getElementById("eow-title")
                 .attr("title");
     }
