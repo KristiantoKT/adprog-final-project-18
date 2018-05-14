@@ -17,8 +17,8 @@
 #Please copy as `application.yml` and change your value.
 
 line.bot:
-  channel-token: ec304289830a0db7cb4c63e7472cba1c
-  channel-secret: UWPccAwgfiXmi+NU9dyb2MjtewLdTkpmez7a69fZ1q3Jtp2YsvWbsHzEaUXZaYBmHZynBPYKHAey5EzrrdPriotqQkchJl4cM8Gn5C51dQWcFoEOn2Gy9aZqw+dE/khEpn2Y6XC84bQVEp+odv4gnwdB04t89/1O/w1cDnyilFU=
+  channel-token: UWPccAwgfiXmi+NU9dyb2MjtewLdTkpmez7a69fZ1q3Jtp2YsvWbsHzEaUXZaYBmHZynBPYKHAey5EzrrdPriotqQkchJl4cM8Gn5C51dQWcFoEOn2Gy9aZqw+dE/khEpn2Y6XC84bQVEp+odv4gnwdB04t89/1O/w1cDnyilFU=
+  channel-secret: ec304289830a0db7cb4c63e7472cba1c
   handler.path: /callback
 
 # To remove Client wire logs. Please comment out following lines.
