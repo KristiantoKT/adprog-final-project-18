@@ -22,12 +22,15 @@ public class YoutubeController {
     @EventMapping
     public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent>
                                                           event) throws IOException {
+
         LOGGER.fine(String.format("TextMessageContent(timestamp='%s',content='%s')",
                 event.getTimestamp(), event.getMessage()));
         TextMessageContent content = event.getMessage();
         String contentText = content.getText();
 
-        String youtubeLink = contentText.replace("/youtube", "").substring(1);
+
+        String removeTag = contentText.replace("/youtube", "");
+        String youtubeLink = removeTag.substring(1);
 
         Document doc = Jsoup.connect(youtubeLink).header("User-Agent", "Chrome").get();
         Element body = doc.body();
