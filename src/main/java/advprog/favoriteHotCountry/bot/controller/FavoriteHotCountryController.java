@@ -31,7 +31,6 @@ public class FavoriteHotCountryController {
                 event.getTimestamp(), event.getMessage()));
         TextMessageContent content = event.getMessage();
         String contentText = content.getText();
-        String cekInput = contentText;
 
         if (contentText.contains("/billboard hotcountry")) {
             String replyTextFix = contentText.replace("/billboard hotcountry", "");
