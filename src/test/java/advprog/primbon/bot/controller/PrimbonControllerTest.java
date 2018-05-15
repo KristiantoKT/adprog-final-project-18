@@ -1,4 +1,4 @@
-package advprog.primbon.bot.primbon;
+package advprog.primbon.bot.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -7,7 +7,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 import advprog.example.bot.PrimbonEventTestUtil;
-import advprog.primbon.bot.controller.PrimbonController;
 
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
