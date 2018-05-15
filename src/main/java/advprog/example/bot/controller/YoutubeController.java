@@ -27,8 +27,15 @@ public class YoutubeController {
                 event.getTimestamp(), event.getMessage()));
         TextMessageContent content = event.getMessage();
         String contentText = content.getText();
+        String[] input = contentText.split(" ");
 
-        if (contentText.contains("/youtube")) {
+        if (input[0].equals("/echo")) {
+            String removeTag = contentText.replace("/echo", "");
+            String replyText = removeTag.substring(1);
+
+            return new TextMessage(replyText);
+
+        } else if (input[0].equals("/youtube")) {
             String removeTag = contentText.replace("/youtube", "");
             String youtubeLink = removeTag.substring(1);
 
@@ -42,7 +49,6 @@ public class YoutubeController {
                         + getLikes(body) + " & " + getDislikes(body);
 
                 return new TextMessage(title + channel + viewers + likesDislikes);
-
             } else {
                 return returnErrorMessage();
             }

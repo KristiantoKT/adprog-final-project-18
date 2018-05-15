@@ -79,6 +79,12 @@ public class YoutubeControllerTest {
                 EventTestUtil.createDummyTextMessage("/youtube https://google.com/");
         TextMessage reply3 = youtubeController.handleTextMessageEvent(event3);
         assertEquals(errorMessage.getText(), reply3.getText());
+
+        MessageEvent<TextMessageContent> event4 =
+                EventTestUtil.createDummyTextMessage("/echo hai");
+        TextMessage reply4 = youtubeController.handleTextMessageEvent(event4);
+        assertEquals("hai", reply4.getText());
+
     }
 
     @Test
