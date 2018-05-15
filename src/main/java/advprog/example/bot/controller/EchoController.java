@@ -51,7 +51,7 @@ public class EchoController {
 
     @EventMapping
     public TextMessage handleAudioMessageEvent(MessageEvent<AudioMessageContent> event) {
-        LOGGER.fine(String.format("TextMessageContent(timestamp='%s',content='%s')",
+        LOGGER.fine(String.format("AudioMessageContent(timestamp='%s',content='%s')",
                 event.getTimestamp(), event.getMessage()));
         AudioMessageContent content = event.getMessage();
         String contentId = content.getId();
@@ -71,7 +71,7 @@ public class EchoController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return new TextMessage(textKembalian.getSpeechText());
+        return new TextMessage(String.valueOf(kembalian.getBody().length));
     }
 
     @EventMapping
