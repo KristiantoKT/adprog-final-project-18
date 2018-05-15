@@ -1,4 +1,4 @@
-package advprog.handwrittenrecognitionbot.controller;
+package advprog.example.bot.controller;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

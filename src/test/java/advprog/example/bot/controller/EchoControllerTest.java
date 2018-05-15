@@ -40,21 +40,13 @@ public class EchoControllerTest {
 
     @Test
     void testHandleTextMessageEvent() {
+        echoController.setUrlImage("https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Cursive_Writing_on_Notebook_paper.jpg/800px-Cursive_Writing_on_Notebook_paper.jpg");
         MessageEvent<TextMessageContent> event =
-                EventTestUtil.createDummyTextMessage("/echo Lorem Ipsum");
+                EventTestUtil.createDummyTextMessage("ocr this");
 
         TextMessage reply = echoController.handleTextMessageEvent(event);
-
-        assertEquals("Lorem Ipsum", reply.getText());
-    }
-
-    @Test
-    void testHandleDefaultMessage() {
-        Event event = mock(Event.class);
-
-        echoController.handleDefaultMessage(event);
-
-        verify(event, atLeastOnce()).getSource();
-        verify(event, atLeastOnce()).getTimestamp();
+        String expected = "dog\nThe quick brown fox jumps over the lazy\nPack "
+                + "my box with five dozen liquor jugs\n";
+        assertEquals(expected, reply.getText());
     }
 }
