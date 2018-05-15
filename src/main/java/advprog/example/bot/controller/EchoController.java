@@ -1,5 +1,7 @@
 package advprog.example.bot.controller;
 
+import advprog.speechtotext.bot.FetchStuff;
+import advprog.speechtotext.bot.Text;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.AudioMessageContent;
@@ -7,6 +9,8 @@ import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
+
+import java.io.IOException;
 import java.util.logging.Logger;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -56,11 +60,18 @@ public class EchoController {
         HttpEntity<String> httpEntity = new HttpEntity<String>("", httpHeaders);
         RestTemplate restTemplate = new RestTemplate();
         String contentLink = String.format(lineApiWebsite, contentId);
-        ResponseEntity<String> kembalian = restTemplate.exchange(contentLink,
+        ResponseEntity<byte[]> kembalian = restTemplate.exchange(contentLink,
                 HttpMethod.GET,
                 httpEntity,
-                String.class);
-        return new TextMessage(String.valueOf(kembalian.getStatusCodeValue()));
+                byte[].class);
+        Text textKembalian = new Text("Belum ada apa-apa");
+        try {
+            textKembalian.setSpeechText(FetchStuff.getTextFromSpeech(kembalian.getBody())
+                    .getSpeechText());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new TextMessage(textKembalian.getSpeechText());
     }
 
     @EventMapping

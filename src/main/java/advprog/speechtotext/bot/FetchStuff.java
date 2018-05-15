@@ -26,7 +26,7 @@ public class FetchStuff {
         return kembalian;
     }
 
-    public static Text getTextFromSpeech(File soundFile) throws IOException {
+    public static Text getTextFromSpeech(byte[] soundByte) throws IOException {
         if (token.length() == 0) {
             token = getTokenFromApi();
         }
@@ -35,11 +35,7 @@ public class FetchStuff {
         headers.add("Authorization", "Bearer " + token);
         headers.set("Content-Type", "audio/wav; codec=\"audio/pcm\"; samplerate=\"16000\"");
         headers.set("Transfer-Encoding", "chunked");
-        FileInputStream fileStream = new FileInputStream(soundFile);
-        byte[] bytes = new byte[(int) soundFile.length()];
-        fileStream.read(bytes);
-        fileStream.close();
-        HttpEntity<byte[]> entityBytes = new HttpEntity<byte[]>(bytes, headers);
+        HttpEntity<byte[]> entityBytes = new HttpEntity<byte[]>(soundByte, headers);
         RestTemplate restTemplate = new RestTemplate();
         String kembalian = restTemplate.postForObject("https://speech.platform.bing.com/speech/recognition/conversation"
                 + "/cognitiveservices/v1?language=en-US", entityBytes, String.class);

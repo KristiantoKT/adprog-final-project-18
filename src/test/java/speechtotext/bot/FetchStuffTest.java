@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import advprog.speechtotext.bot.FetchStuff;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +26,11 @@ public class FetchStuffTest {
 
     @Test
     public void textIsTextType() throws IOException {
-        String namaClass = FetchStuff.getTextFromSpeech(soundFile).getClass().getSimpleName();
+        FileInputStream fileStream = new FileInputStream(soundFile);
+        byte[] bytes = new byte[(int) soundFile.length()];
+        fileStream.read(bytes);
+        fileStream.close();
+        String namaClass = FetchStuff.getTextFromSpeech(bytes).getClass().getSimpleName();
         assertTrue(namaClass.equals("Text"));
     }
 }
