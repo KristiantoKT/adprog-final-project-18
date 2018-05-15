@@ -1,13 +1,9 @@
-package advprog.example.bot.controller;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-
-import advprog.example.bot.EventTestUtil;
 
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
@@ -21,9 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@SpringBootTest(properties = "line.bot.handler.enabled=false")
+@SpringBootTest(classes = ImageAnalyzerController.class)
+//@SpringBootTest(properties = "line.bot.handler.enabled=false")
 @ExtendWith(SpringExtension.class)
-public class EchoControllerTest {
+public class ImageAnalyzerControllerTest {
 
     static {
         System.setProperty("line.bot.channelSecret", "SECRET");
@@ -31,11 +28,11 @@ public class EchoControllerTest {
     }
 
     @Autowired
-    private EchoController echoController;
+    private ImageAnalyzerController imageAnalyzerController;
 
     @Test
     void testContextLoads() {
-        assertNotNull(echoController);
+        assertNotNull(imageAnalyzerController);
     }
 
     @Test
@@ -43,16 +40,16 @@ public class EchoControllerTest {
         MessageEvent<TextMessageContent> event =
                 EventTestUtil.createDummyTextMessage("/echo Lorem Ipsum");
 
-        TextMessage reply = echoController.handleTextMessageEvent(event);
+        TextMessage reply = imageAnalyzerController.handleTextMessageEvent(event);
 
-        assertEquals("Lorem Ipsum", reply.getText());
+        assertEquals("ngomong apa sih bro", reply.getText());
     }
 
     @Test
     void testHandleDefaultMessage() {
         Event event = mock(Event.class);
 
-        echoController.handleDefaultMessage(event);
+        imageAnalyzerController.handleDefaultMessage(event);
 
         verify(event, atLeastOnce()).getSource();
         verify(event, atLeastOnce()).getTimestamp();
