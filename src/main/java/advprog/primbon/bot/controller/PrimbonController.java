@@ -62,9 +62,8 @@ public class PrimbonController {
                 return "Kliwon";
             case 4:
             case -1:
-                return "Legi";
             default:
-                return null;
+                return "Legi";
         }
     }
 
@@ -90,9 +89,8 @@ public class PrimbonController {
                 return "Minggu";
             case 6:
             case -1:
-                return "Senin";
             default:
-                return null;
+                return "Senin";
         }
     }
 
