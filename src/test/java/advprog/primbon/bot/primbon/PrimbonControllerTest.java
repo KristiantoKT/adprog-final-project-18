@@ -60,7 +60,7 @@ public class PrimbonControllerTest {
 
     @Test
     void tanggalJawaTest() throws ParseException {
-        assertEquals("Sabtu Legi", primbonController.tanggalJawa("1981-09-12"));
+        assertEquals("Selasa Kliwon", primbonController.tanggalJawa("2018-05-15"));
     }
 
 
