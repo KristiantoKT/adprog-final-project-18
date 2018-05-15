@@ -60,7 +60,7 @@ public class EchoController {
                 HttpMethod.GET,
                 httpEntity,
                 String.class);
-        return new TextMessage(kembalian.getBody());
+        return new TextMessage(String.valueOf(kembalian.getStatusCodeValue()));
     }
 
     @EventMapping
