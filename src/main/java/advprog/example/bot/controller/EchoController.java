@@ -20,10 +20,10 @@ public class EchoController {
     private static final Logger LOGGER = Logger.getLogger(EchoController.class.getName());
     private static boolean canDoMethod = false;
     private static String lineApiWebsite = "https://api.line.me/v2/bot/message/%s/content";
-    private static String tokenLine = "PvCV0Md5g6W+rui3/oiRDKksMnFJq9Ok2ZIgykqstv0"
-            + "zb2s/kXE27b95EzspEa3WxrRijyYTX0S9iUFHTAjvgK"
-            + "LGChfoGe3ikLuWA2Ja1+kN1mP27Xe9BKjNbM"
-            + "wh83ng9AgJuIdPqfAmbhKAF9Z2WwdB04t89/1O/w1cDnyilFU=";
+    private static String tokenLine = "duWG8dlipcxIsMdED5m4cUoLkEbg"
+            + "JVjEOIRamugQO9ejarfMaAV2RFXZ20uRgEOSxrRijyYTX0S9iUFHTAjv"
+            + "gKLGChfoGe3ikLuWA2Ja1+nv7jeI3kpCQ61bW8ZaVBbiZkpxEQBVz20Q4"
+            + "Tps+TbICgdB04t89/1O/w1cDnyilFU=";
 
     @EventMapping
     public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
