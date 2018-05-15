@@ -35,7 +35,7 @@ public class EchoController {
 
         String replyText = contentText.replace("/billboard japan100 ", "");
 
-        return new TextMessage(billboard100.findArtistInChart(replyText));
+        return new TextMessage(billboard100.findArtist(replyText));
     }
 
     @EventMapping
