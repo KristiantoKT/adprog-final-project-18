@@ -71,7 +71,8 @@ public class EchoController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return new TextMessage(String.valueOf(kembalian.getBody().length));
+        return new TextMessage(textKembalian.getSpeechText() != null
+                ? textKembalian.getSpeechText() : "Tidak ada");
     }
 
     @EventMapping
