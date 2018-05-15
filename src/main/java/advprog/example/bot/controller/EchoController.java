@@ -36,10 +36,10 @@ public class EchoController {
         if (contentText.contains("/echo")) {
             replyText = contentText.replace("/echo ", "");
         } else if (contentText.contains("/speech-to-text")) {
-            replyText = "Ready to recognize speech. Due to the " +
-                    "incompleteness of the current program, " +
-                    "please make sure the sound file is type .wav and " +
-                    "the length is less than 10 seconds.";
+            replyText = "Ready to recognize speech. Due to the "
+                    + "incompleteness of the current program, "
+                    + "please make sure the sound file is type .wav and "
+                    + "the length is less than 10 seconds.";
             canDoMethod = true;
         }
         return new TextMessage(replyText);
