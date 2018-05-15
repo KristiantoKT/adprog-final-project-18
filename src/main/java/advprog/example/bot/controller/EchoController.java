@@ -8,9 +8,9 @@ import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
+import java.util.logging.Logger;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.logging.Logger;
 
 @LineMessageHandler
 public class EchoController {
@@ -33,7 +33,7 @@ public class EchoController {
             return new TextMessage(message);
         } else if (arrContentText[0].equalsIgnoreCase("/echo")) {
             return new TextMessage(arrContentText[1]);
-        } else{
+        } else {
             return new TextMessage("[ERROR] Command not found");
         }
     }
