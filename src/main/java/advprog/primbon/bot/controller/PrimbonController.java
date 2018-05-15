@@ -1,4 +1,5 @@
 package advprog.primbon.bot.controller;
+
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
@@ -22,19 +23,16 @@ public class PrimbonController {
                 event.getTimestamp(), event.getMessage()));
         TextMessageContent content = event.getMessage();
         String contentText = content.getText();
-        String[] perintah  = contentText.split(" ");
+        String[] perintah = contentText.split(" ");
         String replyText;
-        if(perintah[0].equals("/primbon")){
-            try{
+        if (perintah[0].equals("/primbon")) {
+            try {
                 replyText = tanggalJawa(perintah[1]);
                 return new TextMessage(replyText);
-            }
-            catch (ParseException e){
+            } catch (ParseException e) {
                 return new TextMessage("input tanggal salah");
             }
-        }
-
-        else{
+        } else {
             return new TextMessage("Salah keyword");
         }
     }

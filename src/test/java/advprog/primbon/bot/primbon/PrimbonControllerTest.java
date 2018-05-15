@@ -1,29 +1,26 @@
 package advprog.primbon.bot.primbon;
 
-import advprog.primbon.bot.controller.PrimbonController;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 import advprog.example.bot.PrimbonEventTestUtil;
-
+import advprog.primbon.bot.controller.PrimbonController;
 
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
 
+import java.text.ParseException;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import java.text.ParseException;
 
 @SpringBootTest(properties = "line.bot.handler.enabled=false")
 @ExtendWith(SpringExtension.class)
@@ -70,6 +67,12 @@ public class PrimbonControllerTest {
     @Test
     void hariTest() {
         assertEquals("Minggu", primbonController.days(1));
+        assertEquals("Senin", primbonController.days(2));
+        assertEquals("Selasa", primbonController.days(3));
+        assertEquals("Rabu", primbonController.days(4));
+        assertEquals("Kamis", primbonController.days(5));
+        assertEquals("Jumat", primbonController.days(6));
+        assertEquals("Sabtu", primbonController.days(7));
     }
 
     @Test
