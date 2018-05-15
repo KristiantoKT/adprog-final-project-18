@@ -49,6 +49,26 @@ public class PrimbonControllerTest {
     }
 
     @Test
+    void testHandleWrongDateTextMessageEvent() {
+        MessageEvent<TextMessageContent> event =
+                PrimbonEventTestUtil.createDummyTextMessage("/primbon kemasBangsat");
+
+        TextMessage reply = primbonController.handleTextMessageEvent(event);
+
+        assertEquals("input tanggal salah", reply.getText());
+    }
+
+    @Test
+    void testHandleWrongInputTextMessageEvent() {
+        MessageEvent<TextMessageContent> event =
+                PrimbonEventTestUtil.createDummyTextMessage("/priansdknsadkn");
+
+        TextMessage reply = primbonController.handleTextMessageEvent(event);
+
+        assertEquals("Salah keyword", reply.getText());
+    }
+
+    @Test
     void testHandleDefaultMessage() {
         Event event = mock(Event.class);
 
