@@ -47,15 +47,15 @@ public class Billboardjapan100 {
 
     public String printSong() {
         if (songByArtistInChart.size() == 0) {
-            return "Error! The artist isn't on the Billboard 200 List!";
+            return "Oops sorry! The artist isn't on the Billboard Japan HOT 100!";
         }
 
         StringBuilder stringBuilder = new StringBuilder();
 
         int counter = 1;
         for (Song song : songByArtistInChart) {
-            stringBuilder.append(song.getArtist()
-                    + "\n" + song.getName() + "\n" + song.getPosition());
+            stringBuilder.append("Artist : " + song.getArtist()
+                    + "\n" + "Song : " + song.getName() + "\n" + "Rank : " + song.getPosition());
             if (counter < songByArtistInChart.size()) {
                 counter++;
                 stringBuilder.append("\n");
