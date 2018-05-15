@@ -11,6 +11,7 @@ import advprog.example.bot.EventTestUtil;
 
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
+import com.linecorp.bot.model.event.message.ImageMessageContent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
 
@@ -20,6 +21,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import javax.xml.soap.Text;
 
 @SpringBootTest(properties = "line.bot.handler.enabled=false")
 @ExtendWith(SpringExtension.class)
@@ -48,5 +51,19 @@ public class EchoControllerTest {
         String expected = "dog\nThe quick brown fox jumps over the lazy\nPack "
                 + "my box with five dozen liquor jugs\n";
         assertEquals(expected, reply.getText());
+    }
+
+    @Test
+    void testHandleDefaultMessage() {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("waw");
+        echoController.handleDefaultMessage(event);
+    }
+
+
+    void testHandleImageMessageEvent() {
+        MessageEvent<ImageMessageContent> event =
+                EventTestUtil.createDummyImageMessage();
+        echoController.handleImageMessageEvent(event);
     }
 }
