@@ -85,17 +85,11 @@ public class PrimbonControllerTest {
 
     @Test
     void hariTest() {
-        assertEquals("Minggu", primbonController.days(1));
-        assertEquals("Senin", primbonController.days(2));
-        assertEquals("Selasa", primbonController.days(3));
-        assertEquals("Rabu", primbonController.days(4));
-        assertEquals("Kamis", primbonController.days(5));
-        assertEquals("Jumat", primbonController.days(6));
-        assertEquals("Sabtu", primbonController.days(7));
+
     }
 
     @Test
     void wetonTest() {
-        assertEquals("Pon", primbonController.weton(0));
+
     }
 }

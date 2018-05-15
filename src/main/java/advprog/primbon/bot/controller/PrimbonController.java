@@ -9,7 +9,6 @@ import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Logger;
 
@@ -38,47 +37,62 @@ public class PrimbonController {
     }
 
     public String tanggalJawa(String tanggal) throws ParseException {
-        String dataK = "1901-01-01";
+        String dataK = "1901-01-01"; //inisiasi tanggal awal
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date hari = sdf.parse(tanggal);
-        Date konstan = sdf.parse(dataK);
-        long a = hari.getTime() - konstan.getTime();
-        long diffDay = a / (24 * 60 * 60 * 1000);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(hari);
-        int hariKe = calendar.get(Calendar.DAY_OF_WEEK);
-        return days(hariKe) + " " + weton(diffDay);
+        Date tanggalInput = sdf.parse(tanggal);
+        Date tanggalAwal = sdf.parse(dataK);
+        long differentTimes = tanggalInput.getTime() - tanggalAwal.getTime();
+        long diffDay = Math.round(differentTimes / ((double) 24 * 60 * 60 * 1000));
+        return hariHelper(diffDay) + " " + wetonHelper(diffDay);
     }
 
-    public String weton(long a) {
-        if (a % 5 == 0) {
-            return "Pon";
-        } else if (a % 5 == 1) {
-            return "Wage";
-        } else if (a % 5 == 2) {
-            return "Kliwon";
-        } else if (a % 5 == 3) {
-            return "Legi";
-        } else {
-            return "Pahing";
+    public String wetonHelper(long differentDays) {
+        int hari = (int) (differentDays % 5);
+        switch (hari) {
+            case 0:
+                return "Pahing";
+            case 1:
+            case -4:
+                return "Pon";
+            case 2:
+            case -3:
+                return "Wage";
+            case 3:
+            case -2:
+                return "Kliwon";
+            case 4:
+            case -1:
+                return "Legi";
+            default:
+                return null;
         }
     }
 
-    public String days(int a) {
-        if (a == 1) {
-            return "Minggu";
-        } else if (a == 2) {
-            return "Senin";
-        } else if (a == 3) {
-            return "Selasa";
-        } else if (a == 4) {
-            return "Rabu";
-        } else if (a == 5) {
-            return "Kamis";
-        } else if (a == 6) {
-            return "Jumat";
-        } else {
-            return "Sabtu";
+    public String hariHelper(long differentDays) {
+        int hari = (int) differentDays % 7;
+        switch (hari) {
+            case 0:
+                return "Selasa";
+            case 1:
+            case -6:
+                return "Rabu";
+            case 2:
+            case -5:
+                return "Kamis";
+            case 3:
+            case -4:
+                return "Jumat";
+            case 4:
+            case -3:
+                return "Sabtu";
+            case 5:
+            case -2:
+                return "Minggu";
+            case 6:
+            case -1:
+                return "Senin";
+            default:
+                return null;
         }
     }
 
