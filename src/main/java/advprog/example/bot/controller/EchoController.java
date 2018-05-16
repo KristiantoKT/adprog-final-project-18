@@ -3,16 +3,19 @@ package advprog.example.bot.controller;
 import advprog.example.bot.controller.Billboardjapan100;
 
 import com.linecorp.bot.client.LineMessagingClient;
+import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 
 @LineMessageHandler
 public class EchoController {
@@ -20,7 +23,7 @@ public class EchoController {
     private static final Logger LOGGER = Logger.getLogger(EchoController.class.getName());
 
     @Autowired
-    private LineMessagingClient lineMessagingClient;
+    LineMessagingClient lineMessagingClient;
 
     @EventMapping
     public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
@@ -44,6 +47,14 @@ public class EchoController {
                 event.getTimestamp(), event.getSource()));
     }
 
+    private void reply(String reply, String token) {
+        TextMessage textMessage = new TextMessage(reply);
+        try {
+            lineMessagingClient.replyMessage(new ReplyMessage(token, textMessage)).get();
+        } catch (InterruptedException | ExecutionException e) {
+            System.out.println("Error");
+        }
+    }
 
 }
 
