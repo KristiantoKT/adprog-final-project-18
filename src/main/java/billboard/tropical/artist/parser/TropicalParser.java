@@ -1,19 +1,18 @@
 package billboard.tropical.artist.parser;
 
-import org.jsoup.Jsoup;
-import org.jsoup.select.Elements;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-
 import java.io.IOException;
 import java.util.ArrayList;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
-public class TropicalParser {
+public class TropicalParser{
     ArrayList<String> artistsArr = new ArrayList<>();
     ArrayList<String> songsArr = new ArrayList<>();
     Document doc;
 
-    public TropicalParser() {
+    public TropicalParser(){
         doc = getHtml("https://www.billboard.com/charts/tropical-songs");
         Elements artists = doc.select("article.chart-row");
         for (Element artist: artists) {
@@ -29,19 +28,19 @@ public class TropicalParser {
         }
     }
 
-    public ArrayList<String> getArrayArtist() {
+    public ArrayList<String> getArrayArtist(){
         return artistsArr;
     }
 
-    public ArrayList<String> getArraySong() {
+    public ArrayList<String> getArraySong(){
         return songsArr;
     }
 
-    public Document getHtml(String url) {
+    public Document getHtml(String url){
         Document doc;
-        try {
+        try{
             doc = Jsoup.connect(url).get();
-        } catch (IOException e) {
+        } catch (IOException e){
             e.printStackTrace();
             doc = null;
         }
