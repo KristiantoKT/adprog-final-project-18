@@ -1,7 +1,7 @@
 package billboard.hot100.artist.controller;
 
-import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.internal.verification.VerificationModeFactory.atLeastOnce;
@@ -12,11 +12,8 @@ import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
-
 import java.util.ArrayList;
-
 import org.junit.jupiter.api.Test;
-
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -65,7 +62,6 @@ public class ArtistControllerTest {
         TextMessage reply = artistController.handleMessageEvent(event);
         assertEquals("Lorem Ipsum", reply.getText());
     }
-
 
     @Test
     void testHandleDefaultMessage() {
