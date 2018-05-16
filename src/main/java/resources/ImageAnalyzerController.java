@@ -4,6 +4,7 @@ import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.client.MessageContentResponse;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
+import com.linecorp.bot.model.event.message.ImageMessageContent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
@@ -44,7 +45,7 @@ public class ImageAnalyzerController {
     }
 
     @EventMapping
-    public void handleImageMessageEvent(MessageEvent<TextMessageContent> event) throws IOException {
+    public void handleImageMessageEvent(MessageEvent<ImageMessageContent> event) throws IOException {
         final LineMessagingClient client = LineMessagingClient
                 .builder(System.getProperty("line.bot.channelToken"))
                 .build();

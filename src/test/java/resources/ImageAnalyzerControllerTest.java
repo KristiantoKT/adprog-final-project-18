@@ -9,7 +9,9 @@ import static org.mockito.Mockito.verify;
 
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
+import com.linecorp.bot.model.event.message.ImageMessageContent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
+import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TextMessage;
 
 import org.junit.jupiter.api.Test;
@@ -19,6 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import resources.ImageAnalyzerController;
+
+import java.io.IOException;
 
 @SpringBootTest(classes = ImageAnalyzerController.class)
 //@SpringBootTest(properties = "line.bot.handler.enabled=false")
@@ -46,6 +50,16 @@ public class ImageAnalyzerControllerTest {
         TextMessage reply = imageAnalyzerController.handleTextMessageEvent(event);
 
         assertEquals("ngomong apa sih bro", reply.getText());
+    }
+
+    @Test
+    void testHandleImageMessage() throws IOException {
+        Event event = mock(Event.class);
+
+        imageAnalyzerController.handleImageMessageEvent((MessageEvent<ImageMessageContent>) event);
+
+//        verify(event, atLeastOnce()).builder(System.getProperty("line.bot.channelToken"))
+//                .build();;
     }
 
     @Test
