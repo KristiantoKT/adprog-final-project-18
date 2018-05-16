@@ -59,7 +59,6 @@ public class ArtistControllerTest {
         assertEquals("Lorem Ipsum", reply.getText());
     }
 
-
     @Test
     void testHandleDefaultMessage() {
         Event event = mock(Event.class);
