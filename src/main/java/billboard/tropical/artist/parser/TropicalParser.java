@@ -1,8 +1,10 @@
 package billboard.tropical.artist.parser;
 
-import javax.lang.model.element.Element;
-import javax.lang.model.util.Elements;
-import javax.swing.text.Document;
+import org.jsoup.Jsoup;
+import org.jsoup.select.Elements;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -38,7 +40,7 @@ public class TropicalParser {
     public Document getHtml(String url) {
         Document doc;
         try {
-            doc = Jsoup.connect(url).get();
+            doc = (Document) Jsoup.connect(url).get();
         } catch (IOException e) {
             e.printStackTrace();
             doc = null;
