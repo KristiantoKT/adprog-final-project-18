@@ -13,16 +13,17 @@ public class EventTestUtil {
         // Default private constructor
     }
 
-    public static MessageEvent<TextMessageContent> createDummyTextMessage(String text) {
+    public static MessageEvent<TextMessageContent> dummyText(String text) {
         return new MessageEvent<>("replyToken", new UserSource("userId"),
                 new TextMessageContent("id", text),
                 Instant.parse("2018-01-01T00:00:00.000Z"));
     }
 
-    public static MessageEvent<LocationMessageContent> createDummyLocationMessage(String title, String address,
-                                                                                  double lat, double lon) {
+    public static MessageEvent<LocationMessageContent> dummyLocation(String title, String addr,
+                                                                     double lat, double lon) {
+        LocationMessageContent content = new LocationMessageContent("id", title, addr, lat, lon);
         return new MessageEvent<>("replyToken", new UserSource("userId"),
-                new LocationMessageContent("id", title, address, lat, lon),
+                content,
                 Instant.parse("2018-01-01T00:00:00.000Z"));
     }
 }

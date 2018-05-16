@@ -2,11 +2,12 @@ package advprog.example.bot.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 import advprog.example.bot.EventTestUtil;
 
-import advprog.photonearby.PhotoNearby;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.LocationMessageContent;
@@ -15,14 +16,14 @@ import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TemplateMessage;
 import com.linecorp.bot.model.message.TextMessage;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import java.util.List;
 
 @SpringBootTest(properties = "line.bot.handler.enabled=false")
 @ExtendWith(SpringExtension.class)
@@ -44,7 +45,7 @@ public class EchoControllerTest {
     @Test
     void testHandleTextMessageEventEcho() {
         MessageEvent<TextMessageContent> event =
-                EventTestUtil.createDummyTextMessage("/echo Lorem Ipsum");
+                EventTestUtil.dummyText("/echo Lorem Ipsum");
 
         Message reply = echoController.handleTextMessageEvent(event);
 
@@ -54,7 +55,7 @@ public class EchoControllerTest {
     @Test
     void testHandleTextMessageEventPhotoNearby() {
         MessageEvent<TextMessageContent> event =
-                EventTestUtil.createDummyTextMessage("nearby photo");
+                EventTestUtil.dummyText("nearby photo");
 
         Message reply = echoController.handleTextMessageEvent(event);
 
@@ -63,7 +64,7 @@ public class EchoControllerTest {
 
     @Test
     void testHandleLocationMessageEvent() {
-        MessageEvent<LocationMessageContent> event = EventTestUtil.createDummyLocationMessage("Search Nearby Phooto",
+        MessageEvent<LocationMessageContent> event = EventTestUtil.dummyLocation("My Location",
                 "Universitas Indonesia", 6, -10);
 
         List<Message> reply = echoController.handleLocationMessageEvent(event);
