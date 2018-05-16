@@ -30,7 +30,7 @@ public class EchoController {
         LOGGER.fine(String.format("TextMessageContent(timestamp='%s',content='%s')",
                 event.getTimestamp(), event.getMessage()));
 
-        String url = "https://www.billboard.com/charts/japan-hot-100";
+        String url = "https://www.billboard.com/charts/hot-100";
         Billboardjapan100 billboard100 = new Billboardjapan100(url);
 
         TextMessageContent content = event.getMessage();
