@@ -11,29 +11,31 @@ public class AnimeTest {
 
     @BeforeEach
     void seUp() {
-        anime = new Anime("", 0);
+        anime = new Anime("Title", 1);
     }
 
     @Test
     void testGetTitle() {
-        assertEquals("", anime);
+        String title = anime.getTitle();
+        assertEquals(title, anime.getTitle());
     }
 
     @Test
     void testSetTitle() {
-
-
-        assertEquals("", anime);
+        anime.setTitle("changeTitle");
+        assertEquals("changeTitle", anime.getTitle());
     }
 
     @Test
     void testGetEpisode() {
-        assertEquals("", anime);
+        int episode = anime.getEpisode()
+        assertEquals("1", anime.getEpisode());
     }
 
     @Test
     void testSetEpisode() {
-        assertEquals("", anime);
+        anime.setEpisode(2)
+        assertEquals(2, anime.getEpisode());
     }
 
 }
