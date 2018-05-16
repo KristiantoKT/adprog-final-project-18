@@ -16,8 +16,7 @@ public class AnimeTest {
 
     @Test
     void testGetTitle() {
-        String title = anime.getTitle();
-        assertEquals(title, anime.getTitle());
+        assertEquals("Title", anime.getTitle());
     }
 
     @Test
@@ -28,8 +27,7 @@ public class AnimeTest {
 
     @Test
     void testGetEpisode() {
-        int episode = anime.getEpisode()
-        assertEquals("1", anime.getEpisode());
+        assertEquals(1, anime.getEpisode());
     }
 
     @Test
