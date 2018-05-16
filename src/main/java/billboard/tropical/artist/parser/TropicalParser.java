@@ -40,7 +40,7 @@ public class TropicalParser {
     public Document getHtml(String url) {
         Document doc;
         try {
-            doc = (Document) Jsoup.connect(url).get();
+            doc = Jsoup.connect(url).get();
         } catch (IOException e) {
             e.printStackTrace();
             doc = null;
