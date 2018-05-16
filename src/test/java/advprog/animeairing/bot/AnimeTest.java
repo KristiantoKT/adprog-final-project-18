@@ -11,7 +11,7 @@ public class AnimeTest {
 
     @BeforeEach
     void seUp() {
-        anime = new Anime();
+        anime = new Anime("", 0);
     }
 
     @Test
@@ -21,6 +21,8 @@ public class AnimeTest {
 
     @Test
     void testSetTitle() {
+
+
         assertEquals("", anime);
     }
 
