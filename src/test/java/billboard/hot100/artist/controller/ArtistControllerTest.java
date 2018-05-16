@@ -15,7 +15,8 @@ import com.linecorp.bot.model.message.TextMessage;
 
 import java.util.ArrayList;
 
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -39,11 +40,11 @@ public class ArtistControllerTest {
     }
 
     @Test
-    void testHandleTErrorEvent() {
+    void testHandleErrorEvent() {
         MessageEvent<TextMessageContent> event =
                 EventTestUtil.createDummyTextMessage("/billboard hot100 Faraya");
         TextMessage reply = artistController.handleMessageEvent(event);
-        assertEquals("Sorry, your artist doesn't make it to hot 100 chart", reply.getText());
+        assertEquals("Sorry, your artist doesn't make it to Hot 100 chart", reply.getText());
     }
 
     @Test
@@ -60,6 +61,7 @@ public class ArtistControllerTest {
     void testHandleTextMessageEvent() {
         MessageEvent<TextMessageContent> event =
                 EventTestUtil.createDummyTextMessage("/echo Lorem Ipsum");
+
         TextMessage reply = artistController.handleMessageEvent(event);
         assertEquals("Lorem Ipsum", reply.getText());
     }
