@@ -15,7 +15,7 @@ import com.linecorp.bot.model.message.TextMessage;
 
 import java.util.ArrayList;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
