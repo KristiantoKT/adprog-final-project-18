@@ -102,7 +102,7 @@ public class EchoController {
             event.getMessage().getId(),
             responseBody -> {
                 DownloadedContent wav = saveContent("wav", responseBody);
-                File file = new File(wav.uri);
+                File file = new File(wav.path.toUri());
                 FileInputStream fileInputStream;
                 Text text = new Text("");
                 try {
