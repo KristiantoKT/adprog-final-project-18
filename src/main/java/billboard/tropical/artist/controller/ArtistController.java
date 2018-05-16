@@ -32,8 +32,8 @@ public class ArtistController {
             if (arrOfArtists.contains(inputArtist)) {
                 ArrayList<String> arrOfSongs = parser.getArraySong();
                 int position = arrOfArtists.indexOf(inputArtist) + 1;
-                return new TextMessage(inputArtist + "\n" + arrOfSongs.get(position - 1) +
-                        "\n" + position);
+                return new TextMessage(inputArtist + "\n" + arrOfSongs.get(position - 1)
+                        + "\n" + position);
             }
             String error = "Sorry, your artist doesn't make it to tropical chart";
             return new TextMessage(error);

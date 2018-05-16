@@ -7,40 +7,40 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class TropicalParser{
+public class TropicalParser {
     ArrayList<String> artistsArr = new ArrayList<>();
     ArrayList<String> songsArr = new ArrayList<>();
     Document doc;
 
-    public TropicalParser(){
+    public TropicalParser() {
         doc = getHtml("https://www.billboard.com/charts/tropical-songs");
         Elements artists = doc.select("article.chart-row");
         for (Element artist: artists) {
             String song = artist.select("h2.chart-row__song").text();
             String artisA = artist.select("a.chart-row__artist").text();
             String artisSpan = artist.select("span.chart-row__artist").text();
-            if(artisA.equals("")){
+            if(artisA.equals("")) {
                 artistsArr.add(artisSpan.toLowerCase());
-            } else{
+            } else {
                 artistsArr.add(artisA.toLowerCase());
             }
             songsArr.add(song);
         }
     }
 
-    public ArrayList<String> getArrayArtist(){
+    public ArrayList<String> getArrayArtist() {
         return artistsArr;
     }
 
-    public ArrayList<String> getArraySong(){
+    public ArrayList<String> getArraySong() {
         return songsArr;
     }
 
-    public Document getHtml(String url){
+    public Document getHtml(String url) {
         Document doc;
-        try{
+        try {
             doc = Jsoup.connect(url).get();
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             doc = null;
         }
