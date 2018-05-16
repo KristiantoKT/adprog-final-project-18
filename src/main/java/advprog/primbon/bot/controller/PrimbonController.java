@@ -29,10 +29,10 @@ public class PrimbonController {
                 replyText = tanggalJawa(perintah[1]);
                 return new TextMessage(replyText);
             } catch (ParseException e) {
-                return new TextMessage("input tanggal salah");
+                return new TextMessage("input tanggal salah, input berupa /primbon yyyy-mm-dd");
             }
         } else {
-            return new TextMessage("Salah keyword");
+            return new TextMessage("Salah keyword, keyword berupa /primbon tanggal");
         }
     }
 
