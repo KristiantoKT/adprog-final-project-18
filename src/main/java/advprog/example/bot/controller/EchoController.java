@@ -104,13 +104,14 @@ public class EchoController {
                 DownloadedContent wav = saveContent("wav", responseBody);
                 File file = new File(wav.uri);
                 FileInputStream fileInputStream;
-                Text text = new Text("Belum ada apa-apa");
+                Text text = new Text("");
                 try {
                     fileInputStream = new FileInputStream(file);
                     byte[] byteArray = new byte[(int) file.length()];
                     fileInputStream.read(byteArray);
                     text.setSpeechText(FetchStuff.getTextFromSpeech(byteArray).getSpeechText());
                 } catch (IOException e) {
+                    LOGGER.fine(e.getLocalizedMessage());
                     e.printStackTrace();
                 }
                 reply(event.getReplyToken(), new TextMessage(text.getSpeechText() != null
