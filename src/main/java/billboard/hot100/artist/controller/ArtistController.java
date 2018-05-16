@@ -36,7 +36,7 @@ public class ArtistController {
                 return new TextMessage(inputArtist + "\n" + arrOfSongs.get(position - 1)
                         + "\n" + position);
             }
-            String error = "Sorry, your artist doesn't make it to hot 100 chart";
+            String error = "Sorry, your artist doesn't make it to Hot 100 chart";
             return new TextMessage(error);
         } else if (contentText.contains("/echo ")) {
             String replyText = contentText.replace("/echo", "");
