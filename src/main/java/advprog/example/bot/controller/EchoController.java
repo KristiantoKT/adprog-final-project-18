@@ -109,7 +109,7 @@ public class EchoController {
                     fileInputStream = new FileInputStream(file);
                     byte[] byteArray = new byte[(int) file.length()];
                     fileInputStream.read(byteArray);
-                    text = FetchStuff.getTextFromSpeech(byteArray);
+                    text.setSpeechText(FetchStuff.getTextFromSpeech(byteArray).getSpeechText());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
