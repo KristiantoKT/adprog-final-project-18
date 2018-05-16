@@ -10,7 +10,8 @@ public class AnimeTest {
     @BeforeEach
     void setUp() {
         anime = new Anime("FLCL Progressive",
-                "Many years have passed since Naota and Haruhara Haruko shared their "
+                "Many years have passed since "
+                        + "Naota and Haruhara Haruko shared their "
                         + "adventure together. "
                         + "Meanwhile, the war between the two entities known as Medical "
                         + "Mechanica and Fraternity "
@@ -68,5 +69,6 @@ public class AnimeTest {
         anime.setSynopsis("heheheheheh");
         Assertions.assertEquals("heheheheheh", anime.getSynopsis());
     }
+
 
 }
