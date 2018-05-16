@@ -66,7 +66,7 @@ public class AnimeTest {
     @Test
     void setSynopsis() {
         anime.setSynopsis("heheheheheh");
-        Assertions.assertEquals("Dave", anime.getTitle());
+        Assertions.assertEquals("heheheheheh", anime.getSynopsis());
     }
 
 }
