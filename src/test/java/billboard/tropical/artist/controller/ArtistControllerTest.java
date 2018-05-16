@@ -55,15 +55,6 @@ public class ArtistControllerTest {
     }
 
     @Test
-    void testHandleTextMessageEvent() {
-        MessageEvent<TextMessageContent> event =
-                EventTestUtil.createDummyTextMessage("/echo Lorem Ipsum");
-        TextMessage reply = artistController.handleMessageEvent(event);
-        assertEquals("Lorem Ipsum", reply.getText());
-    }
-
-
-    @Test
     void testHandleDefaultMessage() {
         Event event = mock(Event.class);
         artistController.handleDefaultMessage(event);
