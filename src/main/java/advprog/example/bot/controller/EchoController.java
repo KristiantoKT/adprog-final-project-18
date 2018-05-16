@@ -102,7 +102,7 @@ public class EchoController {
             event.getMessage().getId(),
             responseBody -> {
                 DownloadedContent wav = saveContent("wav", responseBody);
-                File file = new File(wav.uri);
+                File file = new File(wav.path.toString());
                 FileInputStream fileInputStream;
                 Text text = new Text("");
                 try {
@@ -114,7 +114,7 @@ public class EchoController {
                     LOGGER.fine(e.getLocalizedMessage());
                     e.printStackTrace();
                 }
-                reply(event.getReplyToken(), new TextMessage(text.getSpeechText() != null
+                reply(event.getReplyToken(), new TextMessage(text.getSpeechText() != ""
                         ? text.getSpeechText() : "Gaada"));
             });
         //        return new TextMessage(textKembalian.getSpeechText() != null
