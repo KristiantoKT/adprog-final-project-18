@@ -1,4 +1,4 @@
-package advprog.example.bot.controller;
+package billboard.tropical.artist.controller;
 
 public class Source {
     public String userId;
