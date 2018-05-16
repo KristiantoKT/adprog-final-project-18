@@ -1,4 +1,4 @@
-package billboard.newAge.artist;
+package billboard.newage.artist;
 
 import java.util.logging.Logger;
 
