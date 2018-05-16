@@ -1,9 +1,10 @@
 package advprog.example.bot.livechart.anime;
 
-import org.junit.Assert;
-import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.Test;
 
 public class ScrappingTest {
     Scrapping scrapping;

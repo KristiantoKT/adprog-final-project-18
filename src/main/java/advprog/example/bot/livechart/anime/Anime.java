@@ -26,6 +26,7 @@ public class Anime {
     public void setSynopsis(String synopsis) {
         this.synopsis = synopsis;
     }
+
     public String[] getGenre() {
         return genre;
     }

@@ -28,10 +28,8 @@ public class Scrapping {
         String genre = anime.select("ol.anime-tags").text();
         Anime animes = new Anime(title, synopsis);
         animes.setGenre(genre.split(" "));
-        return String.format("%s \n " +
-                "   %s",title, synopsis);
-
-
+        return String.format("%s \n "
+                + "   %s",title, synopsis);
     }
 
     public static void main(String[] args) throws IOException {
