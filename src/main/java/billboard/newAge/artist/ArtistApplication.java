@@ -1,4 +1,4 @@
-package advprog.example.bot;
+package billboard.newAge.artist;
 
 import java.util.logging.Logger;
 
@@ -6,12 +6,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BotExampleApplication {
-
-    private static final Logger LOGGER = Logger.getLogger(BotExampleApplication.class.getName());
+public class ArtistApplication {
+    private static final Logger LOGGER =
+            Logger.getLogger(ArtistApplication.class.getName());
 
     public static void main(String[] args) {
         LOGGER.info("Application starting ...");
-        SpringApplication.run(BotExampleApplication.class, args);
+        SpringApplication.run(ArtistApplication.class, args);
     }
 }
