@@ -1,6 +1,6 @@
 package billboard.tropical.artist.controller;
 
-import advprog.example.bot.EventTestUtil;
+import billboard.tropical.artist.EventTestUtil;
 import billboard.tropical.artist.parser.TropicalParser;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
