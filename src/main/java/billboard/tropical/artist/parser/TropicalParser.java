@@ -19,7 +19,7 @@ public class TropicalParser {
             String song = artist.select("h2.chart-row__song").text();
             String artisA = artist.select("a.chart-row__artist").text();
             String artisSpan = artist.select("span.chart-row__artist").text();
-            if(artisA.equals("")) {
+            if (artisA.equals("")) {
                 artistsArr.add(artisSpan.toLowerCase());
             } else {
                 artistsArr.add(artisA.toLowerCase());
