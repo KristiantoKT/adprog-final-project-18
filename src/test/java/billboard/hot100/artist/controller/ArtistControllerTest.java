@@ -17,8 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 
-
-
 public class ArtistControllerTest {
     static {
         System.setProperty("line.bot.channelSecret", "SECRET");
