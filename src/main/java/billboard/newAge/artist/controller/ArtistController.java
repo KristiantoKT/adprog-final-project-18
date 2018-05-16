@@ -35,7 +35,7 @@ public class ArtistController {
                 return new TextMessage(inputArtist + "\n" + arrSong.get(position - 1)
                         + "\n" + position);
             }
-            String error = "Sorry, your artist doesn't make it to new age chart";
+            String error = "Sorry, your artist doesn't make it to New Age chart";
             return new TextMessage(error);
         } else if (contentText.contains("/echo ")) {
             String replyText = contentText.replace("/echo", "");
