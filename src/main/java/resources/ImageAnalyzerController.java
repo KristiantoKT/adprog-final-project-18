@@ -1,3 +1,5 @@
+package resources;
+
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.client.MessageContentResponse;
 import com.linecorp.bot.model.event.Event;
@@ -27,7 +29,7 @@ public class ImageAnalyzerController {
                 event.getTimestamp(), event.getMessage()));
         TextMessageContent content = event.getMessage();
         String contentText = content.getText();
-        String replyText = "memeng koremeng";
+        String replyText;
         if (contentText.equalsIgnoreCase("/analyse_picture")) {
             if (contentBytes != null) {
                 ImageAnalyzer imageAnalyzer = new ImageAnalyzer(contentBytes);

@@ -1,3 +1,5 @@
+package resources;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -16,6 +18,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import resources.ImageAnalyzerController;
 
 @SpringBootTest(classes = ImageAnalyzerController.class)
 //@SpringBootTest(properties = "line.bot.handler.enabled=false")
@@ -53,5 +56,18 @@ public class ImageAnalyzerControllerTest {
 
         verify(event, atLeastOnce()).getSource();
         verify(event, atLeastOnce()).getTimestamp();
+    }
+
+
+    ImageAnalyzer ia = new ImageAnalyzer(null);
+
+    @Test
+    void objectImageAnalyzer() {
+        assertEquals(new ImageAnalyzer(null).getImage(), ia.getImage());
+    }
+
+    @Test
+    void getImageAnalyzerString() {
+        assertEquals("", ia.getResult());
     }
 }

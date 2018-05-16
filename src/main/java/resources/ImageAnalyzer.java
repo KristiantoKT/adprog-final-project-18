@@ -1,3 +1,5 @@
+package resources;
+
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 
 import java.net.URI;
@@ -71,6 +73,10 @@ public class ImageAnalyzer {
 
     public String getResult() {
         return result;
+    }
+
+    public byte[] getImage() {
+        return image;
     }
 
 }
