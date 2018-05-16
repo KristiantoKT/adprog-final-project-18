@@ -15,8 +15,8 @@ import com.linecorp.bot.model.message.TextMessage;
 
 import java.util.ArrayList;
 
-
 import org.junit.jupiter.api.Test;
+
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
