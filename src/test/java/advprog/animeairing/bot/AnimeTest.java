@@ -10,7 +10,7 @@ public class AnimeTest {
     Anime anime;
 
     @BeforeEach
-    void seUp() {
+    void setUp() {
         anime = new Anime("Title", 1);
     }
 
@@ -32,7 +32,7 @@ public class AnimeTest {
 
     @Test
     void testSetEpisode() {
-        anime.setEpisode(2)
+        anime.setEpisode(2);
         assertEquals(2, anime.getEpisode());
     }
 
