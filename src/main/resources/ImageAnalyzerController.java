@@ -17,9 +17,9 @@ import org.apache.commons.io.IOUtils;
 @LineMessageHandler
 public class ImageAnalyzerController {
 
-    private byte[] contentBytes = null;
-
     private static final Logger LOGGER = Logger.getLogger(ImageAnalyzerController.class.getName());
+
+    private byte[] contentBytes = null;
 
     @EventMapping
     public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
