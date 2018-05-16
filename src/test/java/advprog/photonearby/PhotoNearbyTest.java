@@ -62,7 +62,7 @@ public class PhotoNearbyTest {
 
     @Test
     public void searchMethodIsWorking() {
-        PhotoNearby test = new PhotoNearby();
+        PhotoNearby test = PhotoNearby.getInstance();
         String[] result = test.searchImg("40.661292"," -73.968931");
         for (String img : result) {
             System.out.println(img);

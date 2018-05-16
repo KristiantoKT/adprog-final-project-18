@@ -30,6 +30,14 @@ public class PhotoNearby {
     private static final String ENDPOINT = "https://api.flickr.com/services/rest/";
     private static final String API_KEY = "d28aed97f55b89db2b64aef301be7c21";
 
+    private static PhotoNearby photoNearby = new PhotoNearby();
+
+    private PhotoNearby() {}
+
+    public static PhotoNearby getInstance() {
+        return photoNearby;
+    }
+
     public String[] searchImg(String latitude, String longtitude) {
         //Create map of paramaters
         // TODO: Optimize search parameter
