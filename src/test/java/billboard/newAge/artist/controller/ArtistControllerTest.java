@@ -1,4 +1,4 @@
-package billboard.newAge.artist.controller;
+package billboard.newage.artist.controller;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -6,8 +6,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.internal.verification.VerificationModeFactory.atLeastOnce;
 
-import billboard.newAge.artist.EventTestUtil;
-import billboard.newAge.artist.parser.NewAgeParser;
+import billboard.newage.artist.EventTestUtil;
+import billboard.newage.artist.parser.NewAgeParser;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;

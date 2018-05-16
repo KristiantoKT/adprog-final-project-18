@@ -1,12 +1,12 @@
-package billboard.newAge.artist.parser;
+package billboard.newage.artist.parser;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
-import java.io.IOException;
-import java.util.ArrayList;
 
 public class NewAgeParser {
     ArrayList<String> artistsArr = new ArrayList<>();
@@ -20,9 +20,9 @@ public class NewAgeParser {
             String song = artist.select("h2.chart-row__song").text();
             String artisA = artist.select("a.chart-row__artist").text();
             String artisSpan = artist.select("span.chart-row__artist").text();
-            if(artisA.equals("")){
+            if (artisA.equals("")) {
                 artistsArr.add(artisSpan.toLowerCase());
-            } else{
+            } else {
                 artistsArr.add(artisA.toLowerCase());
             }
             songsArr.add(song);

@@ -1,4 +1,4 @@
-package billboard.newAge.artist;
+package billboard.newage.artist;
 
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;

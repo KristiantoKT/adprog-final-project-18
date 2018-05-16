@@ -1,6 +1,6 @@
-package billboard.newAge.artist.controller;
+package billboard.newage.artist.controller;
 
-import billboard.newAge.artist.parser.NewAgeParser;
+import billboard.newage.artist.parser.NewAgeParser;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
