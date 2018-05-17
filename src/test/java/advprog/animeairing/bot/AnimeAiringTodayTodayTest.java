@@ -12,7 +12,7 @@ import org.junit.Test;
 
 public class AnimeAiringTodayTodayTest {
     AnimeAiringToday animeAiringToday;
-    String url = "https://www.livechart.me/schedule/tv";
+    String url = "https://www.livechart.me/schedule/tv?layout=compact";
 
     @Before
     public void setUp() {

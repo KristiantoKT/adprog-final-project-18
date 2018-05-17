@@ -33,7 +33,8 @@ public class AnimeAiringToday {
     private void setAiringTodayList(String urlAiringToday) {
         try {
             Document doc = Jsoup.connect(urlAiringToday).get();
-            Elements header = doc.getElementsByClass("schedule-card");
+
+            Elements header = doc.getElementsByClass("schedule-card past");
 
             for (int i = 0; i < header.size(); i++) {
                 Element elem = header.get(i);
@@ -44,8 +45,8 @@ public class AnimeAiringToday {
                         .replace(":", "");
                 Anime anime = new Anime(title,episode);
                 airingToday.add(anime);
-
             }
+
         } catch (IOException e) {
             System.out.println("Error!");
         }
