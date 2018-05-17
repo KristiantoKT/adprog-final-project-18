@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 public class FathimahApiTest {
 
     private static final String ALFATIHAH = "Al Fatihah";
@@ -26,14 +28,14 @@ public class FathimahApiTest {
             "Segala puji bagi Allah, Tuhan semesta alam";
 
     @Test
-    void testRequestLegitimateSurahFromAlQuran() {
+    void testRequestLegitimateSurahFromAlQuran() throws IOException {
         Surah alFatihah = FathimahApi.getSurah(1);
         assertEquals(ALFATIHAH, alFatihah.getName());
         assertEquals(ALFATIHAHINFO, alFatihah.getInfo());
     }
 
     @Test
-    void invalidSurahFromAlQuranThrowsIndexOutOfBoundException() {
+    void invalidSurahFromAlQuranThrowsIndexOutOfBoundException() throws IOException {
         try {
             FathimahApi.getSurah(500);
             assert false;
@@ -43,14 +45,14 @@ public class FathimahApiTest {
     }
 
     @Test
-    void testRequestLegitimateVerseFromAlQuran() {
+    void testRequestLegitimateVerseFromAlQuran() throws IOException {
         Verse basmalah = FathimahApi.getVerse(1, 1);
         assertEquals(BASMALAH, basmalah.getArabic());
         assertEquals(BASMALAHTRANSLATION, basmalah.getTranslation());
     }
 
     @Test
-    void testRequestInvalidVerseFromAlQuran() {
+    void testRequestInvalidVerseFromAlQuran() throws IOException {
         try {
             FathimahApi.getVerse(10,1);
             assert false;
@@ -60,7 +62,7 @@ public class FathimahApiTest {
     }
 
     @Test
-    void testRequestLegitimateVersesFromAlQuran() {
+    void testRequestLegitimateVersesFromAlQuran() throws IOException {
         Verse[] alFathihah = FathimahApi.getVerses(1,7, 1);
         assertEquals(BASMALAH, alFathihah[0].getArabic());
         assertEquals(BASMALAHTRANSLATION, alFathihah[0].getTranslation());
@@ -69,7 +71,7 @@ public class FathimahApiTest {
     }
 
     @Test
-    void testRequestInvalidVersesFromAlQuran() {
+    void testRequestInvalidVersesFromAlQuran() throws IOException {
         try {
             FathimahApi.getVerses(1, 10, 1);
             assert false;

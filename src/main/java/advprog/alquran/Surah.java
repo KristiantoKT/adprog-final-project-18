@@ -8,11 +8,12 @@ public class Surah {
     private String type;
     private String info;
 
-    public Surah(int number, String name, String translation, String type, String info) {
+    public Surah(int number, String name, String translation,
+                 Verse[] verses, String type, String info) {
         this.number = number;
         this.name = name;
         this.translation = translation;
-        this.verses = null;
+        this.verses = verses;
         this.type = type;
         this.info = info;
     }
