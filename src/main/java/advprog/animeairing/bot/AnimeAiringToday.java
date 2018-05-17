@@ -39,7 +39,9 @@ public class AnimeAiringToday {
                 Element elem = header.get(i);
                 String title = elem.getElementsByClass("schedule-card-title").text();
                 String episode = elem.getElementsByClass("schedule-card-countdown")
-                        .text().split(" ")[0];
+                        .text().split(" ")[0]
+                        .replace("EP","")
+                        .replace(":", "");
                 Anime anime = new Anime(title,episode);
                 airingToday.add(anime);
 

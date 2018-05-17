@@ -28,6 +28,6 @@ public class Anime {
 
     @Override
     public String toString() {
-        return episode + " " + title;
+        return title + " " + episode;
     }
 }
