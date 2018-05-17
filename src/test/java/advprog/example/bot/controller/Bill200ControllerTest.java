@@ -53,7 +53,7 @@ public class Bill200ControllerTest {
         reply = bill200Controller.handleTextMessageEvent(event);
 
         assertEquals("Post Malone\n" + "beerbongs & bentleys\n"
-                + "1\n" + "Post Malone\n" + "Stoney\n" + "9", reply.getText());
+                + "1\n" + "Post Malone\n" + "Stoney\n" + "11", reply.getText());
 
         event = EventTestUtil.createDummyTextMessage("oi");
 
