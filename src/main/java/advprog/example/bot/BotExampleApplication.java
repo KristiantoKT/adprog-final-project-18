@@ -6,7 +6,7 @@
 //import org.springframework.boot.autoconfigure.SpringBootApplication;
 //
 //@SpringBootApplication
-//public class BotExampleApplication {
+////public class BotExampleApplication {
 //
 //    private static final Logger LOGGER = Logger.getLogger(BotExampleApplication.class.getName());
 //
