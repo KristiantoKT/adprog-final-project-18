@@ -25,15 +25,14 @@ public class Scrapping {
     private String scrap(Element anime) {
         String title = anime.select("h3.main-title").text();
         String synopsis = anime.select("div.anime-synopsis").text();
-        String genre = anime.select("ol.anime-tags").text();
         Anime animes = new Anime(title, synopsis);
-        animes.setGenre(genre.split(" "));
+        String genre = anime.select("ol.anime-tags").text();
         return String.format("%s \n "
                 + "   %s",title, synopsis);
     }
 
     public static void main(String[] args) throws IOException {
         Scrapping s = new Scrapping();
-        System.out.println(s.scrap("https://www.livechart.me/summer-2018/tv"));
+        System.out.println(s.scrap("https://www.livechart.me/spring-2018/tv"));
     }
 }

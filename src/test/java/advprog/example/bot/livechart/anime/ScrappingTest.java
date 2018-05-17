@@ -1,6 +1,5 @@
 package advprog.example.bot.livechart.anime;
 
-
 import java.io.IOException;
 
 import org.junit.Assert;
