@@ -10,9 +10,9 @@ import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 import java.util.logging.Logger;
 
 @LineMessageHandler
-public class EchoController {
+public class VgmdbController {
 
-    private static final Logger LOGGER = Logger.getLogger(EchoController.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(VgmdbController.class.getName());
 
     @EventMapping
     public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
@@ -20,9 +20,23 @@ public class EchoController {
                 event.getTimestamp(), event.getMessage()));
         TextMessageContent content = event.getMessage();
         String contentText = content.getText();
+        if (contentText.contains("/echo")) {
+            String replyText = contentText.replace("/echo", "");
+            return new TextMessage(replyText.substring(1));
+        } else if (contentText.contains("/vgmdb")) {
+            if (contentText.equalsIgnoreCase("/vgmdb OST this month")) {
+                String replyText = "open vgmdb.net";
+                return new TextMessage(replyText);
+            } else {
+                return new TextMessage(errorMessage());
+            }
+        } else {
+            return new TextMessage(errorMessage());
+        }
+    }
 
-        String replyText = contentText.replace("/echo", "");
-        return new TextMessage(replyText.substring(1));
+    public String errorMessage() {
+        return "incorrect input. it should be is : /vgmdb OST this month";
     }
 
     @EventMapping

@@ -6,12 +6,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BotExampleApplication {
+public class BotApplication {
 
-    private static final Logger LOGGER = Logger.getLogger(BotExampleApplication.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(BotApplication.class.getName());
 
     public static void main(String[] args) {
         LOGGER.info("Application starting ...");
-        SpringApplication.run(BotExampleApplication.class, args);
+        SpringApplication.run(BotApplication.class, args);
     }
 }
