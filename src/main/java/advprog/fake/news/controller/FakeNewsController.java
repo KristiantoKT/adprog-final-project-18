@@ -20,8 +20,22 @@ public class FakeNewsController {
         TextMessageContent content = event.getMessage();
         String contentText = content.getText();
 
-        String replyText = contentText.replace("/echo", "");
-        return new TextMessage(replyText.substring(1));
+        try {
+            if (content.getText().contains("/is_fake")) {
+                return new TextMessage("ehe");
+            } else if (content.getText().contains("/is_satire")) {
+                return new TextMessage("ehe");
+            } else if (content.getText().contains("/is_conspiracy")) {
+                return new TextMessage("ehe");
+            } else if (content.getText().contains("/add_filter")) {
+                return new TextMessage("ehe");
+            } else {
+                throw new IllegalArgumentException();
+            }
+        } catch (IllegalArgumentException e) {
+            return new TextMessage("Command not found!");
+        }
+
     }
 
     @EventMapping
@@ -29,4 +43,5 @@ public class FakeNewsController {
         LOGGER.fine(String.format("Event(timestamp='%s',source='%s')",
                 event.getTimestamp(), event.getSource()));
     }
+
 }
