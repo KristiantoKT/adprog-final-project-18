@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 
+import advprog.top20album.bot.Album;
 import advprog.top20album.bot.TopAlbum;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,9 +37,15 @@ public class TopAlbumTest {
     }
 
     @Test
-    public void getTop20List() {
+    public void getListOfUrls() {
         List<String> list = topAlbum.getListOfUrl();
         assertEquals(20, list.size());
+    }
+
+    @Test
+    public void getListOfAlbums() {
+        List<Album> list = topAlbum.getListOfAlbums();
+        assertEquals(1, list.size());
     }
 
 

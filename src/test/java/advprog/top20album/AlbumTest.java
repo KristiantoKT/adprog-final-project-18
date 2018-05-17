@@ -12,7 +12,7 @@ public class AlbumTest {
 
     @BeforeEach
     void setUp() {
-        album = new Album(1, "CHRONO CROSS ORIGINAL SOUNDTRACK", 4.73, 394857);
+        album = new Album(1, "CHRONO CROSS ORIGINAL SOUNDTRACK", "4.73", "394857");
     }
 
     @Test
@@ -39,24 +39,24 @@ public class AlbumTest {
 
     @Test
     void getRating() {
-        assertEquals(4.73, album.getRating());
+        assertEquals("4.73", album.getRating());
     }
 
     @Test
     void setRating() {
-        album.setRating(5.00);
-        assertEquals(5.00, album.getRating());
+        album.setRating("5.00");
+        assertEquals("5.00", album.getRating());
     }
 
     @Test
     void getPrice() {
-        assertEquals(394857, album.getPrice());
+        assertEquals("394857", album.getPrice());
     }
 
     @Test
     void setPrice() {
-        album.setPrice(1000);
-        assertEquals(1000, album.getPrice());
+        album.setPrice("1000");
+        assertEquals("1000", album.getPrice());
     }
 
     @Test

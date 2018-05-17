@@ -3,10 +3,10 @@ package advprog.top20album.bot;
 public class Album {
     private int position;
     private String name;
-    private double rating;
-    private int price;
+    private String rating;
+    private String price;
 
-    public Album(int position, String name, double rating, int price) {
+    public Album(int position, String name, String rating, String price) {
         this.position = position;
         this.name = name;
         this.rating = rating;
@@ -29,19 +29,19 @@ public class Album {
         this.name = name;
     }
 
-    public double getRating() {
+    public String getRating() {
         return rating;
     }
 
-    public void setRating(double rating) {
+    public void setRating(String rating) {
         this.rating = rating;
     }
 
-    public int getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
