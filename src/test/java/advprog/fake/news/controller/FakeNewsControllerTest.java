@@ -50,7 +50,37 @@ public class FakeNewsControllerTest {
 
         TextMessage reply = fakeNewsController.handleTextMessageEvent(event);
 
-        assertEquals(reply.getText(),"ehe");
+        assertEquals(reply.getText(), "ehe");
+    }
+
+    @Test
+    void testHandleTextMessageEventIsConspiracy() {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/is_conspiracy");
+
+        TextMessage reply = fakeNewsController.handleTextMessageEvent(event);
+
+        assertEquals(reply.getText(), "ehe");
+    }
+
+    @Test
+    void testHandleTextMessageEventIsSatire() {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/is_satire");
+
+        TextMessage reply = fakeNewsController.handleTextMessageEvent(event);
+
+        assertEquals(reply.getText(), "ehe");
+    }
+
+    @Test
+    void testHandleTextMessageEventAddFilter() {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/add_filter");
+
+        TextMessage reply = fakeNewsController.handleTextMessageEvent(event);
+
+        assertEquals(reply.getText(), "ehe");
     }
 
     @Test
