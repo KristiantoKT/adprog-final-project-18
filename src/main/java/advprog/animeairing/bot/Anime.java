@@ -2,10 +2,10 @@ package advprog.animeairing.bot;
 
 public class Anime {
     private String title;
-    private int episode;
+    private String episode;
 
 
-    public Anime (String title, int episode) {
+    public Anime (String title, String episode) {
         this.title = title;
         this.episode = episode;
     }
@@ -18,16 +18,16 @@ public class Anime {
         this.title = title;
     }
 
-    public int getEpisode() {
+    public String getEpisode() {
         return episode;
     }
 
-    public void setEpisode(int episode) {
+    public void setEpisode(String episode) {
         this.episode = episode;
     }
 
     @Override
     public String toString(){
-        return title + " " + episode;
+        return episode + " " + title;
     }
 }

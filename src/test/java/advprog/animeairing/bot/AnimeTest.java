@@ -11,7 +11,7 @@ public class AnimeTest {
 
     @BeforeEach
     void setUp() {
-        anime = new Anime("Title", 1);
+        anime = new Anime("Title", "1");
     }
 
     @Test
@@ -27,13 +27,13 @@ public class AnimeTest {
 
     @Test
     void testGetEpisode() {
-        assertEquals(1, anime.getEpisode());
+        assertEquals("1", anime.getEpisode());
     }
 
     @Test
     void testSetEpisode() {
-        anime.setEpisode(2);
-        assertEquals(2, anime.getEpisode());
+        anime.setEpisode("2");
+        assertEquals("2", anime.getEpisode());
     }
 
 }

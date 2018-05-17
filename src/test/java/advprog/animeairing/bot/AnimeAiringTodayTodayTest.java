@@ -7,12 +7,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import java.util.ArrayList;
-import org.junit.Before;
-import org.junit.Test;
+
 
 public class AnimeAiringTodayTodayTest {
     AnimeAiringToday animeAiringToday;
@@ -23,15 +19,17 @@ public class AnimeAiringTodayTodayTest {
         animeAiringToday = new AnimeAiringToday(url);
     }
 
+
     @Test
     public void testUrlNotFound() {
         new AnimeAiringToday("https://haduh.ac.id/");
     }
 
     @Test
-    public void testGetUrlAnimeAiringToday() {
-        assertEquals(url, animeAiringToday.getAnimeUrlAiringToday());
+    public void testGetUrl() {
+        assertEquals(url, animeAiringToday.getUrlAiringToday());
     }
+
 
     @Test
     public void testGetAnimeAiringToday() {
@@ -45,4 +43,6 @@ public class AnimeAiringTodayTodayTest {
         ArrayList<Anime> listAiringToday = animeAiringToday.getAiringToday();
         assertNotNull(listAiringToday);
     }
+
+
 }
