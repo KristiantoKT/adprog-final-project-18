@@ -22,12 +22,16 @@ public class FakeNewsController {
 
         try {
             if (content.getText().contains("/is_fake")) {
+                boolean isFake = determineFake();
                 return new TextMessage("ehe");
             } else if (content.getText().contains("/is_satire")) {
+                boolean isSatire = determineSatire();
                 return new TextMessage("ehe");
             } else if (content.getText().contains("/is_conspiracy")) {
+                boolean isConspiracy = determnineConspiracy();
                 return new TextMessage("ehe");
             } else if (content.getText().contains("/add_filter")) {
+                addFilter();
                 return new TextMessage("ehe");
             } else {
                 throw new IllegalArgumentException();
@@ -36,6 +40,21 @@ public class FakeNewsController {
             return new TextMessage("Command not found!");
         }
 
+    }
+
+    private void addFilter() {
+    }
+
+    private boolean determnineConspiracy() {
+        return true;
+    }
+
+    private boolean determineSatire() {
+        return true;
+    }
+
+    private boolean determineFake() {
+        return true;
     }
 
     @EventMapping
