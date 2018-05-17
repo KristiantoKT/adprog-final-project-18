@@ -36,7 +36,7 @@ public class VgmdbController {
     }
 
     public String errorMessage() {
-        return "incorrect input. it should be is : /vgmdb OST this month";
+        return "Incorrect input! it should be: /vgmdb OST this month";
     }
 
     @EventMapping
