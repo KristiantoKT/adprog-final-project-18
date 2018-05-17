@@ -5,7 +5,7 @@ import com.linecorp.bot.model.message.TextMessage;
 
 import java.io.IOException;
 
-public class SpringCommand implements SeasonCommand{
+public class SpringCommand implements SeasonCommand {
     private Scrapping scrapping = new Scrapping();
 
     static final String SPRING_URL = "https://www.livechart.me/spring-";
@@ -19,7 +19,7 @@ public class SpringCommand implements SeasonCommand{
                 ? "I didn't find any rankings for " + input : out);
     }
 
-    public String splitInput(String input){
+    public String splitInput(String input) {
         String[] inputDetail = input.split("-");
         input = inputDetail[1];
         return input;

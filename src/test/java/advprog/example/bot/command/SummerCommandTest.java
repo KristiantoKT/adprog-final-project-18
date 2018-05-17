@@ -1,10 +1,11 @@
 package advprog.example.bot.command;
 
 import com.linecorp.bot.model.message.TextMessage;
-import org.junit.Assert;
-import org.junit.Test;
 
 import java.io.IOException;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 public class SummerCommandTest {
     private String testDate = "summer-2018";
