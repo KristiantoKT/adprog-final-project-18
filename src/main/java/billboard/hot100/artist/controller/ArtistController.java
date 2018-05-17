@@ -1,7 +1,6 @@
 package billboard.hot100.artist.controller;
 
 import billboard.hot100.artist.parser.Hot100Parser;
-
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
@@ -26,21 +25,21 @@ public class ArtistController {
     }
 
     private TextMessage stringBuilderForEvents(String contentText) {
-        if (contentText.contains("/billboard tropical ")) {
+        if (contentText.contains("/billboard hot100 ")) {
             Hot100Parser parser = new Hot100Parser();
-            ArrayList<String> arrOfArtists = parser.getArrayArtist();
-            String inputArtist = contentText.replace("/billboard tropical ", "").toLowerCase();
-            if (arrOfArtists.contains(inputArtist)) {
-                ArrayList<String> arrOfSongs = parser.getArraySong();
-                int position = arrOfArtists.indexOf(inputArtist) + 1;
-                return new TextMessage(inputArtist + "\n" + arrOfSongs.get(position - 1)
+            ArrayList<String> arrArtist = parser.getArtistsArr();
+            String inputArtist = contentText.replace("/billboard hot100 ", "").toLowerCase();
+            if (arrArtist.contains(inputArtist)) {
+                ArrayList<String> arrSong = parser.getSongsArr();
+                int position = arrArtist.indexOf(inputArtist) + 1;
+                return new TextMessage(inputArtist + "\n" + arrSong.get(position - 1)
                         + "\n" + position);
             }
             String error = "Sorry, your artist doesn't make it to Hot 100 chart";
             return new TextMessage(error);
         } else if (contentText.contains("/echo ")) {
             String replyText = contentText.replace("/echo", "");
-            return new TextMessage(replyText);
+            return new TextMessage(replyText.substring(1));
         }
         return new TextMessage("");
     }

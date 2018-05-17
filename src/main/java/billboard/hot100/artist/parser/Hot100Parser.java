@@ -9,8 +9,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class Hot100Parser {
-    ArrayList<String> artistsArr = new ArrayList<>();
-    ArrayList<String> songsArr = new ArrayList<>();
+    ArrayList<String> arrOfArtist = new ArrayList<>();
+    ArrayList<String> arrOfSong = new ArrayList<>();
     Document doc;
 
     public Hot100Parser() {
@@ -21,20 +21,22 @@ public class Hot100Parser {
             String artisA = artist.select("a.chart-row__artist").text();
             String artisSpan = artist.select("span.chart-row__artist").text();
             if (artisA.equals("")) {
-                artistsArr.add(artisSpan.toLowerCase());
+                arrOfArtist.add(artisSpan.toLowerCase());
             } else {
-                artistsArr.add(artisA.toLowerCase());
+                arrOfArtist.add(artisA.toLowerCase());
             }
-            songsArr.add(song);
+            arrOfSong.add(song);
         }
     }
 
-    public ArrayList<String> getArrayArtist() {
-        return artistsArr;
+    public ArrayList<String> getArtistsArr() {
+
+        return arrOfArtist;
     }
 
-    public ArrayList<String> getArraySong() {
-        return songsArr;
+    public ArrayList<String> getSongsArr() {
+
+        return arrOfSong;
     }
 
     public Document getHtml(String url) {

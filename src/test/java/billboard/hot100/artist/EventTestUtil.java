@@ -7,6 +7,7 @@ import com.linecorp.bot.model.event.source.UserSource;
 import java.time.Instant;
 
 public class EventTestUtil {
+
     private EventTestUtil() {
         // Default private constructor
     }
@@ -17,3 +18,4 @@ public class EventTestUtil {
                 Instant.parse("2018-01-01T00:00:00.000Z"));
     }
 }
+
