@@ -5,7 +5,7 @@ public class Anime {
     private String episode;
 
 
-    public Anime (String title, String episode) {
+    public Anime(String title, String episode) {
         this.title = title;
         this.episode = episode;
     }
@@ -27,7 +27,7 @@ public class Anime {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return episode + " " + title;
     }
 }

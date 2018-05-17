@@ -14,7 +14,7 @@ public class AnimeAiringToday {
     private String urlAiringToday;
     private ArrayList<Anime> airingToday;
 
-    public AnimeAiringToday(String urlAiringToday){
+    public AnimeAiringToday(String urlAiringToday) {
         this.urlAiringToday = urlAiringToday;
         airingToday = new ArrayList<>();
         setAiringTodayList(urlAiringToday);
@@ -31,27 +31,27 @@ public class AnimeAiringToday {
 
 
     private void setAiringTodayList(String urlAiringToday) {
-        try{
+        try {
             Document doc = Jsoup.connect(urlAiringToday).get();
             Elements header = doc.getElementsByClass("schedule-card");
 
-            for(int i = 0; i < header.size(); i++) {
+            for (int i = 0; i < header.size(); i++) {
                 Element elem = header.get(i);
                 String title = elem.getElementsByClass("schedule-card-title").text();
-                String episode = elem.getElementsByClass("schedule-card-countdown").text().split(" ")[0];
-
+                String episode = elem.getElementsByClass("schedule-card-countdown")
+                        .text().split(" ")[0];
                 Anime anime = new Anime(title,episode);
                 airingToday.add(anime);
 
             }
-        } catch (IOException e){
+        } catch (IOException e) {
             System.out.println("Error!");
         }
     }
 
     public String listAiringToday() {
         StringBuilder output = new StringBuilder();
-        for (Anime anime : airingToday){
+        for (Anime anime : airingToday) {
             output.append(anime.toString() + "\n");
         }
         return output.toString();
