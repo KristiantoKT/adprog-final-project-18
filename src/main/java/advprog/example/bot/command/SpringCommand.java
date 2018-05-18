@@ -11,7 +11,7 @@ public class SpringCommand implements SeasonCommand {
     static final String SPRING_URL = "https://www.livechart.me/spring-";
 
     @Override
-    public TextMessage execute(String input) throws IOException {
+    public TextMessage execute(String input, String genre) throws IOException {
         splitInput(input);
         String out = scrapping.scrap(SPRING_URL + input + "/tv");
 

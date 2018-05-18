@@ -5,5 +5,5 @@ import com.linecorp.bot.model.message.TextMessage;
 import java.io.IOException;
 
 public interface SeasonCommand {
-    TextMessage execute(String input) throws IOException;
+    TextMessage execute(String input, String genre) throws IOException;
 }

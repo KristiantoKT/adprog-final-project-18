@@ -3,11 +3,12 @@ package advprog.example.bot.livechart.anime;
 public class Anime {
     private String title;
     private String synopsis;
-    private  String[] genre;
+    private  String genre;
 
-    public Anime(String title, String synopsis) {
+    public Anime(String title, String synopsis, String genre) {
         this.title = title;
         this.synopsis = synopsis;
+        this.genre = genre;
     }
 
     public String getTitle() {
@@ -27,11 +28,11 @@ public class Anime {
         this.synopsis = synopsis;
     }
 
-    public String[] getGenre() {
+    public String getGenre() {
         return genre;
     }
 
-    public void setGenre(String[] genre) {
+    public void setGenre(String genre) {
         this.genre = genre;
     }
 }

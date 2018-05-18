@@ -23,7 +23,7 @@ public class SummerCommandTest {
 
     @Test
     public void testValidOutput() throws IOException {
-        reply = command.execute(testDate);
+        reply = command.execute(testDate, "Action");
         reply.getText().contains(sampleTitle);
         reply.getText().contains(sampleSynopsis);
     }

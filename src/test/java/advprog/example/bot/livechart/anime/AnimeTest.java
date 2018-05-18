@@ -27,7 +27,8 @@ public class AnimeTest {
                         + "\n"
                         + "But why did Haruko return to Earth? "
                         + "What happened to her Rickenbacker 4001 she left with Naota? "
-                        + "And where did the human-type robot ‘Canti’ go?");
+                        + "And where did the human-type robot ‘Canti’ go?"
+        ,"Action");
     }
 
     @Test
@@ -68,6 +69,18 @@ public class AnimeTest {
     void setSynopsis() {
         anime.setSynopsis("heheheheheh");
         Assertions.assertEquals("heheheheheh", anime.getSynopsis());
+    }
+
+    @Test
+    void getGenre() {
+
+        Assertions.assertEquals("Action", anime.getGenre());
+    }
+
+    @Test
+    void setGenre() {
+        anime.setGenre("Action");
+        Assertions.assertEquals("Action", anime.getGenre());
     }
 
 

@@ -11,7 +11,7 @@ public class SummerCommand implements SeasonCommand {
     static final String SUMMER_URL = "https://www.livechart.me/summer-";
 
     @Override
-    public TextMessage execute(String input) throws IOException {
+    public TextMessage execute(String input, String genre) throws IOException {
         splitInput(input);
         String out = scrapping.scrap(SUMMER_URL + input + "/tv");
 

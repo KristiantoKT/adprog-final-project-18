@@ -11,7 +11,7 @@ public class WinterCommand implements SeasonCommand {
     static final String WINTER_URL = "https://www.livechart.me/winter-";
 
     @Override
-    public TextMessage execute(String input) throws IOException {
+    public TextMessage execute(String input, String genre) throws IOException {
         splitInput(input);
         String out = scrapping.scrap(WINTER_URL + input + "/tv");
 

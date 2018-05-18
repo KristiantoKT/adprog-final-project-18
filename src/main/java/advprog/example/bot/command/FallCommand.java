@@ -11,7 +11,7 @@ public class FallCommand implements SeasonCommand {
     static final String FALL_URL = "https://www.livechart.me/fall-";
 
     @Override
-    public TextMessage execute(String input) throws IOException {
+    public TextMessage execute(String input, String genre) throws IOException {
         splitInput(input);
         String out = scrapping.scrap(FALL_URL + input + "/tv");
 
