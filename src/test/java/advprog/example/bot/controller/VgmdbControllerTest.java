@@ -59,7 +59,7 @@ public class VgmdbControllerTest {
 
         TextMessage reply1 = vgmdbController.handleTextMessageEvent(event1);
 
-        assertTrue(reply1.getText().contains("Beat Saber Original Game Soundtrack"));
+        assertTrue(reply1.getText().contains("Beat Saber Original Game Soundtrack : 127388.3 IDR"));
 
         //incorrect input
         String errormessage = vgmdbController.errorMessage();
