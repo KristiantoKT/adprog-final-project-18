@@ -34,8 +34,8 @@ public class TopAlbum {
                 listOfUrl.add(links.get(i).attr("href"));
             }
 
+            int position = 1;
             for (String url : listOfUrl) {
-                int position = 1;
                 setTop20(url, position);
                 position++;
             }
@@ -111,7 +111,7 @@ public class TopAlbum {
 
         for (Album album : listOfAlbums) {
             sb.append(album.getPosition() + " - " + album.getName() + " - " + album.getRating()
-                    + " " + album.getPrice());
+                    + " (" + Double.parseDouble(album.getPrice()) * 127.90 + " IDR)\n");
         }
         return sb.toString();
 
