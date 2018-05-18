@@ -36,7 +36,6 @@ public class AlbumOfTheMonth {
                 if (albumName.contains("Original Soundtrack")
                         || albumName.contains("Original Game Soundtrack")
                         || albumName.contains("Soundtrack")) {
-                    System.out.println("masuk if nyari soundtrack");
                     String liTag = element.getElementsByTag("li").get(1).text();
 
                     String[] splitTag = liTag.split(" ");
