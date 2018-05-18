@@ -2,7 +2,6 @@ package advprog.example.bot.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -14,12 +13,16 @@ import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
 
+import java.io.IOException;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+
 
 @SpringBootTest(properties = "line.bot.handler.enabled=false")
 @ExtendWith(SpringExtension.class)
@@ -39,7 +42,7 @@ public class VgmdbControllerTest {
     }
 
     @Test
-    void testHandleTextMessageEvent() {
+    void testHandleTextMessageEvent() throws IOException {
         //echo
         MessageEvent<TextMessageContent> event =
                 EventTestUtil.createDummyTextMessage("/echo Lorem Ipsum");
@@ -49,12 +52,6 @@ public class VgmdbControllerTest {
         assertEquals("Lorem Ipsum", reply.getText());
 
         //vgmdb
-        MessageEvent<TextMessageContent> event1 =
-                EventTestUtil.createDummyTextMessage("/vgmdb ost this month");
-
-        TextMessage reply1 = vgmdbController.handleTextMessageEvent(event1);
-
-        assertEquals("open vgmdb.net", reply1.getText());
 
         //incorrect input
 
