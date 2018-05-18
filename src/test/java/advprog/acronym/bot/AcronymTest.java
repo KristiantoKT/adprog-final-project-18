@@ -34,5 +34,17 @@ public class AcronymTest {
         assertTrue(acronym.getKepanjangan() != null);
     }
 
+    @Test
+    public void acronymSetKepanjanganTest() {
+        acronym.setKepanjangan("Je Ke Tee Fourti Eight");
+        assertTrue(acronym.getKepanjangan().equals("Je Ke Tee Fourti Eight"));
+    }
+
+    @Test
+    public void acronymSetKependekanTest() {
+        acronym.setKependekan("JKT488");
+        assertTrue(acronym.getKependekan().equals("JKT488"));
+    }
+
 
 }

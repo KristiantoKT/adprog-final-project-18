@@ -49,11 +49,6 @@ public class EchoController {
     private LineMessagingClient lineMessagingClient;
     private static final Logger LOGGER = Logger.getLogger(EchoController.class.getName());
     private static boolean canDoMethod = false;
-    private static String lineApiWebsite = "https://api.line.me/v2/bot/message/%s/content";
-    private static String tokenLine = "duWG8dlipcxIsMdED5m4cUoLkEbg"
-            + "JVjEOIRamugQO9ejarfMaAV2RFXZ20uRgEOSxrRijyYTX0S9iUFHTAjv"
-            + "gKLGChfoGe3ikLuWA2Ja1+nv7jeI3kpCQ61bW8ZaVBbiZkpxEQBVz20Q4"
-            + "Tps+TbICgdB04t89/1O/w1cDnyilFU=";
 
     @EventMapping
     public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
@@ -97,26 +92,31 @@ public class EchoController {
         //        } catch (IOException e) {
         //            e.printStackTrace();
         //        }
-        handleHeavyContent(
-            event.getReplyToken(),
-            event.getMessage().getId(),
-            responseBody -> {
-                DownloadedContent wav = saveContent("wav", responseBody);
-                File file = new File(wav.path.toString());
-                FileInputStream fileInputStream;
-                Text text = new Text("");
-                try {
-                    fileInputStream = new FileInputStream(file);
-                    byte[] byteArray = new byte[(int) file.length()];
-                    fileInputStream.read(byteArray);
-                    text.setSpeechText(FetchStuff.getTextFromSpeech(byteArray).getSpeechText());
-                } catch (IOException e) {
-                    LOGGER.fine(e.getLocalizedMessage());
-                    e.printStackTrace();
-                }
-                reply(event.getReplyToken(), new TextMessage(text.getSpeechText() != ""
-                        ? text.getSpeechText() : "Gaada"));
-            });
+        if(canDoMethod) {
+            handleHeavyContent(
+                event.getReplyToken(),
+                event.getMessage().getId(),
+                responseBody -> {
+                    DownloadedContent wav = saveContent("wav", responseBody);
+                    File file = new File(wav.path.toString());
+                    FileInputStream fileInputStream;
+                    Text text = new Text("Gaada");
+                    try {
+                        fileInputStream = new FileInputStream(file);
+                        byte[] byteArray = new byte[(int) file.length()];
+                        fileInputStream.read(byteArray);
+                        text.setSpeechText(FetchStuff.getTextFromSpeech(byteArray).getSpeechText());
+                    } catch (IOException e) {
+                        LOGGER.fine(e.getLocalizedMessage());
+                        e.printStackTrace();
+                    }
+                    reply(event.getReplyToken(), new TextMessage(text.getSpeechText() != ""
+                            ? text.getSpeechText() : "Gaada"));
+                });
+        } else {
+            reply(event.getReplyToken(), new TextMessage("tulis /speech-to-text "
+                    + "terlebih dahulu"));
+        }
         //        return new TextMessage(textKembalian.getSpeechText() != null
         //                ? textKembalian.getSpeechText() : "Tidak ada");
     }
