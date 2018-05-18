@@ -27,8 +27,8 @@ public class AnimeTest {
                         + "\n"
                         + "But why did Haruko return to Earth? "
                         + "What happened to her Rickenbacker 4001 she left with Naota? "
-                        + "And where did the human-type robot ‘Canti’ go?"
-        ,"Action");
+                        + "And where did the human-type robot ‘Canti’ go?",
+                "Action");
     }
 
     @Test

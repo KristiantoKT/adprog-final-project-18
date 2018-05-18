@@ -1,9 +1,9 @@
 package advprog.example.bot.livechart.anime;
 
+import java.io.IOException;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
 
 public class ActionScrapTest {
     ActionScrap scrapping;
@@ -13,7 +13,7 @@ public class ActionScrapTest {
 
     String scrapOut;
 
-    public ActionScrapTest() throws IOException {
+    public ActionScrapTest() {
         scrapping = new ActionScrap();
     }
 
