@@ -27,13 +27,13 @@ public class AlbumOfTheMonth {
             Elements body = document.getElementsByClass("album_infobit_medium");
             for (int i = 0; i < 10; i++) {
                 Element element = body.get(i);
-                String albumName = element.getElementsByClass("albumtitle album-game").html();
+                String albumName = element.getElementsByClass("albumtitle").html();
                 String price = "price";
 
                 String albumNameList = Parser.unescapeEntities(albumName, false);
                 //String priceList = Parser.unescapeEntities(price, false);
 
-                Soundtrack soundtrack = new Soundtrack(albumName);
+                Soundtrack soundtrack = new Soundtrack(albumNameList);
                 soundtracksOfTheMonth.add(soundtrack);
             }
         } catch (IOException e) {
