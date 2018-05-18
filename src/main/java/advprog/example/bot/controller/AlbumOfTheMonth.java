@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.parser.Parser;
 import org.jsoup.select.Elements;
 
 public class AlbumOfTheMonth {
@@ -25,10 +24,10 @@ public class AlbumOfTheMonth {
         try {
             Document document = Jsoup.connect(url).get();
             Elements body = document.getElementsByClass("album_infobit_medium");
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 20; i++) {
                 Element element = body.get(i);
                 String albumName = element.getElementsByClass("albumtitle").get(1).text();
-                String price = "price";
+                //String price = "price";
 
                 //String albumNameList = Parser.unescapeEntities(albumName, false);
                 //String priceList = Parser.unescapeEntities(price, false);
