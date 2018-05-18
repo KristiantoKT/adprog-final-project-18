@@ -53,8 +53,8 @@ public class VgmdbControllerTest {
 
         //vgmdb
 
-        //incorrect input
 
+        //incorrect input
         String errormessage = vgmdbController.errorMessage();
 
         MessageEvent<TextMessageContent> event2 =
