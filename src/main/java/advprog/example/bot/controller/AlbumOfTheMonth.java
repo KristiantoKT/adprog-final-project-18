@@ -24,7 +24,7 @@ public class AlbumOfTheMonth {
         try {
             Document document = Jsoup.connect(url).get();
             Elements body = document.getElementsByClass("album_infobit_medium");
-            for (int i = 0; i < 50; i++) {
+            for (int i = 0; i < 70; i++) {
                 Element element = body.get(i);
                 String albumName = element.getElementsByClass("albumtitle").get(1).text();
                 if (albumName.contains("Original Soundtrack")
