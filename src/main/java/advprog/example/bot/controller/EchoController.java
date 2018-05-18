@@ -20,6 +20,11 @@ public class EchoController {
                 event.getTimestamp(), event.getMessage()));
         TextMessageContent content = event.getMessage();
         String contentText = content.getText();
+        String[] inputan = contentText.split(" ");
+
+        if (inputan[0].equals("/listen_song")) {
+            System.out.println("yey");
+        }
 
         String replyText = contentText.replace("/echo", "");
         return new TextMessage(replyText.substring(1));
