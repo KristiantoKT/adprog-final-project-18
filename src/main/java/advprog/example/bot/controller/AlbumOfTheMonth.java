@@ -77,10 +77,6 @@ public class AlbumOfTheMonth {
         return str.toString();
     }
 
-    public String getUrl() {
-        return url;
-    }
-
     public ArrayList<Soundtrack> getSoundtracksOfTheMonth() {
         return soundtracksOfTheMonth;
     }
