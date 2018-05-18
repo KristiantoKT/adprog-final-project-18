@@ -23,7 +23,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @SpringBootTest(properties = "line.bot.handler.enabled=false")
 @ExtendWith(SpringExtension.class)
-public class Bill200ControllerTest {
+public class TopAlbumControllerTest {
 
     static {
         System.setProperty("line.bot.channelSecret", "SECRET");
@@ -31,44 +31,37 @@ public class Bill200ControllerTest {
     }
 
     @Autowired
-    private Bill200Controller bill200Controller;
+    private TopAlbumController topAlbumController;
 
     @Test
     void testContextLoads() {
-        assertNotNull(bill200Controller);
+        assertNotNull(topAlbumController);
     }
 
     @Test
     void testHandleTextMessageEvent() {
         MessageEvent<TextMessageContent> event =
-                EventTestUtil.createDummyTextMessage("/billboard bill200 ArtistRandom");
+                EventTestUtil.createDummyTextMessage("/billboard bill200");
 
-        TextMessage reply = bill200Controller.handleTextMessageEvent(event);
-
-        assertEquals("Error! The artist you are looking for isn't"
-                + " on the Billboard 200 List!", reply.getText());
-
-        event = EventTestUtil.createDummyTextMessage("/billboard bill200 Post Malone");
-
-        reply = bill200Controller.handleTextMessageEvent(event);
-
-        assertEquals("Post Malone\n" + "beerbongs & bentleys\n"
-                + "1\n" + "Post Malone\n" + "Stoney\n" + "11", reply.getText());
-
-        event = EventTestUtil.createDummyTextMessage("oi");
-
-        reply = bill200Controller.handleTextMessageEvent(event);
-
-        assertEquals("Please use a correct input E.g /billboard bill200 ARTIST", reply.getText());
+        TextMessage reply = topAlbumController.handleTextMessageEvent(event);
+        assertNotNull(reply);
     }
 
     @Test
     void testHandleDefaultMessage() {
         Event event = mock(Event.class);
 
-        bill200Controller.handleDefaultMessage(event);
+        topAlbumController.handleDefaultMessage(event);
 
         verify(event, atLeastOnce()).getSource();
         verify(event, atLeastOnce()).getTimestamp();
+    }
+
+    @Test
+    void testInswitch() {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/billboard bill200");
+        TextMessage reply = topAlbumController.handleTextMessageEvent(event);
+        assertNotNull(reply);
     }
 }

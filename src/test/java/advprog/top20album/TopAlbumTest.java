@@ -3,10 +3,11 @@ package advprog.top20album;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.List;
-
 import advprog.top20album.bot.Album;
 import advprog.top20album.bot.TopAlbum;
+
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -45,7 +46,7 @@ public class TopAlbumTest {
     @Test
     public void getListOfAlbums() {
         List<Album> list = topAlbum.getListOfAlbums();
-        assertEquals(1, list.size());
+        assertEquals(20, list.size());
     }
 
 

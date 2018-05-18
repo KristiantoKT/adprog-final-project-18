@@ -1,15 +1,15 @@
 package advprog.top20album.bot;
 
-import advprog.favartist.bot.Song;
+import java.io.IOException;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.parser.Parser;
 import org.jsoup.select.Elements;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class TopAlbum {
 
@@ -26,7 +26,7 @@ public class TopAlbum {
 
     public void getTop20Url(String vgmdbUrl) {
         try {
-            Document doc = Jsoup.connect("https://vgmdb.net/db/statistics.php?do=top_rated").get();
+            Document doc = Jsoup.connect(vgmdbUrl).get();
             Elements link = doc.select("div#innermain");
             Elements links = link.select("a[href]");
 
@@ -34,12 +34,11 @@ public class TopAlbum {
                 listOfUrl.add(links.get(i).attr("href"));
             }
 
-/*            for (String url : listOfUrl) {
+            for (String url : listOfUrl) {
                 int position = 1;
                 setTop20(url, position);
-            }*/
-
-            setTop20(listOfUrl.get(0),1);
+                position++;
+            }
 
         } catch (IOException e) {
             System.out.println("Error!");
@@ -57,21 +56,35 @@ public class TopAlbum {
             String formattedNames = Parser.unescapeEntities(name, false);
             //System.out.println(formattedNames);
 
+
             // BUAT PRICE
             Element table = link.get(0);
-            Element e = table.getElementById("album_infobit_large");
-            Element rows = e.getElementsByTag("tbody").get(0);
-            Element row = rows.getElementsByTag("tr").get(9);
-            Element eprice = row.getElementsByTag("td").get(1);
-            String price = eprice.text().split(" ")[0];
+            Elements e = doc.select("table#album_infobit_large");
+            Element a = e.get(0);
+            Elements f = a.getElementsByClass("vbmenu_option");
+            int temp = 0;
+
+            for (Element g : f) {
+                temp++;
+            }
+
+            Element b;
+            if (temp == 0) {
+                b = a.getElementsByTag("tr").get(temp + 3);
+            } else {
+                b = a.getElementsByTag("tr").get(temp + 4);
+            }
+
+            String price = b.getElementsByTag("td").get(1).text().split(" ")[0];
             //System.out.println(price);
 
             // BUAT RATING
-            String rating = doc.getElementById("ratingmsg-album-4").text().split(" ")[1];
+            String rating = doc.select("span[rel=rating]").text().split(" ")[1];
             //System.out.println(rating);
 
             Album album = new Album(position, formattedNames, rating, price);
             listOfAlbums.add(album);
+
         } catch (IOException e) {
             System.out.println("Error!");
         }
@@ -92,6 +105,17 @@ public class TopAlbum {
         }
 
         return stringBuilder.toString();
+    }
+
+    public String printTop20() {
+        StringBuilder sb = new StringBuilder();
+
+        for (Album album : listOfAlbums) {
+            sb.append(album.getPosition() + " - " + album.getName() + " - " + album.getRating()
+                    + " " + album.getPrice());
+        }
+        return sb.toString();
+
     }
 
     public String getUrl() {

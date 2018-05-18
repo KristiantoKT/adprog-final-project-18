@@ -47,6 +47,6 @@ public class Album {
 
     @Override
     public String toString() {
-        return position + " - " + name + " - " + rating + " (" + price +" IDR)";
+        return position + " - " + name + " - " + rating + " (" + price + " IDR)";
     }
 }

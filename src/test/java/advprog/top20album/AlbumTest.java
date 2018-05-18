@@ -1,6 +1,5 @@
 package advprog.top20album;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import advprog.top20album.bot.Album;
