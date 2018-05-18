@@ -8,9 +8,8 @@ import java.util.ArrayList;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.parser.Parser;
 import org.jsoup.select.Elements;
-
-
 
 public class AlbumOfTheMonth {
     private String url;
@@ -31,10 +30,10 @@ public class AlbumOfTheMonth {
                 String albumName = element.getElementsByClass("albumtitle album-game").html();
                 String price = "price";
 
-                //String albumNameList = Parser.unescapeEntities(albumName, false);
+                String albumNameList = Parser.unescapeEntities(albumName, false);
                 //String priceList = Parser.unescapeEntities(price, false);
 
-                Soundtrack soundtrack = new Soundtrack(albumName, price);
+                Soundtrack soundtrack = new Soundtrack(albumName);
                 soundtracksOfTheMonth.add(soundtrack);
             }
         } catch (IOException e) {
