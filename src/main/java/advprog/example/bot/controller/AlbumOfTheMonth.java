@@ -24,14 +24,15 @@ public class AlbumOfTheMonth {
         try {
             Document document = Jsoup.connect(url).get();
             Elements body = document.getElementsByClass("album_infobit_medium");
-            for (int i = 0; i < 200; i++) {
+            for (int i = 0; i < 50; i++) {
                 Element element = body.get(i);
                 String albumName = element.getElementsByClass("albumtitle").get(1).text();
                 if (albumName.contains("Original Soundtrack")
                         || albumName.contains("Original Game Soundtrack")
                         || albumName.contains("Soundtrack")) {
                     String liTag = element.getElementsByTag("li").get(1).text();
-                    String price = liTag.split(" ")[3];
+                    String[] splitTag = liTag.split(" ");
+                    String price = splitTag[2] + splitTag[3];
                     Soundtrack soundtrack = new Soundtrack(albumName, price);
                     soundtracksOfTheMonth.add(soundtrack);
                 }
