@@ -2,17 +2,13 @@ package advprog.example.bot.controller;
 
 import static java.lang.String.format;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.ArrayList;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import sun.net.www.http.HttpClient;
 
 public class AlbumOfTheMonth {
     private String url;
