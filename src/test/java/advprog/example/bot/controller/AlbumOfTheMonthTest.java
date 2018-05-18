@@ -36,7 +36,7 @@ public class AlbumOfTheMonthTest {
         String price = "8.99";
         String result = albumOfTheMonth.currencyConverter(price, from);
 
-        assertEquals(result, "127388.3 IDR");
+        assertEquals(result, "127388.30 IDR");
 
     }
 }

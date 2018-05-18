@@ -52,11 +52,11 @@ public class AlbumOfTheMonth {
         if (from.equalsIgnoreCase("USD")) {
             Double usdToIdr = 14170.00;
             Double priceIdr = Double.parseDouble(price) * usdToIdr;
-            return priceIdr + " IDR";
+            return String.format("%.2f IDR", priceIdr);
         } else if (from.equalsIgnoreCase("JPY")) {
             Double jpyToIdr = 127.82;
-            Double priceToIdr = Double.parseDouble(price) * jpyToIdr;
-            return priceToIdr + " IDR";
+            Double priceIdr = Double.parseDouble(price) * jpyToIdr;
+            return String.format("%.2f IDR", priceIdr);
         } else {
             return "";
         }
