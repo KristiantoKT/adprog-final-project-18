@@ -16,6 +16,7 @@ import com.linecorp.bot.model.message.TextMessage;
 
 import java.io.IOException;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -51,6 +52,14 @@ public class VgmdbControllerTest {
         TextMessage reply = vgmdbController.handleTextMessageEvent(event);
 
         assertEquals("Lorem Ipsum", reply.getText());
+
+        //vgmdb
+        MessageEvent<TextMessageContent> event1 =
+                EventTestUtil.createDummyTextMessage("/vgmdb OST this month");
+
+        TextMessage reply1 = vgmdbController.handleTextMessageEvent(event1);
+
+        assertTrue(reply1.getText().contains("Beat Saber Original Game Soundtrack"));
 
         //incorrect input
         String errormessage = vgmdbController.errorMessage();

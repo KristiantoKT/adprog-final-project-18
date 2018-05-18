@@ -12,6 +12,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import sun.net.www.http.HttpClient;
 
 public class AlbumOfTheMonth {
     private String url;
@@ -39,6 +40,7 @@ public class AlbumOfTheMonth {
 
                     String[] splitTag = liTag.split(" ");
 
+                    //String price = splitTag[2] + " " + splitTag[3];
                     String price = currencyConverter(splitTag[2], splitTag[3]);
 
                     Soundtrack soundtrack = new Soundtrack(albumName, price);
@@ -51,20 +53,18 @@ public class AlbumOfTheMonth {
     }
 
     public String currencyConverter(String price, String from) throws IOException {
-        String to = "IDR";
-
-        URL url = new URL("http://finance.yahoo.com/d/quotes.csv?f=l1&s=" + from + to + "=X");
-
-        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-        String line = reader.readLine();
-
-        Double idrPriceString = Double.parseDouble(line) * Integer.parseInt(price);
-
-        String result = idrPriceString + " IDR";
-
-        return result;
+        if (from.equalsIgnoreCase("USD")) {
+            Double usdToIdr = 14170.00;
+            Double priceIdr = Double.parseDouble(price) * usdToIdr;
+            return priceIdr + " IDR";
+        } else if (from.equalsIgnoreCase("JPY")) {
+            Double jpyToIdr = 127.82;
+            Double priceToIdr = Double.parseDouble(price) * jpyToIdr;
+            return priceToIdr + " IDR";
+        } else {
+            return "";
+        }
     }
-
 
     public String listAlbum() {
         StringBuilder str = new StringBuilder();
@@ -75,7 +75,6 @@ public class AlbumOfTheMonth {
         }
         return str.toString();
     }
-
 
     public String getUrl() {
         return url;
