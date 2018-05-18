@@ -65,12 +65,4 @@ public class VgmdbController {
                 event.getTimestamp(), event.getSource()));
     }
 
-    /** private void replyText(String replies, String token) {
-        TextMessage textMessage = new TextMessage(replies);
-        try {
-            lineMessagingClient.replyMessage(new ReplyMessage(token, textMessage)).get();
-        } catch (InterruptedException | ExecutionException e) {
-            System.out.println("error");
-        }
-    }**/
 }

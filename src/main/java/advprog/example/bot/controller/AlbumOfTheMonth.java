@@ -2,7 +2,10 @@ package advprog.example.bot.controller;
 
 import static java.lang.String.format;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 
 import org.jsoup.Jsoup;
@@ -33,9 +36,11 @@ public class AlbumOfTheMonth {
                         || albumName.contains("Original Game Soundtrack")
                         || albumName.contains("Soundtrack")) {
                     String liTag = element.getElementsByTag("li").get(1).text();
+
                     String[] splitTag = liTag.split(" ");
 
-                    String price = splitTag[2] + " " + splitTag[3];
+                    String price = currencyConverter(splitTag[2], splitTag[3]);
+
                     Soundtrack soundtrack = new Soundtrack(albumName, price);
                     soundtracksOfTheMonth.add(soundtrack);
                 }
@@ -43,6 +48,21 @@ public class AlbumOfTheMonth {
         } catch (IOException e) {
             System.out.println("Illegal IO");
         }
+    }
+
+    public String currencyConverter(String price, String from) throws IOException {
+        String to = "IDR";
+
+        URL url = new URL("http://finance.yahoo.com/d/quotes.csv?f=l1&s=" + from + to + "=X");
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+        String line = reader.readLine();
+
+        Double idrPriceString = Double.parseDouble(line) * Integer.parseInt(price);
+
+        String result = idrPriceString + " IDR";
+
+        return result;
     }
 
 
