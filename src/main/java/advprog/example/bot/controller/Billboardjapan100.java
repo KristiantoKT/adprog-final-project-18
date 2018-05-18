@@ -47,7 +47,7 @@ public class Billboardjapan100 {
 
     public String printSong() {
         if (songInChart.size() == 0) {
-            return "Oops sorry! The artist isn't on the Billboard Japan HOT 100!";
+            return "Oops sorry! The artist is not on the Billboard Japan HOT 100!";
         }
 
         StringBuilder stringBuilder = new StringBuilder();
