@@ -30,7 +30,9 @@ public class AlbumOfTheMonth {
                 if (albumName.contains("Original Soundtrack")
                         || albumName.contains("Original Game Soundtrack")
                         || albumName.contains("Soundtrack")) {
-                    Soundtrack soundtrack = new Soundtrack(albumName);
+                    String liTag = element.getElementsByTag("li").get(1).text();
+                    String price = liTag.split(" ")[3];
+                    Soundtrack soundtrack = new Soundtrack(albumName, price);
                     soundtracksOfTheMonth.add(soundtrack);
                 }
             }
