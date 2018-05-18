@@ -19,11 +19,6 @@ public class LivechartController {
     private static final Logger LOGGER = Logger.getLogger(LivechartController.class.getName());
 
     private String wantedGenre;
-    private static final String preferredGenre = "What's your preffered genre?"
-            + "  Action"
-            + " Comedy"
-            + " Fantasy";
-
     private SpringCommand spc = new SpringCommand();
     private SummerCommand smc = new SummerCommand();
     private FallCommand fac = new FallCommand();
@@ -38,7 +33,10 @@ public class LivechartController {
 
         String contentText = content.getText();
         if (contentText.equals("/lookup_anime")) {
-            return new TextMessage(preferredGenre);
+            return new TextMessage("What's your preffered genre?"
+                    + "  Action"
+                    + " Comedy"
+                    + " Fantasy");
         }
         return new TextMessage("Invalid Command");
     }

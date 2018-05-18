@@ -1,5 +1,5 @@
 #
-# Copyright 2016 LINE Corporation
+# Copyright 2018 LINE Corporation
 #
 # LINE Corporation licenses this file to you under the Apache License,
 # version 2.0 (the "License"); you may not use this file except in compliance
@@ -13,13 +13,10 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-#This is tempalte file for configuration.
-#Please copy as `application.yml` and change your value.
-
 line.bot:
-  channel-token: '833392c9280dad088667b8a0213b0aef'
-  channel-secret: 'KoiTBSG4nqrnsmtx+2S14W9yMW8nU0BAhr30GvUMitmayn0O/yJxzepsa113jEp/7j8VLK0O3K
-  /awc6vsvG/GnZ5JCRIwC6Lh6N8ckZMwM+muPQ8ytQe0qd9KHKlcUHMujjnYONJwsXIYFWo0BKUqQdB04t89/1O/w1cDnyilFU='
+  channel-token: '8IU0UA332l0dbeYA7x1YFnHvziSq93IT+CbdGYLUHFsHrsHofKUnohqdRzb4Qf6i7j8VLK0O3K/awc6vsvG
+  /GnZ5JCRIwC6Lh6N8ckZMwM+HlOk+o4QGEeXgiORPVg12c6HswEplkXHjktv2R/ATtAdB04t89/1O/w1cDnyilFU='
+  channel-secret: '833392c9280dad088667b8a0213b0aef'
   handler.path: /callback
 
 # To remove Client wire logs. Please comment out following lines.
