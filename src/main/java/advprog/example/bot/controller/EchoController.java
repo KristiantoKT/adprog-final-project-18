@@ -45,6 +45,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @LineMessageHandler
 public class EchoController {
 
+    @Autowired
     private LineMessagingClient lineMessagingClient;
     private static final Logger LOGGER = Logger.getLogger(EchoController.class.getName());
     private static boolean canDoMethod = false;
