@@ -33,15 +33,20 @@ public class VgmdbController {
         String[] splitInput = contentText.split(" ");
 
         if (splitInput[0].equalsIgnoreCase("/echo")) {
+
             String replyText = contentText.replace("/echo", "");
             return new TextMessage(replyText.substring(1));
+
         } else if (splitInput[0].equalsIgnoreCase("/vgmdb")) {
+
             if (contentText.equalsIgnoreCase("/vgmdb OST this month")) {
+
                 AlbumOfTheMonth albumOfTheMonth = new
                         AlbumOfTheMonth("https://vgmdb.net/db/calendar.php?year=2018&month=5");
                 String result = albumOfTheMonth.listAlbum();
 
                 return new TextMessage(result);
+
             } else {
                 return new TextMessage(errorMessage());
             }

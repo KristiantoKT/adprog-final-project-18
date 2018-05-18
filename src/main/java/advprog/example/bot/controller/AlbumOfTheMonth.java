@@ -20,18 +20,21 @@ public class AlbumOfTheMonth {
         setSoundtracksOfTheMonthList(url);
     }
 
-    private void setSoundtracksOfTheMonthList(String url) {
+    public void setSoundtracksOfTheMonthList(String url) {
         try {
             Document document = Jsoup.connect(url).get();
             Elements body = document.getElementsByClass("album_infobit_medium");
             for (int i = 0; i < 50; i++) {
+
                 Element element = body.get(i);
                 String albumName = element.getElementsByClass("albumtitle").get(1).text();
+
                 if (albumName.contains("Original Soundtrack")
                         || albumName.contains("Original Game Soundtrack")
                         || albumName.contains("Soundtrack")) {
                     String liTag = element.getElementsByTag("li").get(1).text();
                     String[] splitTag = liTag.split(" ");
+
                     String price = splitTag[2] + " " + splitTag[3];
                     Soundtrack soundtrack = new Soundtrack(albumName, price);
                     soundtracksOfTheMonth.add(soundtrack);
@@ -41,6 +44,7 @@ public class AlbumOfTheMonth {
             System.out.println("Illegal IO");
         }
     }
+
 
     public String listAlbum() {
         StringBuilder str = new StringBuilder();

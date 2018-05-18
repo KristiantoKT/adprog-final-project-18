@@ -2,6 +2,7 @@ package advprog.example.bot.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -52,7 +53,12 @@ public class VgmdbControllerTest {
         assertEquals("Lorem Ipsum", reply.getText());
 
         //vgmdb
+        MessageEvent<TextMessageContent> event1 =
+                EventTestUtil.createDummyTextMessage("/vgmdb OST this month");
 
+        TextMessage reply1 = vgmdbController.handleTextMessageEvent(event1);
+
+        assertTrue(reply1.getText().contains("Beat Saber Original Game Soundtrack"));
 
         //incorrect input
         String errormessage = vgmdbController.errorMessage();
