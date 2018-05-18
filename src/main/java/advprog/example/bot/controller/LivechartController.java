@@ -38,60 +38,7 @@ public class LivechartController {
 
         String contentText = content.getText();
         if (contentText.equals("/lookup_anime")) {
-            new TextMessage(preferredGenre);
-            switch (contentText) {
-                default:
-                    break;
-                case "Action":
-                    wantedGenre = "Action";
-                    break;
-                case "Comedy":
-                    wantedGenre = "Comedy";
-                    break;
-                case "Fantasy":
-                    wantedGenre = "Fantasy";
-                    break;
-            }
-            switch (contentText) {
-                default:
-                    break;
-                case "spring-2017":
-                    spc.execute("spring-2017", wantedGenre);
-                    break;
-                case "spring-2018":
-                    spc.execute("spring-2018", wantedGenre);
-                    break;
-                case "spring-2019":
-                    spc.execute("spring-2019", wantedGenre);
-                    break;
-                case "summer-2017":
-                    smc.execute("summer-2017", wantedGenre);
-                    break;
-                case "summer-2018":
-                    smc.execute("summer-2018", wantedGenre);
-                    break;
-                case "summer-2019":
-                    smc.execute("summer-2019", wantedGenre);
-                    break;
-                case "fall-2017":
-                    fac.execute("fall-2017", wantedGenre);
-                    break;
-                case "fall-2018":
-                    fac.execute("fall-2018", wantedGenre);
-                    break;
-                case "fall-2019":
-                    fac.execute("fall-2019", wantedGenre);
-                    break;
-                case "winter-2017":
-                    wic.execute("winter-2017", wantedGenre);
-                    break;
-                case "winter-2018":
-                    wic.execute("winter-2018", wantedGenre);
-                    break;
-                case "winter-2019":
-                    wic.execute("winter-2019", wantedGenre);
-                    break;
-            }
+            return new TextMessage(preferredGenre);
         }
         return new TextMessage("Invalid Command");
     }
