@@ -40,11 +40,12 @@ public class VgmdbController {
         } else if (splitInput[0].equalsIgnoreCase("/vgmdb")) {
 
             if (contentText.equalsIgnoreCase("/vgmdb OST this month")) {
+                System.out.println("masuk if vgmdv ost this month");
 
                 AlbumOfTheMonth albumOfTheMonth = new
                         AlbumOfTheMonth("https://vgmdb.net/db/calendar.php?year=2018&month=5");
-                String result = albumOfTheMonth.listAlbum();
 
+                String result = albumOfTheMonth.listAlbum();
                 return new TextMessage(result);
 
             } else {

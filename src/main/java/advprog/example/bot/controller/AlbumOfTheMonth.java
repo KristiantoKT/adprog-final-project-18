@@ -36,12 +36,13 @@ public class AlbumOfTheMonth {
                 if (albumName.contains("Original Soundtrack")
                         || albumName.contains("Original Game Soundtrack")
                         || albumName.contains("Soundtrack")) {
+                    System.out.println("masuk if nyari soundtrack");
                     String liTag = element.getElementsByTag("li").get(1).text();
 
                     String[] splitTag = liTag.split(" ");
 
-                    //String price = splitTag[2] + " " + splitTag[3];
-                    String price = currencyConverter(splitTag[2], splitTag[3]);
+                    String price = splitTag[2] + " " + splitTag[3];
+                    //String price = currencyConverter(splitTag[2], splitTag[3]);
 
                     Soundtrack soundtrack = new Soundtrack(albumName, price);
                     soundtracksOfTheMonth.add(soundtrack);
@@ -52,7 +53,7 @@ public class AlbumOfTheMonth {
         }
     }
 
-    public String currencyConverter(String price, String from) throws IOException {
+    public String currencyConverter(String price, String from) {
         if (from.equalsIgnoreCase("USD")) {
             Double usdToIdr = 14170.00;
             Double priceIdr = Double.parseDouble(price) * usdToIdr;
