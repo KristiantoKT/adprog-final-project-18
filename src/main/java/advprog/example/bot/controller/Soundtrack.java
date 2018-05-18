@@ -27,6 +27,6 @@ public class Soundtrack {
 
     @Override
     public String toString() {
-        return albumName + ":" + price;
+        return albumName + " : " + price;
     }
 }

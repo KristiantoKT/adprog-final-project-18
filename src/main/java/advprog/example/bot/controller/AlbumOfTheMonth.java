@@ -32,7 +32,7 @@ public class AlbumOfTheMonth {
                         || albumName.contains("Soundtrack")) {
                     String liTag = element.getElementsByTag("li").get(1).text();
                     String[] splitTag = liTag.split(" ");
-                    String price = splitTag[2] + splitTag[3];
+                    String price = splitTag[2] + " " + splitTag[3];
                     Soundtrack soundtrack = new Soundtrack(albumName, price);
                     soundtracksOfTheMonth.add(soundtrack);
                 }
