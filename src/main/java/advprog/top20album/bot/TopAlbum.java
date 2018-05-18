@@ -39,7 +39,6 @@ public class TopAlbum {
                 setTop20(url, position);
                 position++;
             }
-
         } catch (IOException e) {
             System.out.println("Error!");
         }
