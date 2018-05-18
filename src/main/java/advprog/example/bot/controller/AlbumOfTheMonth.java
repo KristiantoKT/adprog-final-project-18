@@ -40,8 +40,8 @@ public class AlbumOfTheMonth {
 
                     String[] splitTag = liTag.split(" ");
 
-                    //String price = splitTag[2] + " " + splitTag[3];
-                    String price = currencyConverter(splitTag[2], splitTag[3]);
+                    String price = splitTag[2] + " " + splitTag[3];
+                    //String price = currencyConverter(splitTag[2], splitTag[3]);
 
                     Soundtrack soundtrack = new Soundtrack(albumName, price);
                     soundtracksOfTheMonth.add(soundtrack);
