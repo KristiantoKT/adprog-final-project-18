@@ -9,36 +9,42 @@ public class Hospital {
     private String imageLink;
     private String description;
 
-    public Hospital(String name, String address, double latitude, double longitude, String phone,
-                    String imageLink, String description) {
-
+    public Hospital(String name, String address, double latitude, double longitude,
+                    String phone, String imageLink, String description) {
+        this.name = name;
+        this.address = address;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.phone = phone;
+        this.imageLink = imageLink;
+        this.description = description;
     }
 
     public String getName() {
-        return null;
+        return name;
     }
 
     public String getAddress() {
-        return null;
+        return address;
     }
 
     public double getLatitude() {
-        return 0.0;
+        return latitude;
     }
 
     public double getLongitude() {
-        return 0.0;
+        return longitude;
     }
 
     public String getPhone() {
-        return null;
+        return phone;
     }
 
     public String getImageLink() {
-        return null;
+        return imageLink;
     }
 
     public String getDescription() {
-        return null;
+        return description;
     }
 }
