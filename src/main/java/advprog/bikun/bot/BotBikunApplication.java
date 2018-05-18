@@ -1,4 +1,5 @@
 package advprog.bikun.bot;
+
 import java.util.logging.Logger;
 
 import org.springframework.boot.SpringApplication;

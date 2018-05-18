@@ -5,8 +5,9 @@ import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.event.source.UserSource;
 
 import java.time.Instant;
+
 public class EventBikunTestUtil {
-    private EventTestUtil() {
+    private EventBikunTestUtil() {
         // Default private constructor
     }
 
