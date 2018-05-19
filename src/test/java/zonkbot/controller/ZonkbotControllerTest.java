@@ -59,7 +59,7 @@ public class ZonkbotControllerTest {
     }
 
     @Test
-    void testZonkbotControllerTextDefault(){
+    void testZonkbotControllerTextDefault() {
         MessageEvent<TextMessageContent> event =
                 EventTestUtil.createDummyTextMessage("ayams");
         TextMessage reply = zonkbotController.handleTextMessageEvent(event);
