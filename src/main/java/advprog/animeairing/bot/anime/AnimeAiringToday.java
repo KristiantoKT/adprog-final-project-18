@@ -1,4 +1,4 @@
-package advprog.animeairing.bot;
+package advprog.animeairing.bot.anime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,6 +32,7 @@ public class AnimeAiringToday {
 
     private void setAiringTodayList(String urlAiringToday) {
         try {
+
             Document doc = Jsoup.connect(urlAiringToday).get();
 
             Elements header = doc.getElementsByClass("schedule-card past");
@@ -46,6 +47,7 @@ public class AnimeAiringToday {
                 Anime anime = new Anime(title,episode);
                 airingToday.add(anime);
             }
+
 
         } catch (IOException e) {
             System.out.println("Error!");

@@ -1,4 +1,4 @@
-package advprog.animeairing.bot;
+package advprog.animeairing.bot.anime;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

@@ -1,4 +1,4 @@
-package advprog.animeairing.bot;
+package advprog.animeairing.bot.anime;
 
 public class Anime {
     private String title;
