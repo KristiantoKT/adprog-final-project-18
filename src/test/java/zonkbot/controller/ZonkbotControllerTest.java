@@ -21,6 +21,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import zonkbot.EventTestUtil;
 
+
 @SpringBootTest(properties = "line.bot.handler.enabled=false")
 @ExtendWith(SpringExtension.class)
 public class ZonkbotControllerTest {
@@ -29,6 +30,7 @@ public class ZonkbotControllerTest {
         System.setProperty("line.bot.channelSecret", "SECRET");
         System.setProperty("line.bot.channelToken", "TOKEN");
     }
+
 
     @Autowired
     private ZonkbotController zonkbotController;
@@ -41,12 +43,51 @@ public class ZonkbotControllerTest {
     @Test
     void testHandleTextMessageEvent() {
         MessageEvent<TextMessageContent> event =
-                EventTestUtil.createDummyTextMessage("/zonk Lorem Ipsum");
+                EventTestUtil.createDummyTextMessage("/zonkbot");
 
         TextMessage reply = zonkbotController.handleTextMessageEvent(event);
 
-        assertEquals("zonk zonk Lorem Ipsum", reply.getText());
+        assertEquals("zonkbot activated!", reply.getText());
     }
+
+
+
+    @Test
+    void testZonkbotController() {
+        assertEquals("Answer 1:", zonkbotController.add_question("ayam?"));
+        assertEquals("Answer 2:", zonkbotController.add_question("tidak"));
+    }
+
+    @Test
+    void testZonkbotControllerTextDefault(){
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("ayams");
+        TextMessage reply = zonkbotController.handleTextMessageEvent(event);
+        assertEquals("ayams", reply.getText());
+
+    }
+
+    @Test
+    void testZonkbotControllerZonkbotNotActivated() {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/add_question");
+        TextMessage reply = zonkbotController.handleTextMessageEvent(event);
+        String replyText = "zonkbot are not available."
+                + "To activate zonkbot please type \"/zonkbot\"";
+        assertEquals(replyText, reply.getText());
+
+    }
+
+    @Test
+    void testZonkbotControllerAddQuestion() {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/zonkbot");
+        zonkbotController.handleTextMessageEvent(event);
+        event = EventTestUtil.createDummyTextMessage("/add_question");
+        TextMessage reply = zonkbotController.handleTextMessageEvent(event);
+        assertEquals("Please input your question",reply.getText());
+    }
+
 
     @Test
     void testHandleDefaultMessage() {
