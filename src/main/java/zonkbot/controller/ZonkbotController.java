@@ -9,6 +9,7 @@ import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 
 import java.util.logging.Logger;
 
+import org.jetbrains.annotations.NotNull;
 import zonkbot.Question;
 import zonkbot.Zonkbot;
 
@@ -19,8 +20,8 @@ public class ZonkbotController {
     private Zonkbot zonkbot = null;
     private Question question = null;
     private int answerNumber = 0;
-    private boolean zonkbotActive = false;
-    private boolean addQuestionSection = false;
+    public boolean zonkbotActive = false;
+    public boolean addQuestionSection = false;
 
 
 
@@ -34,22 +35,33 @@ public class ZonkbotController {
         String replyText = "";
 
         if (textContent.equals("/zonkbot") && !zonkbotActive) {
-            zonkbot = new Zonkbot();
-            replyText = "zonkbot activated!";
-        } else if (textContent.equals("/add_question") && !addQuestionSection) {
+            replyText = activateZonkbot();
+        } else if (textContent.equals("/deactivate_zonkbot")) {
+            zonkbotActive = false;
+            replyText = "zonkbot deactivated";
+        } else if (textContent.equals("/add_question") && !zonkbotActive) {
+            replyText = "zonkbot are not available."
+                    + "To activate zonkbot please type \"/zonkbot\"";
+        } else if (textContent.equals("/add_question") && zonkbotActive && !addQuestionSection) {
             replyText = "Please input your question";
             addQuestionSection = true;
         } else if (addQuestionSection && zonkbotActive) {
             replyText = add_question(textContent);
-
-        } else if (textContent.equals("/add_question") && !zonkbotActive) {
-            replyText = "zonkbot are not available."
-                    + "To activate zonkbot please type \"/zonkbot\"";
-        } else {
-            replyText =  textContent.replace("/","");
+        } else if (textContent.substring(0,5).equals("/echo")) {
+            replyText =  textContent.replace("/echo ","");
         }
 
+
         return new TextMessage(replyText);
+    }
+
+    @NotNull
+    private String activateZonkbot() {
+        String replyText;
+        zonkbotActive = true;
+        zonkbot = new Zonkbot();
+        replyText = "zonkbot activated!";
+        return replyText;
     }
 
 

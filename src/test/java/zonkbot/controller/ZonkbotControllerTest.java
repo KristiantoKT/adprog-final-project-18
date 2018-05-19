@@ -41,16 +41,22 @@ public class ZonkbotControllerTest {
     }
 
     @Test
-    void testHandleTextMessageEvent() {
+    void testDeactivateZonkbot() {
+        deactivateZonkbot();
         MessageEvent<TextMessageContent> event =
-                EventTestUtil.createDummyTextMessage("/zonkbot");
-
+                EventTestUtil.createDummyTextMessage("/deactivate_zonkbot");
         TextMessage reply = zonkbotController.handleTextMessageEvent(event);
-
-        assertEquals("zonkbot activated!", reply.getText());
+        assertEquals("zonkbot deactivated", reply.getText());
     }
 
-
+    @Test
+    void testHandleTextMessageEvent() {
+        deactivateZonkbot();
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/zonkbot");
+        TextMessage reply = zonkbotController.handleTextMessageEvent(event);
+        assertEquals("zonkbot activated!", reply.getText());
+    }
 
     @Test
     void testZonkbotController() {
@@ -60,8 +66,9 @@ public class ZonkbotControllerTest {
 
     @Test
     void testZonkbotControllerTextDefault() {
+        deactivateZonkbot();
         MessageEvent<TextMessageContent> event =
-                EventTestUtil.createDummyTextMessage("ayams");
+                EventTestUtil.createDummyTextMessage("/echo ayams");
         TextMessage reply = zonkbotController.handleTextMessageEvent(event);
         assertEquals("ayams", reply.getText());
 
@@ -69,6 +76,7 @@ public class ZonkbotControllerTest {
 
     @Test
     void testZonkbotControllerZonkbotNotActivated() {
+        deactivateZonkbot();
         MessageEvent<TextMessageContent> event =
                 EventTestUtil.createDummyTextMessage("/add_question");
         TextMessage reply = zonkbotController.handleTextMessageEvent(event);
@@ -80,6 +88,7 @@ public class ZonkbotControllerTest {
 
     @Test
     void testZonkbotControllerAddQuestion() {
+        deactivateZonkbot();
         MessageEvent<TextMessageContent> event =
                 EventTestUtil.createDummyTextMessage("/zonkbot");
         zonkbotController.handleTextMessageEvent(event);
@@ -97,5 +106,11 @@ public class ZonkbotControllerTest {
 
         verify(event, atLeastOnce()).getSource();
         verify(event, atLeastOnce()).getTimestamp();
+    }
+
+    void deactivateZonkbot() {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/deactivate_zonkbot");
+        zonkbotController.handleTextMessageEvent(event);
     }
 }
