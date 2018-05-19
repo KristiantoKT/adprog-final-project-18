@@ -25,8 +25,9 @@ public class AlbumOfTheMonth {
             Document document = Jsoup.connect(url).get();
             Elements body = document.getElementsByClass("album_infobit_medium");
             int bodySize = body.size();
+            //System.out.println(bodySize);
 
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 200; i++) {
 
                 Element element = body.get(i);
                 String albumName = element.getElementsByClass("albumtitle").get(1).text();
