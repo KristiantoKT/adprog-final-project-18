@@ -34,15 +34,15 @@ public class MovieSchedules {
             for (Element movie : links) {
                 String title = movie.getElementsByClass("schedule-title").html(); //("chart-row__song").html();
                 String schedule = movie.getElementsByClass("showtime-lists").html();
-                String sttipeStudio = movie.getElementsByClass("schedule-type").html();
+                String formatStudio = movie.getElementsByClass("schedule-type").html();
                 System.out.printf(title);
                 System.out.printf(schedule);
-                System.out.printf(sttipeStudio);
+                System.out.printf(formatStudio);
 
                 String formatTitle = Parser.unescapeEntities(title, false);
                 String formatSchedule = Parser.unescapeEntities(schedule, false);
 
-                if (formatSchedule.equalsIgnoreCase(studioType)) {
+                if (formatStudio.equalsIgnoreCase(stTypeFix)) {
                     songInChart.add(new Song(formatTitle, formatSchedule));
                 }
             }
