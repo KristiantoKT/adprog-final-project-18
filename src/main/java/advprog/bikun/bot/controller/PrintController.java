@@ -1,6 +1,5 @@
 package advprog.bikun.bot.controller;
 
-import advprog.bikun.bot.BikunController;
 import advprog.bikun.bot.HalteBikun;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.linecorp.bot.model.event.Event;

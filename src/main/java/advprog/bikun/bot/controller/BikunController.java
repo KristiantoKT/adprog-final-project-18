@@ -1,5 +1,6 @@
-package advprog.bikun.bot;
+package advprog.bikun.bot.controller;
 
+import advprog.bikun.bot.HalteBikun;
 import com.linecorp.bot.model.action.Action;
 import com.linecorp.bot.model.action.MessageAction;
 import com.linecorp.bot.model.action.URIAction;
@@ -14,6 +15,7 @@ import com.linecorp.bot.model.message.template.ButtonsTemplate;
 import com.linecorp.bot.model.message.template.ImageCarouselColumn;
 import com.linecorp.bot.model.message.template.ImageCarouselTemplate;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -78,7 +80,7 @@ public class BikunController {
         return Math.sqrt(distance);
     }
 
-    public static String differenceMinutes(){
+    public static String differenceMinutes() throws ParseException {
         String time1 = "12:00:00";
         String time2 = "12:01:00";
 
@@ -86,7 +88,6 @@ public class BikunController {
         Date date1 = format.parse(time1);
         Date date2 = format.parse(time2);
         long difference = date2.getTime() - date1.getTime();
-        System.out.println(difference/1000);
+        return "";
     }
-
 }

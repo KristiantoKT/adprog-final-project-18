@@ -17,8 +17,8 @@
 #Please copy as `application.yml` and change your value.
 
 line.bot:
-  channel-token: channel token punyamu
-  channel-secret: channel secret punyamu
+  channel-token: tgcvhKdkOZszb4AwEz/HqKpT2Vb/RpaX2ykcoHO7ylZc2TAprVyY9oR1y4ULnU4MEuABSoI4evNtIC/0X3h49EL2DLTeqfNXYHrsS1OCrB0st/tVHpTN2PDGp/N7YZRopELLJ1c6WKsCLfK79mT5/gdB04t89/1O/w1cDnyilFU=
+  channel-secret: d0baf92e1c551f2f72ca280f7d7f9914
   handler.path: /callback
 
 # To remove Client wire logs. Please comment out following lines.
