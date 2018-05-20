@@ -20,7 +20,7 @@ public class QuestionTest {
         answers.add("tidak");
         assertEquals(question.getAnswers(), answers);
         assertEquals("apakah adprog penting?\n"
-                + "    ya\n" + "    tidak\n", question.toString());
+                + "    ya\n" + "    tidak", question.toString());
         assertEquals("apakah adprog penting?", question.getQuestion());
     }
 }

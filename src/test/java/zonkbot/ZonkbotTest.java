@@ -15,7 +15,7 @@ public class ZonkbotTest {
         question.addAnswer("tidak");
         zonkbot.add_question(question);
         assertEquals("apakah adprog penting?\n"
-                + "    ya\n" + "    tidak\n",zonkbot.toString());
+                + "    ya\n" + "    tidak",zonkbot.toString());
         assertEquals(0, zonkbot.getQuestionIndex("apakah adprog penting?"));
         assertEquals("apakah adprog penting?", zonkbot.getQuestions()
                 .get(0).getQuestion());

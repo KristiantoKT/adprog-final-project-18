@@ -32,9 +32,10 @@ public class Question {
     @Override
     public String toString() {
         String result = question + "\n";
-        for (String answer: answers) {
-            result += "    " + answer + "\n";
+        for (int i = 0; i < answers.size() - 1; i++) {
+            result += "    " + answers.get(i) + "\n";
         }
+        result += "    " + answers.get(answers.size() - 1);
         return result;
     }
 

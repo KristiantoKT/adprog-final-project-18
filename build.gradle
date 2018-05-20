@@ -38,6 +38,8 @@ repositories {
     mavenCentral()
 }
 
+apply plugin: 'org.springframework.boot'
+
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "com.linecorp.bot:line-bot-spring-boot:1.15.0"
