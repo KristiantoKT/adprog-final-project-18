@@ -78,15 +78,14 @@ public class ZonkbotController {
         }
         //CHANGE_ANSWER
         else if (zonkbot != null && textContent.equals("/change_answer")) {
-            chooseAnswer(replyToken);
-            zonkbot.setChange_answer_section(true);
+            chooseQuestion(replyToken);
         }
         //CHANGE_ANSWER_SECTION
         else if (zonkbot != null && textContent.length() > 10
                 && textContent.substring(0,10).equals("/Question")) {
             int questionIndex = Integer.parseInt(textContent.substring(11));
-            Question chosenQuestion = zonkbot.chooseQuestion(questionIndex);
-            chooseCorrectAnswer(chosenQuestion, replyToken);
+            question = zonkbot.chooseQuestion(questionIndex);
+            chooseCorrectAnswer(question, replyToken);
         }
         //CHOOSE CORRECT ANSWER
         else if (textContent.length() >= 15
@@ -142,7 +141,6 @@ public class ZonkbotController {
         } else if (answerNumber >= 4) {
             question.addAnswer(textContent);
             zonkbot.add_question(question);
-            //RESULT GANTI DENGAN CAROUSEL
             chooseCorrectAnswer(question, replyToken);
             addQuestionReset();
         }
@@ -169,7 +167,7 @@ public class ZonkbotController {
         this.reply(replyToken, templateMessage);
     }
 
-    private void chooseAnswer(String replyToken) {
+    private void chooseQuestion(String replyToken) {
         List<Question> questions = zonkbot.getQuestions();
         List<CarouselColumn> columns = new ArrayList<>();
         for (int i = 0; i < questions.size(); i++) {
