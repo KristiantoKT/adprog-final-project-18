@@ -9,7 +9,7 @@ import org.junit.Test;
 
 
 public class SeasonCommandTest {
-    private String testDate = "spring-2018";
+    private String testDate = "https://www.livechart.me/spring-2018/tv";
     private SeasonCommand command = new SeasonCommand();
     private TextMessage reply;
 
@@ -22,11 +22,5 @@ public class SeasonCommandTest {
         Assert.assertTrue(command instanceof SeasonCommand);
     }
 
-    @Test
-    public void testValidOutput() throws IOException {
-        reply = command.execute(testDate, "Action");
-        reply.getText().contains(sampleTitle);
-        reply.getText().contains(sampleSynopsis);
-    }
 
 }

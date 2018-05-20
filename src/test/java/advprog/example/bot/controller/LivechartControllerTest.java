@@ -68,7 +68,7 @@ public class LivechartControllerTest {
 
         TextMessage reply = livechartcontroller.handleTextMessageEvent(event);
 
-        assertEquals("Something Wrong", reply.getText());
+        assertEquals("Action", reply.getText());
     }
 
     @Test
@@ -78,6 +78,6 @@ public class LivechartControllerTest {
 
         TextMessage reply = livechartcontroller.handleTextMessageEvent(event);
 
-        assertEquals("Something Wrong", reply.getText());
+        assertEquals("winter", reply.getText());
     }
 }

@@ -18,21 +18,19 @@ public class SeasonCommand {
     private String year;
     private String genre;
 
-
     String out;
 
     static final String LINK_URL = "https://www.livechart.me/";
 
     public TextMessage execute(String input, String genre) throws IOException {
         if (genre.equalsIgnoreCase("Action")) {
-            out = as.actionScrap(getUrl());
+            out = as.actionScrap(input);
         } else if (genre.equalsIgnoreCase("Comedy")) {
-            out = cs.comedyScrap(getUrl());
+            out = cs.comedyScrap(input);
         } else if (genre.equalsIgnoreCase("Fantasy")) {
-            out = fs.fantasyScrap(getUrl());
+            out = fs.fantasyScrap(input);
         }
         out = scrapping.scrap(LINK_URL + input + "/tv");
-
 
         return new TextMessage(out.contains("Invalid")
                 ? "There's no anime at " + input : out);
@@ -68,6 +66,11 @@ public class SeasonCommand {
 
     public void setGenre(String genre) {
         this.genre = genre;
+    }
+
+    public static void main(String[] args) throws IOException {
+        SeasonCommand s = new SeasonCommand();
+        System.out.println(s.execute("https://www.livechart.me/spring-2018/tv", "Comedy"));
     }
 
 }
