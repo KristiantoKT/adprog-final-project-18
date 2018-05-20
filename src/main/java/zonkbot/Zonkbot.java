@@ -4,10 +4,14 @@ import java.util.ArrayList;
 
 public class Zonkbot {
     ArrayList<Question> questions;
+    private boolean add_question_section;
+    private int answer_number;
 
     public Zonkbot() {
         // Default Constructor
         questions = new ArrayList<Question>();
+        add_question_section = false;
+        answer_number = 0;
     }
 
     public void add_question(Question question) {
@@ -28,6 +32,21 @@ public class Zonkbot {
         return -1;
     }
 
+    public boolean isAdd_question_section(){
+        return add_question_section;
+    }
+
+    public int getAnswer_number(){
+        return answer_number;
+    }
+
+    public void setAdd_question_section(boolean add_question_section){
+        this.add_question_section = add_question_section;
+    }
+
+    public void setAnswer_number(int answer_number){
+        this.answer_number = answer_number;
+    }
 
     @Override
     public String toString() {

@@ -28,9 +28,7 @@ public class ZonkbotController {
     private static final Logger LOGGER = Logger.getLogger(ZonkbotController.class.getName());
     private Zonkbot zonkbot = null;
     private Question question = null;
-    private int answerNumber = 0;
-    public boolean zonkbotActive = false;
-    public boolean addQuestionSection = false;
+    private boolean zonkbotActive = false;
 
 
     @Autowired
@@ -42,31 +40,46 @@ public class ZonkbotController {
                 event.getTimestamp(), event.getMessage()));
         TextMessageContent messageContent = event.getMessage();
         String textContent = messageContent.getText();
-        String replyText = "";
-
-        if (textContent.equals("/zonkbot") && !zonkbotActive) {
-            replyText = activateZonkbot();
-        } else if (textContent.equals("/zonkbot") && zonkbotActive) {
-            replyText = "zonkbot has already activated";
-        } else if (textContent.equals("/deactivate_zonkbot") && zonkbotActive) {
-            zonkbotActive = false;
-            replyText = "zonkbot deactivated";
-        } else if (textContent.equals("/add_question") && !zonkbotActive) {
-            replyText = "zonkbot are not available."
-                    + "To activate zonkbot please type \"/zonkbot\"";
-        } else if (textContent.equals("/add_question") && zonkbotActive && !addQuestionSection) {
-            replyText = "Please input your question";
-            addQuestionSection = true;
-        } else if (addQuestionSection && zonkbotActive) {
-            replyText = add_question(textContent);
-
-        //ECHO FOR LOGGING
-        } else if (textContent.substring(0,5).equals("/echo")) {
-            replyText =  textContent.replace("/echo","eyak eyak");
-        }
-
+        String replyText = responseMessage(textContent);
         replyText(event.getReplyToken(),replyText);
         return;
+    }
+
+    private String responseMessage(String textContent) {
+        String replyText;
+        //ACTIVATE ZONKBOT
+        if (textContent.equals("/zonkbot") && !zonkbotActive) {
+            replyText = activateZonkbot();
+        }
+        //ZONKBOT ALREADY ACTIVATED
+        else if (textContent.equals("/zonkbot") && zonkbotActive) {
+            replyText = "zonkbot has already activated";
+        }
+        //DEACTIVATE ZONKBOT
+        else if (textContent.equals("/deactivate_zonkbot") && zonkbotActive) {
+            zonkbotActive = false;
+            replyText = "zonkbot deactivated";
+        }
+        //ADD_QUESTION
+        else if (textContent.equals("/add_question") && zonkbotActive
+                && !zonkbot.isAdd_question_section()) {
+            replyText = "Please input your question";
+            zonkbot.setAdd_question_section(true);
+        }
+        //ADD_QUESTION_SECTION
+        else if (zonkbotActive && zonkbot.isAdd_question_section()) {
+            replyText = add_question(textContent);
+        }
+        //ECHO
+        else if (textContent.substring(0,5).equals("/echo")) {
+            replyText =  textContent.replace("/echo","eyak eyak");
+        }
+        //OTHERS
+        else {
+            replyText = "zonkbot are not available."
+                    + "To activate zonkbot please type \"/zonkbot\"";
+        }
+        return replyText;
     }
 
     @NotNull
@@ -81,21 +94,27 @@ public class ZonkbotController {
 
     public String add_question(String textContent) {
         String result = "";
+        int answerNumber = zonkbot.getAnswer_number();
         if (answerNumber == 0) {
             question = new Question(textContent);
             result = "Answer 1:";
-            answerNumber++;
+            zonkbot.setAnswer_number(answerNumber++);
         } else if (answerNumber < 4) {
-            answerNumber++;
+            zonkbot.setAnswer_number(answerNumber++);
             question.addAnswer(textContent);
             result = "Answer " + answerNumber + ":";
         } else if (answerNumber > 4) {
             zonkbot.add_question(question);
             result = zonkbot.toString();
-            answerNumber = 0;
-            addQuestionSection = false;
+            questionReset();
         }
         return result;
+    }
+
+    private void questionReset() {
+        zonkbot.setAnswer_number(0);
+        zonkbot.setAdd_question_section(false);
+        question = null;
     }
 
     @EventMapping
