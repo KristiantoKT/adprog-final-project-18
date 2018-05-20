@@ -5,10 +5,9 @@ public class Song {
     private String artist;
     private int position;
 
-    public Song(String name, String artist, int position) {
+    public Song(String name, String artist) {
         this.name = name;
         this.artist = artist;
-        this.position = position;
     }
 
     public String getName() {

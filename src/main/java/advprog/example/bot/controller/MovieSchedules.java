@@ -21,20 +21,29 @@ public class MovieSchedules {
     }
 
     public String findArtist(String studioType) {
+        String[] studType = studioType.split("_");
+        String stTypeFix = "";
+        for (String stType : studType) {
+            stTypeFix += stType;
+        }
+
         try {
             Document doc = Jsoup.connect(movieUrl).get();
-            Elements links = doc.getElementsByClass("chart-row");
+            Elements links = doc.getElementsByClass("schedule-lists");
 
-            for (int i = 0; i < 100; i++) {
-                Element elem = links.get(i);
-                String title = elem.getElementsByClass("schedule-title").html(); //("chart-row__song").html();
-                String schedule = elem.getElementsByClass("showtime-lists").html();
+            for (Element movie : links) {
+                String title = movie.getElementsByClass("schedule-title").html(); //("chart-row__song").html();
+                String schedule = movie.getElementsByClass("showtime-lists").html();
+                String sttipeStudio = movie.getElementsByClass("schedule-type").html();
+                System.out.printf(title);
+                System.out.printf(schedule);
+                System.out.printf(sttipeStudio);
 
-                String formatName = Parser.unescapeEntities(title, false);
-                String formatArtist = Parser.unescapeEntities(schedule, false);
+                String formatTitle = Parser.unescapeEntities(title, false);
+                String formatSchedule = Parser.unescapeEntities(schedule, false);
 
-                if (formatArtist.equalsIgnoreCase(studioType)) {
-                    songInChart.add(new Song(formatName, formatArtist, i + 1));
+                if (formatSchedule.equalsIgnoreCase(studioType)) {
+                    songInChart.add(new Song(formatTitle, formatSchedule));
                 }
             }
 
