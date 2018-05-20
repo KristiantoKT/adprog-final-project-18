@@ -78,7 +78,7 @@ public class ZonkbotController {
         }
         //CHANGE_ANSWER
         else if (zonkbot != null && textContent.equals("/change_answer")) {
-            if(zonkbot.getQuestions() == null)
+            if(zonkbot.getQuestions().isEmpty())
                 replyText = "There is no question";
             else
                 chooseQuestion(replyToken);
