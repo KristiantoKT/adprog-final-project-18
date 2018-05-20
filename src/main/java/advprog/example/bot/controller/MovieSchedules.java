@@ -34,7 +34,7 @@ public class MovieSchedules {
             for (Element movie : links) {
                 String title = movie.getElementsByClass("schedule-title").html(); //("chart-row__song").html();
                 String schedule = movie.getElementsByClass("showtime-lists").html();
-                String formatStudio = movie.getElementsByClass("schedule-type").html();
+                String formatStudio = movie.getElementsByClass("audi-nm").html();
                 System.out.printf(title);
                 System.out.printf(schedule);
                 System.out.printf(formatStudio);
@@ -42,7 +42,7 @@ public class MovieSchedules {
                 String formatTitle = Parser.unescapeEntities(title, false);
                 String formatSchedule = Parser.unescapeEntities(schedule, false);
 
-                if (formatStudio.contains(stTypeFix)) {
+                if (stTypeFix.contains(formatSchedule)) {
                     songInChart.add(new Song(formatTitle, formatSchedule));
                 }
             }
