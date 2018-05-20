@@ -39,10 +39,22 @@ public class Question {
     @Override
     public String toString() {
         String result = question + "\n";
-        for (int i = 0; i < answers.size() - 1; i++) {
-            result += "    " + answers.get(i) + "\n";
+        for (int i = 0; i < answers.size(); i++) {
+            result += answerStringBuilder(i);
         }
-        result += "    " + answers.get(answers.size() - 1);
+        return result;
+    }
+
+    private String answerStringBuilder(int i){
+        String result = "";
+        if (correct_answer_index == i && i != answers.size())
+            result = "   *" + answers.get(i) + "*\n";
+        else if (correct_answer_index == i && i == answers.size())
+            result = "   *" + answers.get(i) + "*";
+        else if (i == answers.size())
+            result = "    " + answers.get(i);
+        else
+            result = "    " + answers.get(i) + "\n";
         return result;
     }
 
