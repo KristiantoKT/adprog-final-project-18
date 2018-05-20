@@ -83,7 +83,7 @@ public class ZonkbotController {
             String correctAnswer = textContent.substring(16);
             question.setCorrectAnswer(correctAnswer);
             replyText = question.toString();
-            questionReset();
+            question = null;
         }
         //ECHO
         else if (textContent.substring(0,5).equals("/echo")) {
@@ -127,14 +127,14 @@ public class ZonkbotController {
             zonkbot.add_question(question);
             //RESULT GANTI DENGAN CAROUSEL
             replyWithCarousel(question, replyToken);
+            addQuestionReset();
         }
         return result;
     }
 
-    private void questionReset() {
+    private void addQuestionReset() {
         zonkbot.setAnswer_number(0);
         zonkbot.setAdd_question_section(false);
-        question = null;
     }
 
     private void replyWithCarousel(Question question, String replyToken) {
