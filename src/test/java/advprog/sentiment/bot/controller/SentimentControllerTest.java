@@ -73,7 +73,7 @@ public class SentimentControllerTest {
         MessageEvent<TextMessageContent> event =
             EventTestUtil.createDummyTextMessage("/echo Lorem Ipsum");
 
-        TextMessage reply = echoController.handleTextMessageEvent(event);
+        TextMessage reply = sentimentController.handleTextMessageEvent(event);
 
         assertEquals("Lorem Ipsum", reply.getText());
     }

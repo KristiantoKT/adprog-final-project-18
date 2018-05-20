@@ -1,5 +1,7 @@
 package advprog.sentiment.bot.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
@@ -7,23 +9,20 @@ import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.springframework.boot.json.BasicJsonParser;
-
-import java.util.logging.Logger;
-import java.util.Map;
-import java.util.List;
-
-import java.net.URL;
-import java.net.MalformedURLException;
-import javax.net.ssl.HttpsURLConnection;
-
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Logger;
+import javax.net.ssl.HttpsURLConnection;
+
+import org.springframework.boot.json.BasicJsonParser;
 
 @LineMessageHandler
 public class SentimentController {
@@ -74,21 +73,21 @@ public class SentimentController {
     }
 
     public String getSentiment(String text) {
-        String query = 
-            "{" +
-                "\"documents\" : [" + 
-                    "{" +
-                        "\"languange\": \"%s\", " +
-                        "\"id\": \"%s\", " +
-                        "\"text\": \"%s\"" +
-                    "}" + 
-                "]" + 
-            "}";
+        String query = "{"
+                + 
+                "\"documents\" : ["
+                    + "{"
+                        + "\"languange\": \"%s\", "
+                        + "\"id\": \"%s\", "
+                        + "\"text\": \"%s\""
+                    + "}"
+                + "]"
+            + "}";
 
-        String escaped_text = text.replace("\"", "\\\"");
-        escaped_text = text.replace("\'", "\\\'");
+        String escapedText = text.replace("\"", "\\\"");
+        escapedText = text.replace("\'", "\\\'");
 
-        query = String.format(query, "en", "1", escaped_text);
+        query = String.format(query, "en", "1", escapedText);
 
         String result = "";
         try {
@@ -101,10 +100,10 @@ public class SentimentController {
             con.setRequestProperty("Ocp-Apim-Subscription-Key", SUBCRIPTION_KEY);
             con.setDoOutput(true);
 
-            byte[] encoded_query = query.getBytes("UTF-8");
+            byte[] encodedQuery = query.getBytes("UTF-8");
 
             DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            wr.write(encoded_query, 0, encoded_query.length);
+            wr.write(encodedQuery, 0, encodedQuery.length);
             wr.flush();
             wr.close();
 
