@@ -23,18 +23,18 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @SpringBootTest(properties = "line.bot.handler.enabled=false")
 @ExtendWith(SpringExtension.class)
-public class BikunTest {
+public class PrintControllerTest {
     static {
         System.setProperty("line.bot.channelSecret", "SECRET");
         System.setProperty("line.bot.channelToken", "TOKEN");
     }
 
     @Autowired
-    private Bikun bikun;
+    private PrintController printController;
 
     @Test
     void testContextLoads() {
-        assertNotNull(bikun);
+        assertNotNull(printController);
     }
 
     @Test
@@ -42,7 +42,7 @@ public class BikunTest {
         MessageEvent<TextMessageContent> event =
                 EventTestUtil.createDummyTextMessage("/echo Lorem Ipsum");
 
-        TextMessage reply = bikun.handleTextMessageEvent(event);
+        TextMessage reply = printController.handleTextMessageEvent(event);
 
         assertEquals("Lorem Ipsum", reply.getText());
     }
@@ -51,7 +51,7 @@ public class BikunTest {
     void testHandleDefaultMessage() {
         Event event = mock(Event.class);
 
-        bikun.handleDefaultMessage(event);
+        printController.handleDefaultMessage(event);
 
         verify(event, atLeastOnce()).getSource();
         verify(event, atLeastOnce()).getTimestamp();
