@@ -7,14 +7,21 @@ public class Question {
 
     String question;
     ArrayList<String> answers;
-    //int correct_answer_index;
+    int correct_answer_index;
 
     public Question(String question) {
         this.question = question;
         answers = new ArrayList<String>();
     }
 
-
+    public void setCorrectAnswer(String string){
+        for (int i = 0; i < answers.size(); i++) {
+            if (answers.get(i).equals(string)) {
+                correct_answer_index = i;
+                return;
+            }
+        }
+    }
 
     public void addAnswer(String answer) {
         answers.add(answer);

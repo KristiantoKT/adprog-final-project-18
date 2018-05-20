@@ -78,6 +78,13 @@ public class ZonkbotController {
         else if (zonkbotActive && zonkbot.isAdd_question_section()) {
             replyText = add_question(textContent, replyToken);
         }
+        //CHOOSE CORRECT ANSWER
+        else if (textContent.substring(0,15).equals("/Correct answer:")){
+            String correctAnswer = textContent.substring(16);
+            question.setCorrectAnswer(correctAnswer);
+            replyText = question.toString();
+            questionReset();
+        }
         //ECHO
         else if (textContent.substring(0,5).equals("/echo")) {
             replyText =  textContent.replace("/echo","");
@@ -120,8 +127,6 @@ public class ZonkbotController {
             zonkbot.add_question(question);
             //RESULT GANTI DENGAN CAROUSEL
             replyWithCarousel(question, replyToken);
-            //result = zonkbot.toString();
-            questionReset();
         }
         return result;
     }
@@ -136,11 +141,11 @@ public class ZonkbotController {
         List<String> answers = question.getAnswers();
         List<CarouselColumn> columns = new ArrayList<>();
         List<Action> actions = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            actions.add(new MessageAction(answers.get(i),
-                    String.format("/answer %s", answers.get(i))));
+        for (String answer: answers) {
+            actions.add(new MessageAction("Select",
+                    String.format("/Correct answer: %s", answer)));
+            columns.add(new CarouselColumn(null,"Choose the correct answer",answer,actions));
         }
-        columns.add(new CarouselColumn(null,"dumdum","Choose the correct answer",actions));
         Template carouselTemplate = new CarouselTemplate(columns);
         TemplateMessage templateMessage = new TemplateMessage("Answers", carouselTemplate);
         this.reply(replyToken, templateMessage);
