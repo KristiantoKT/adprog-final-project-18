@@ -1,92 +1,146 @@
 [
   {
     "nama": "Halte Fisip UI",
-    "latitude": "-6.361853",
-    "longitude": "106.830153"
+    "latitude": -6.361853,
+    "longitude": 106.830153,
+    "jadwal" : [
+
+    ]
   },
   {
     "nama": "Halte Psikologi UI",
-    "latitude": "-6.362866",
-    "longitude": "106.831116"
+    "latitude": -6.362866,
+    "longitude": 106.831116,
+    "jadwal" : [
+
+    ]
   },
   {
     "nama": "Halte FHUI",
-    "latitude": "-6.364734",
-    "longitude": "106.832258"
+    "latitude": -6.364734,
+    "longitude": 106.832258,
+    "jadwal" : [
+
+    ]
   }
   {
     "nama": "Halte MUI",
-    "latitude": "-6.365517",
-    "longitude": "106.832066"
+    "latitude": -6.365517,
+    "longitude": 106.832066,
+    "jadwal" : [
+
+    ]
   },
   {
     "nama": "Halte Balairung",
-    "latitude": "-6.368196",
-    "longitude": "106.831546"
+    "latitude": -6.368196,
+    "longitude": 106.831546,
+    "jadwal" : [
+
+    ]
   }
   {
     "nama": "Halte Bikun Pocin",
-    "latitude": "-6.368284",
-    "longitude": "106.831742"
+    "latitude": -6.368284,
+    "longitude": 106.831742,
+    "jadwal" : [
+
+    ]
   },
   {
     "nama": "Halte RIK",
-    "latitude": "-6.370369",
-    "longitude": "106.830843"
+    "latitude": -6.370369,
+    "longitude": 106.830843,
+    "jadwal" : [
+
+    ]
   },
   {
     "nama": "Halte FKM UI",
-    "latitude": "-6.371473",
-    "longitude": "106.829243"
+    "latitude": -6.371473,
+    "longitude": 106.829243,
+    "jadwal" : [
+
+    ]
   },
   {
     "nama": "Halte FMIPA UI",
-    "latitude": "-6.369862",
-    "longitude": "106.826041"
+    "latitude": -6.369862,
+    "longitude": 106.826041,
+    "jadwal" : [
+
+    ]
   },
   {
     "nama": "Halte PNJ",
-    "latitude": "-6.366969",
-    "longitude": "106.824316"
+    "latitude": -6.366969,
+    "longitude": 106.824316,
+    "jadwal" : [
+
+    ]
   },
   {
     "nama": "Halte Pusgiwa",
-    "latitude": "-6.366761",
-    "longitude": "106.823511"
+    "latitude": -6.366761,
+    "longitude": 106.823511,
+    "jadwal" : [
+
+    ]
   },
   {
     "nama" : "Halte Vokasi UI",
-    "latitude" : "-6.366077",
-    "longitude" : "106.821667"
+    "latitude" : -6.366077,
+    "longitude" : 106.821667,
+    "jadwal" : [
+
+    ]
   },
   {
     "nama" : "Halte Stadion UI",
-    "latitude" : "-6.365877",
-    "longitude" : "106.821785"
+    "latitude" : -6.365877,
+    "longitude" : 106.821785,
+    "jadwal" : [
+
+    ]
   },
   {
     "nama" : "Halte Teknik (Merah)",
-    "latitude" : "-6.361154",
-    "longitude" : "106.823133"
+    "latitude" : -6.361154,
+    "longitude" : 106.823133,
+    "jadwal" : [
+
+    ]
   },
   {
     "nama" : "Halte Teknik (Biru)",
-    "latitude" : "-6.361322",
-    "longitude" : "106.823310"
+    "latitude" : -6.361322,
+    "longitude" : 106.823310,
+    "jadwal" : [
+
+    ]
   },
   {
     "nama" : "Halte FE UI (Merah)",
-    "latitude" : "-6.359395",
-    "longitude" : "106.825923"
+    "latitude" : -6.359395,
+    "longitude" : 106.825923,
+    "jadwal" : [
+
+    ]
   },
   {
     "nama" : "Halte FE UI (Biru)",
-    "latitude" : "-6.359627",
-    "longitude" : "106.825950"
+    "latitude" : -6.359627,
+    "longitude" : 106.825950,
+    "jadwal" : [
+
+    ]
   },
   {
     "nama" : "Halte FIB UI",
-    "latitude" : "-6.361167",
-    "longitude" : "106.829481"
+    "latitude" : -6.361167,
+    "longitude" : 106.829481,
+    "jadwal" : [
+
+    ]
   }
 ]
