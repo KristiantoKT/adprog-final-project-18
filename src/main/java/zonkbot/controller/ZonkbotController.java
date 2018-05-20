@@ -6,7 +6,6 @@ import com.linecorp.bot.model.action.MessageAction;
 import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
-import com.linecorp.bot.model.event.message.MessageContent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TemplateMessage;
@@ -19,7 +18,6 @@ import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -54,7 +52,7 @@ public class ZonkbotController {
     }
 
     public String responseMessage(String textContent, String replyToken) {
-        String replyText;
+        String replyText = "";
         //ACTIVATE ZONKBOT
         if (textContent.equals("/zonkbot") && zonkbot == null) {
             replyText = activateZonkbot();
@@ -78,6 +76,18 @@ public class ZonkbotController {
         else if (zonkbot != null && zonkbot.isAdd_question_section()) {
             replyText = add_question(textContent, replyToken);
         }
+        //CHANGE_ANSWER
+        else if (zonkbot != null && textContent.equals("/change_answer")) {
+            chooseAnswer(replyToken);
+            zonkbot.setChange_answer_section(true);
+        }
+        //CHANGE_ANSWER_SECTION
+        else if (zonkbot != null && textContent.length() > 10
+                && textContent.substring(0,10).equals("/Question")) {
+            int questionIndex = Integer.parseInt(textContent.substring(11));
+            Question chosenQuestion = zonkbot.chooseQuestion(questionIndex);
+            chooseCorrectAnswer(chosenQuestion, replyToken);
+        }
         //CHOOSE CORRECT ANSWER
         else if (textContent.length() >= 15
                 && textContent.substring(0,15).equals("/Correct answer")){
@@ -85,7 +95,6 @@ public class ZonkbotController {
             question.setCorrectAnswer(correctAnswer);
             replyText = question.toString();
             question = null;
-            LOGGER.fine(replyText);
         }
         //ECHO
         else if (textContent.length() > 5
@@ -134,7 +143,7 @@ public class ZonkbotController {
             question.addAnswer(textContent);
             zonkbot.add_question(question);
             //RESULT GANTI DENGAN CAROUSEL
-            replyWithCarousel(question, replyToken);
+            chooseCorrectAnswer(question, replyToken);
             addQuestionReset();
         }
         return result;
@@ -145,7 +154,7 @@ public class ZonkbotController {
         zonkbot.setAdd_question_section(false);
     }
 
-    private void replyWithCarousel(Question question, String replyToken) {
+    private void chooseCorrectAnswer(Question question, String replyToken) {
         List<String> answers = question.getAnswers();
         List<CarouselColumn> columns = new ArrayList<>();
         for (int i = 0; i < answers.size(); i++) {
@@ -153,10 +162,25 @@ public class ZonkbotController {
             actions.add(new MessageAction("Select",
                     String.format("/Correct answer: %s", i)));
             columns.add(new CarouselColumn(null,
-                    "Choose the correct answer",answers.get(i),actions));
+                    "Choose The Correct Answer", answers.get(i), actions));
         }
         Template carouselTemplate = new CarouselTemplate(columns);
         TemplateMessage templateMessage = new TemplateMessage("Answers", carouselTemplate);
+        this.reply(replyToken, templateMessage);
+    }
+
+    private void chooseAnswer(String replyToken) {
+        List<Question> questions = zonkbot.getQuestions();
+        List<CarouselColumn> columns = new ArrayList<>();
+        for (int i = 0; i < questions.size(); i++) {
+            List<Action> actions = new ArrayList<>();
+            actions.add(new MessageAction("Select",
+                    String.format("/Question: %s", i)));
+            columns.add(new CarouselColumn(null,
+                    "Choose Question", questions.get(i).getQuestion(), actions));
+        }
+        Template carouselTemplate = new CarouselTemplate(columns);
+        TemplateMessage templateMessage = new TemplateMessage("Questions", carouselTemplate);
         this.reply(replyToken, templateMessage);
     }
 

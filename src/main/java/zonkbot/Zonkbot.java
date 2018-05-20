@@ -5,12 +5,13 @@ import java.util.ArrayList;
 public class Zonkbot {
     ArrayList<Question> questions;
     private boolean add_question_section;
+    private boolean change_answer_section;
     private int answer_number;
 
     public Zonkbot() {
-        // Default Constructor
         questions = new ArrayList<Question>();
         add_question_section = false;
+        change_answer_section = false;
         answer_number = 0;
     }
 
@@ -22,6 +23,10 @@ public class Zonkbot {
         return questions;
     }
 
+
+    public Question chooseQuestion(int arrayIndex) {
+        return questions.get(arrayIndex);
+    }
 
     public int getQuestionIndex(String question) {
         for (int i = 0; i < questions.size(); i++) {
@@ -36,12 +41,20 @@ public class Zonkbot {
         return add_question_section;
     }
 
+    public boolean isChange_answer_section() {
+        return change_answer_section;
+    }
+
     public int getAnswer_number(){
         return answer_number;
     }
 
-    public void setAdd_question_section(boolean add_question_section){
+    public void setAdd_question_section(boolean add_question_section) {
         this.add_question_section = add_question_section;
+    }
+
+    public void setChange_answer_section(boolean change_answer_section) {
+        this.change_answer_section = change_answer_section;
     }
 
     public void setAnswer_number(int answer_number){
