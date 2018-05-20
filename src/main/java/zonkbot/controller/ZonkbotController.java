@@ -6,6 +6,7 @@ import com.linecorp.bot.model.action.MessageAction;
 import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
+import com.linecorp.bot.model.event.message.MessageContent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TemplateMessage;
@@ -36,7 +37,6 @@ public class ZonkbotController {
     private static final Logger LOGGER = Logger.getLogger(ZonkbotController.class.getName());
     private Zonkbot zonkbot = null;
     private Question question = null;
-    private boolean zonkbotActive = false;
 
 
     @Autowired
@@ -56,30 +56,31 @@ public class ZonkbotController {
     public String responseMessage(String textContent, String replyToken) {
         String replyText;
         //ACTIVATE ZONKBOT
-        if (textContent.equals("/zonkbot") && !zonkbotActive) {
+        if (textContent.equals("/zonkbot") && zonkbot == null) {
             replyText = activateZonkbot();
         }
         //ZONKBOT ALREADY ACTIVATED
-        else if (textContent.equals("/zonkbot") && zonkbotActive) {
+        else if (textContent.equals("/zonkbot") && zonkbot != null) {
             replyText = "zonkbot has already activated";
         }
         //DEACTIVATE ZONKBOT
-        else if (textContent.equals("/deactivate") && zonkbotActive) {
-            zonkbotActive = false;
+        else if (textContent.equals("/deactivate") && zonkbot != null) {
+            deactivateZonkbot();
             replyText = "zonkbot deactivated, all question will be deleted";
         }
         //ADD_QUESTION
-        else if (textContent.equals("/add_question") && zonkbotActive
+        else if (textContent.equals("/add_question") && zonkbot != null
                 && !zonkbot.isAdd_question_section()) {
             replyText = "Please input your question";
             zonkbot.setAdd_question_section(true);
         }
         //ADD_QUESTION_SECTION
-        else if (zonkbotActive && zonkbot.isAdd_question_section()) {
+        else if (zonkbot != null && zonkbot.isAdd_question_section()) {
             replyText = add_question(textContent, replyToken);
         }
         //CHOOSE CORRECT ANSWER
-        else if (textContent.substring(0,15).equals("/Correct answer")){
+        else if (textContent.length() >= 15
+                && textContent.substring(0,15).equals("/Correct answer")){
             String correctAnswer = textContent.substring(17);
             question.setCorrectAnswer(correctAnswer);
             replyText = question.toString();
@@ -87,11 +88,13 @@ public class ZonkbotController {
             LOGGER.fine(replyText);
         }
         //ECHO
-        else if (textContent.substring(0,5).equals("/echo")) {
+        else if (textContent.length() > 5
+                && textContent.substring(0,5).equals("/echo")) {
             replyText =  textContent.replace("/echo","");
+            replyText = replyText.substring(1);
         }
         //ZONKBOT NOT AVAILABLE
-        else if (!zonkbotActive) {
+        else if (zonkbot == null) {
             replyText = "zonkbot are not available."
                     + "To activate zonkbot please type \"/zonkbot\"";
         }
@@ -102,10 +105,14 @@ public class ZonkbotController {
         return replyText;
     }
 
+    private void deactivateZonkbot() {
+        zonkbot = null;
+        question = null;
+    }
+
     @NotNull
     private String activateZonkbot() {
         String replyText;
-        zonkbotActive = true;
         zonkbot = new Zonkbot();
         replyText = "zonkbot activated!";
         return replyText;
