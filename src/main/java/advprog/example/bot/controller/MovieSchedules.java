@@ -56,7 +56,7 @@ public class MovieSchedules {
 
     public String printSong() {
         if (songInChart.size() == 0) {
-            return "Oops sorry! The artist isn't on the Billboard Japan HOT 100!";
+            return "Oops sorry! That studio type isn't available in this CGV! Please look for another CGV cinemas";
         }
 
         StringBuilder stringBuilder = new StringBuilder();
