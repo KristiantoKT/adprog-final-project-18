@@ -62,12 +62,10 @@ public class ZonkbotController {
 
         //ECHO FOR LOGGING
         } else if (textContent.substring(0,5).equals("/echo")) {
-            replyText =  textContent.replace("/echo ","eyak eyak");
-            replyText(event.getReplyToken(),replyText);
+            replyText =  textContent.replace("/echo","");
         }
 
-        //return new TextMessage(replyText);
-        return;
+        replyText(event.getReplyToken(),replyText);
     }
 
     @NotNull
@@ -111,7 +109,7 @@ public class ZonkbotController {
 
     private void reply(@NonNull String replyToken, @NonNull List<Message> messages) {
         try {
-            BotApiResponse apiResponse = lineMessagingClient
+            lineMessagingClient
                     .replyMessage(new ReplyMessage(replyToken, messages))
                     .get();
         } catch (InterruptedException | ExecutionException e) {
