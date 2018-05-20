@@ -42,7 +42,7 @@ public class MovieSchedules {
                 String formatTitle = Parser.unescapeEntities(title, false);
                 String formatSchedule = Parser.unescapeEntities(schedule, false);
 
-                if (formatStudio.equalsIgnoreCase(stTypeFix)) {
+                if (formatStudio.contains(stTypeFix)) {
                     songInChart.add(new Song(formatTitle, formatSchedule));
                 }
             }
