@@ -22,11 +22,12 @@ import java.util.logging.Logger;
 
 @LineMessageHandler
 public class PrintController {
-    private static final Logger LOGGER = Logger.getLogger(PrintController.class.getName());
     private String path = "./src/main/java/advprog/bikun/bot/halte-bikun.json";
     private BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
     private ObjectMapper objectMapper = new ObjectMapper();
     private HalteBikun[] halteBikuns = objectMapper.readValue(bufferedReader, HalteBikun[].class);
+
+    private static final Logger LOGGER = Logger.getLogger(PrintController.class.getName());
 
     public PrintController() throws IOException {
     }

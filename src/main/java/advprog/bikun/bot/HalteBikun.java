@@ -1,5 +1,7 @@
 package advprog.bikun.bot;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 public class HalteBikun {
