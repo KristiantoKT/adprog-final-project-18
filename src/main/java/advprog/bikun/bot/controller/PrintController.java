@@ -12,6 +12,7 @@ import com.linecorp.bot.model.message.TemplateMessage;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -29,6 +30,7 @@ public class PrintController {
 
     private static final Logger LOGGER = Logger.getLogger(PrintController.class.getName());
 
+    @Autowired
     public PrintController() throws IOException {
     }
 

@@ -10,12 +10,12 @@ public class HalteBikun {
     private double longitude;
     private List<String> jadwal;
 
-    public HalteBikun(String nama, double latitude, double longitude, List<String> jadwal) {
-        this.nama = nama;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.jadwal = jadwal;
-    }
+//    public HalteBikun(String nama, double latitude, double longitude, List<String> jadwal) {
+//        this.nama = nama;
+//        this.latitude = latitude;
+//        this.longitude = longitude;
+//        this.jadwal = jadwal;
+//    }
 
     public String getNama() {
         return nama;
