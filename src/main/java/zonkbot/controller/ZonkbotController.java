@@ -78,11 +78,14 @@ public class ZonkbotController {
         }
         //CHANGE_ANSWER
         else if (zonkbot != null && textContent.equals("/change_answer")) {
-            chooseQuestion(replyToken);
+            if(zonkbot.getQuestions() == null)
+                replyText = "There is no question";
+            else
+                chooseQuestion(replyToken);
         }
         //CHANGE_ANSWER_SECTION
         else if (zonkbot != null && textContent.length() > 10
-                && textContent.substring(0,10).equals("/Question")) {
+                && textContent.substring(0,9).equals("/Question")) {
             int questionIndex = Integer.parseInt(textContent.substring(11));
             question = zonkbot.chooseQuestion(questionIndex);
             chooseCorrectAnswer(question, replyToken);
