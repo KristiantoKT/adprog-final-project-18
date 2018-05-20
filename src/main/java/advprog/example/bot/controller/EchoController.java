@@ -36,32 +36,32 @@ public class EchoController {
 
         String replyText = "";
 
-        if (contentText.contains("/cgv_gold_class")){
+        if (contentText.equalsIgnoreCase("/cgv_gold_class")){
             replyText += contentText;
             return new TextMessage(movieSched.findArtist(replyText));
-        } else if (contentText.contains("/cgv_regular_2d")) {
+        } else if (contentText.equalsIgnoreCase("/cgv_regular_2d")) {
             replyText += contentText;
             return new TextMessage(movieSched.findArtist(replyText));
-        } else if (contentText.contains("/cgv_4dx_3d_cinema")) {
+        } else if (contentText.equalsIgnoreCase("/cgv_4dx_3d_cinema")) {
                 replyText += contentText;
                 return new TextMessage(movieSched.findArtist(replyText));
-        } else if (contentText.contains("/cgv_velvet")) {
+        } else if (contentText.equalsIgnoreCase("/cgv_velvet")) {
             replyText += contentText;
             return new TextMessage(movieSched.findArtist(replyText));
-        } else if (contentText.contains("/cgv_sweet_box")) {
+        } else if (contentText.equalsIgnoreCase("/cgv_sweet_box")) {
             replyText += contentText;
             return new TextMessage(movieSched.findArtist(replyText));
-        } else if (contentText.contains("/cgv_sweet_box")) {
+        } else if (contentText.equalsIgnoreCase("/cgv_sweet_box")) {
             replyText += contentText;
             return new TextMessage(movieSched.findArtist(replyText));
-        } else if (contentText.contains("/cgv_change_cinema")) {
+        } else if (contentText.equalsIgnoreCase("/cgv_change_cinema")) {
             replyText += contentText.replace("/cgv_change_cinema ", "");
             url = replyText;
             return new TextMessage(movieSched.findArtist(replyText));
         }
         else {
             replyText += "Pleasa input the right command";
-            return new TextMessage(movieSched.findArtist(replyText));
+            return new TextMessage(replyText);
         }
 
 
