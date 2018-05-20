@@ -135,12 +135,12 @@ public class ZonkbotController {
     private void replyWithCarousel(Question question, String replyToken) {
         List<String> answers = question.getAnswers();
         List<CarouselColumn> columns = new ArrayList<>();
+        List<Action> actions = new ArrayList<>();
         for (String answer: answers) {
-            List<Action> actions = new ArrayList<>();
-            actions.add(new MessageAction("Choose",
+            actions.add(new MessageAction(answer,
                     String.format("/answer %s", answer)));
-            columns.add(new CarouselColumn(null,answer,answer,actions));
         }
+        columns.add(new CarouselColumn(null,"dumdum","Choose the correct answer",actions));
         Template carouselTemplate = new CarouselTemplate(columns);
         TemplateMessage templateMessage = new TemplateMessage("Answers", carouselTemplate);
         this.reply(replyToken, templateMessage);
