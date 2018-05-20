@@ -80,7 +80,7 @@ public class ZonkbotController {
         }
         //CHOOSE CORRECT ANSWER
         else if (textContent.substring(0,15).equals("/Correct answer")){
-            String correctAnswer = textContent.substring(16);
+            String correctAnswer = textContent.substring(17);
             question.setCorrectAnswer(correctAnswer);
             replyText = question.toString();
             question = null;
