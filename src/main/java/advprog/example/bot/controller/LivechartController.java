@@ -103,10 +103,6 @@ public class LivechartController {
             CarouselTemplate carouselTemplate = new CarouselTemplate(
                     Arrays.asList(
                             new CarouselColumn("https://u.livechart.me/anime/poster_images/154/0957157a7117cf99523c2042cc46045f:small.jpg", "Genre", "Click One of The Genre", Arrays.asList(
-                                    /*new URIAction("Go to line.me",
-                                            "https://line.me"),
-                                    new URIAction("Go to line.me",
-                                            "https://line.me"),*/
                                     new PostbackAction("Action",
                                             "Action", "/genre Action"),
                                     new PostbackAction("Comedy",
