@@ -14,7 +14,9 @@ import com.linecorp.bot.model.message.template.ButtonsTemplate;
 import com.linecorp.bot.model.message.template.ImageCarouselColumn;
 import com.linecorp.bot.model.message.template.ImageCarouselTemplate;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class BikunController {
@@ -76,5 +78,15 @@ public class BikunController {
         return Math.sqrt(distance);
     }
 
+    public static String differenceMinutes(){
+        String time1 = "12:00:00";
+        String time2 = "12:01:00";
+
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+        Date date1 = format.parse(time1);
+        Date date2 = format.parse(time2);
+        long difference = date2.getTime() - date1.getTime();
+        System.out.println(difference/1000);
+    }
 
 }
