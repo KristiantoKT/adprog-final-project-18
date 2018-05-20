@@ -1,5 +1,7 @@
 package advprog.example.bot.controller;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import advprog.example.bot.EventTestUtil;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
@@ -17,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @SpringBootTest(properties = "line.bot.handler.enabled=false")
@@ -69,8 +70,9 @@ public class LivechartControllerTest {
 
         assertEquals("Something Wrong", reply.getText());
     }
+
     @Test
-    void testHandleTextMessageEventFilmSeason() throws IOException {
+    void testHandleTextMessageEventGenreSeason() throws IOException {
         MessageEvent<TextMessageContent> event =
                 EventTestUtil.createDummyTextMessage("/genre/season winter");
 
