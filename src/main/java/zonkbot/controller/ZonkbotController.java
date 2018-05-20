@@ -98,9 +98,9 @@ public class ZonkbotController {
         if (answerNumber == 0) {
             question = new Question(textContent);
             result = "Answer 1:";
-            zonkbot.setAnswer_number(answerNumber++);
+            zonkbot.setAnswer_number(++answerNumber);
         } else if (answerNumber < 4) {
-            zonkbot.setAnswer_number(answerNumber++);
+            zonkbot.setAnswer_number(++answerNumber);
             question.addAnswer(textContent);
             result = "Answer " + answerNumber + ":";
         } else if (answerNumber > 4) {
