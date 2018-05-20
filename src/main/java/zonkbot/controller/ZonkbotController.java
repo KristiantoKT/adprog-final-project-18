@@ -84,6 +84,7 @@ public class ZonkbotController {
             question.setCorrectAnswer(correctAnswer);
             replyText = question.toString();
             question = null;
+            LOGGER.fine(replyText);
         }
         //ECHO
         else if (textContent.substring(0,5).equals("/echo")) {

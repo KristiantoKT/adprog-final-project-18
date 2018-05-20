@@ -60,11 +60,7 @@ public class ZonkbotControllerTest {
     //        assertEquals("zonkbot activated!", reply.getText());
     //    }
 
-    @Test
-    void testZonkbotController() {
-        assertEquals("Answer 1:", zonkbotController.add_question("ayam?"));
-        assertEquals("Answer 2:", zonkbotController.add_question("tidak"));
-    }
+
 
     //    @Test
     //    void testZonkbotControllerTextDefault() {
@@ -120,18 +116,19 @@ public class ZonkbotControllerTest {
         verify(event, atLeastOnce()).getTimestamp();
     }
 
-    @Test
-    void testZonkbotToString() {
-        String reply;
-        zonkbotController.responseMessage("/zonkbot");
-        zonkbotController.responseMessage("/add_question");
-        zonkbotController.responseMessage("ayam?");
-        zonkbotController.responseMessage("1");
-        zonkbotController.responseMessage("2");
-        zonkbotController.responseMessage("3");
-        reply = zonkbotController.responseMessage("4");
-        assertEquals("ayam?\n    1\n    2\n    3\n    4", reply);
-    }
+//    @Test
+//    void testZonkbotToString() {
+//        Event event = mock(Event.class);
+//        String reply;
+//        zonkbotController.responseMessage("/zonkbot");
+//        zonkbotController.responseMessage("/add_question");
+//        zonkbotController.responseMessage("ayam?");
+//        zonkbotController.responseMessage("1");
+//        zonkbotController.responseMessage("2");
+//        zonkbotController.responseMessage("3");
+//        reply = zonkbotController.responseMessage("4");
+//        assertEquals("ayam?\n    1\n    2\n    3\n    4", reply);
+//    }
 
     void deactivateZonkbot() {
         MessageEvent<TextMessageContent> event =
