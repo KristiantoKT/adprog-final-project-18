@@ -32,6 +32,7 @@ public class Itunes {
         pickedSong = songByArtist.get(pickedNumber);
         getPreviewUrl(pickedSong);
     }
+
     public void getPreviewUrl(Song song) {
         //get the url for song preview
         song.getPreviewUrl();

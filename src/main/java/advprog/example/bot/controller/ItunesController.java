@@ -13,11 +13,6 @@ import com.linecorp.bot.model.response.BotApiResponse;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -30,17 +25,27 @@ import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+
 @LineMessageHandler
 public class ItunesController {
 
     private static final Logger LOGGER = Logger.getLogger(ItunesController.class.getName());
-    private static final String channelToken = "M+cDBxVHqt8ZjGEcYDqy7X3HX/SECVSx6xVDXoaKh1l5mMy00ZZ9Y8cJS5o7H2AqieBj8UbU9bfPNYQqI4JXE8EJgyuaaJLJB8Oo21K2XN4NJZOQgK3ouBglkK7V0K7iVNqz27a1xKahlIODN6qRigdB04t89/1O/w1cDnyilFU=";
+    private static final String channelToken = "M+cDBxVHqt8ZjGEcYDq"
+            + "y7X3HX/SECVSx6xVDXoaKh1l5mMy00ZZ9Y8cJS5o7H2"
+            + "AqieBj8UbU9bfPNYQqI4JXE8EJgyuaaJLJB8Oo21K2XN"
+            + "4NJZOQgK3ouBglkK7V0K7iVNqz27a1xKahlIODN6qRig"
+            + "dB04t89/1O/w1cDnyilFU=";
 
     @Autowired
     public LineMessagingClient lineMessagingClient;
 
     @EventMapping
-    public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws IOException, JSONException {
+    public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event)
+            throws IOException, JSONException {
         LOGGER.fine(String.format("TextMessageContent(timestamp='%s',content='%s')",
                 event.getTimestamp(), event.getMessage()));
         TextMessageContent content = event.getMessage();
@@ -113,7 +118,7 @@ public class ItunesController {
         for (int i = 0; i < param.length; i++) {
             base += param[i] + "+";
         }
-        return base.substring(0,base.length()-1);
+        return base.substring(0,base.length() - 1);
     }
 
     public void replyAudio(String replyToken, SongInformation theSong) {
@@ -129,8 +134,8 @@ public class ItunesController {
         final AudioMessage audioMessage = new AudioMessage(theSong.previewUrl, 20000);
 
         final ImageMessage imageMessage = new ImageMessage(
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Download_on_iTunes.svg/800px-Download_on_iTunes.svg.png"
-                ,"https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Download_on_iTunes.svg/800px-Download_on_iTunes.svg.png");
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Download_on_iTunes.svg/800px-Download_on_iTunes.svg.png",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Download_on_iTunes.svg/800px-Download_on_iTunes.svg.png");
 
         List<Message> message = new ArrayList<Message>();
         message.add(imageMessage);
