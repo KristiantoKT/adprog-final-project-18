@@ -8,19 +8,18 @@ import org.junit.Assert;
 import org.junit.Test;
 
 
-public class FallCommandTest {
-    private String testDate = "fall-2018";
-    private SeasonCommand command = new FallCommand();
+public class SeasonCommandTest {
+    private String testDate = "spring-2018";
+    private SeasonCommand command = new SeasonCommand();
     private TextMessage reply;
 
-    private String sampleTitle = "Goblin Slayer";
-    private String sampleSynopsis = "A young priestess has "
-           +  "formed her first adventuring party";
+    private String sampleTitle = "Boku no Hero Academia 3rd Season";
+    private String sampleSynopsis = "Izuku";
 
 
     @Test
     public void testInstanceOf() {
-        Assert.assertTrue(command instanceof FallCommand);
+        Assert.assertTrue(command instanceof SeasonCommand);
     }
 
     @Test
