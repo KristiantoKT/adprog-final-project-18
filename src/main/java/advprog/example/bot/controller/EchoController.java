@@ -1,7 +1,5 @@
 package advprog.example.bot.controller;
 
-import advprog.example.bot.controller.Billboardjapan100;
-
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.event.Event;
@@ -30,15 +28,43 @@ public class EchoController {
         LOGGER.fine(String.format("TextMessageContent(timestamp='%s',content='%s')",
                 event.getTimestamp(), event.getMessage()));
 
-        String url = "https://www.billboard.com/charts/japan-hot-100";
-        Billboardjapan100 billboard100 = new Billboardjapan100(url);
+        String url = "https://www.cgv.id/en/schedule/cinema";
+        MovieSchedules movieSched = new MovieSchedules(url);
 
         TextMessageContent content = event.getMessage();
         String contentText = content.getText();
 
-        String replyText = contentText.replace("/billboard japan100 ", "");
+        String replyText = "";
 
-        return new TextMessage(billboard100.findArtist(replyText));
+        if (contentText.contains("/cgv_gold_class")){
+            replyText += contentText;
+            return new TextMessage(movieSched.findArtist(replyText));
+        } else if (contentText.contains("/cgv_regular_2d")) {
+            replyText += contentText;
+            return new TextMessage(movieSched.findArtist(replyText));
+        } else if (contentText.contains("/cgv_4dx_3d_cinema")) {
+                replyText += contentText;
+                return new TextMessage(movieSched.findArtist(replyText));
+        } else if (contentText.contains("/cgv_velvet")) {
+            replyText += contentText;
+            return new TextMessage(movieSched.findArtist(replyText));
+        } else if (contentText.contains("/cgv_sweet_box")) {
+            replyText += contentText;
+            return new TextMessage(movieSched.findArtist(replyText));
+        } else if (contentText.contains("/cgv_sweet_box")) {
+            replyText += contentText;
+            return new TextMessage(movieSched.findArtist(replyText));
+        } else if (contentText.contains("/cgv_change_cinema")) {
+            replyText += contentText.replace("/cgv_change_cinema ", "");
+            url = replyText;
+            return new TextMessage(movieSched.findArtist(replyText));
+        }
+        else {
+            replyText += "Pleasa input the right command";
+            return new TextMessage(movieSched.findArtist(replyText));
+        }
+
+
     }
 
     @EventMapping

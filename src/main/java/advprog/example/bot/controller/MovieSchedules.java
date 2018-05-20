@@ -11,29 +11,29 @@ import org.jsoup.nodes.Element;
 import org.jsoup.parser.Parser;
 import org.jsoup.select.Elements;
 
-public class Billboardjapan100 {
-    private String urlBillboard;
+public class MovieSchedules {
+    private String movieUrl;
     private List<Song> songInChart;
 
-    public Billboardjapan100(String billboardUrl) {
-        this.urlBillboard = billboardUrl;
+    public MovieSchedules(String billboardUrl) {
+        this.movieUrl = billboardUrl;
         songInChart = new ArrayList<>();
     }
 
-    public String findArtist(String artistSearch) {
+    public String findArtist(String studioType) {
         try {
-            Document doc = Jsoup.connect(urlBillboard).get();
+            Document doc = Jsoup.connect(movieUrl).get();
             Elements links = doc.getElementsByClass("chart-row");
 
             for (int i = 0; i < 100; i++) {
                 Element elem = links.get(i);
-                String name = elem.getElementsByClass("chart-row__song").html();
-                String artist = elem.getElementsByClass("chart-row__artist").html();
+                String title = elem.getElementsByClass("schedule-title").html(); //("chart-row__song").html();
+                String schedule = elem.getElementsByClass("showtime-lists").html();
 
-                String formatName = Parser.unescapeEntities(name, false);
-                String formatArtist = Parser.unescapeEntities(artist, false);
+                String formatName = Parser.unescapeEntities(title, false);
+                String formatArtist = Parser.unescapeEntities(schedule, false);
 
-                if (formatArtist.equalsIgnoreCase(artistSearch)) {
+                if (formatArtist.equalsIgnoreCase(studioType)) {
                     songInChart.add(new Song(formatName, formatArtist, i + 1));
                 }
             }
@@ -47,7 +47,7 @@ public class Billboardjapan100 {
 
     public String printSong() {
         if (songInChart.size() == 0) {
-            return "Oops sorry! The artist is not on the Billboard Japan HOT 100!";
+            return "Oops sorry! The artist isn't on the Billboard Japan HOT 100!";
         }
 
         StringBuilder stringBuilder = new StringBuilder();
