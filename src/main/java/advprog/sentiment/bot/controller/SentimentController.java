@@ -7,10 +7,13 @@ import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 
-import org.springframework.boot.json.GsonJsonParser;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.springframework.boot.json.BasicJsonParser;
 
 import java.util.logging.Logger;
 import java.util.Map;
+import java.util.List;
 
 import java.net.URL;
 import java.net.MalformedURLException;
@@ -31,6 +34,7 @@ public class SentimentController {
     private static final String SUBCRIPTION_KEY = "122c5a4b68f6430d9d9145692799bbd5";
 
     @EventMapping
+    @SuppressWarnings("unchecked")
     public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
         LOGGER.fine(String.format("TextMessageContent(timestamp='%s',content='%s')",
                 event.getTimestamp(), event.getMessage()));
@@ -42,15 +46,22 @@ public class SentimentController {
             replyText = contentText.replace("/echo ", "");
         } else if (contentText.matches("^/sentiment (.*)")) {
             String tmp = contentText.replace("/sentiment ", "");
-            replyText = getSentiment(tmp);
+            String responseText = getSentiment(tmp);
 
-            GsonJsonParser parser = new GsonJsonParser();
+            BasicJsonParser parser = new BasicJsonParser();
 
-            Map<String, Object> data = parser.parseMap(replyText);
+            Map<String, Object> data0 = parser.parseMap(responseText);
+            List<Object> data1 = (List<Object>) data0.get("documents");
+            Map<String, Object> data2 = (Map<String, Object>) data1.get(0);
 
-            System.out.println(data.get("documents"));
+            System.out.println(data2.get("score"));
+            double data5 = (double)data2.get("score");
+            double score = Double.valueOf(data5) * 100;
+            System.out.println(score);
+
+            replyText = String.format("Sentiment: %.2f%%", score);
         } else {
-            replyText = "wait what?";
+            replyText = "";
         }
 
         return new TextMessage(replyText);
@@ -74,14 +85,14 @@ public class SentimentController {
                 "]" + 
             "}";
 
-        query = String.format(query, "en", "1", text);
+        String escaped_text = text.replace("\"", "\\\"");
+        escaped_text = text.replace("\'", "\\\'");
+
+        query = String.format(query, "en", "1", escaped_text);
 
         String result = "";
         try {
             URL url = new URL(API_URL);
-
-            LOGGER.fine(String.format("what do i know? this is : \n\n%s \n\n%s \n\n%s", 
-                        query, "lol", "lol"));
 
             HttpsURLConnection con = (HttpsURLConnection)url.openConnection();
 

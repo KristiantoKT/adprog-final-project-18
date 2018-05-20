@@ -1,7 +1,6 @@
 package advprog.sentiment.bot.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import static org.mockito.Mockito.atLeastOnce;
@@ -46,9 +45,39 @@ public class SentimentControllerTest {
 
         TextMessage reply = sentimentController.handleTextMessageEvent(event);
 
-        assertEquals("Lorem Ipsum", reply.getText());
-        assertThat(reply.getText()).contains("3%");
+        assertEquals("Sentiment: 2.67%", reply.getText());
     }
+
+    @Test
+    void testHandleTextMessageEvent2() {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/sentiment You look pretty");
+
+        TextMessage reply = sentimentController.handleTextMessageEvent(event);
+
+        assertEquals("Sentiment: 85.19%", reply.getText());
+    }
+
+    @Test
+    void testHandleTextMessageEvent3() {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/sentiment Let's eat some food");
+
+        TextMessage reply = sentimentController.handleTextMessageEvent(event);
+
+        assertEquals("Sentiment: 96.29%", reply.getText());
+    }
+
+    @Test
+    void testHandleTextMessageEvent4() {
+        MessageEvent<TextMessageContent> event =
+            EventTestUtil.createDummyTextMessage("/echo Lorem Ipsum");
+
+        TextMessage reply = echoController.handleTextMessageEvent(event);
+
+        assertEquals("Lorem Ipsum", reply.getText());
+    }
+
 
     @Test
     void testHandleDefaultMessage() {
