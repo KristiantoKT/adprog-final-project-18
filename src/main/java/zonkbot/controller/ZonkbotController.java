@@ -58,7 +58,7 @@ public class ZonkbotController {
         //DEACTIVATE ZONKBOT
         else if (textContent.equals("/deactivate_zonkbot") && zonkbotActive) {
             zonkbotActive = false;
-            replyText = "zonkbot deactivated";
+            replyText = "zonkbot deactivated, all question will be deleted";
         }
         //ADD_QUESTION
         else if (textContent.equals("/add_question") && zonkbotActive
@@ -72,7 +72,7 @@ public class ZonkbotController {
         }
         //ECHO
         else if (textContent.substring(0,5).equals("/echo")) {
-            replyText =  textContent.replace("/echo","eyak eyak");
+            replyText =  textContent.replace("/echo","");
         }
         //OTHERS
         else {
