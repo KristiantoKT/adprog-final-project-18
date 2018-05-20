@@ -15,12 +15,8 @@ public class Question {
     }
 
     public void setCorrectAnswer(String string){
-        for (int i = 0; i < answers.size(); i++) {
-            if (answers.get(i).equals(string)) {
-                correct_answer_index = i;
-                return;
-            }
-        }
+        int i = Integer.parseInt(string);
+        correct_answer_index = i;
     }
 
     public void addAnswer(String answer) {
@@ -48,9 +44,9 @@ public class Question {
     private String answerStringBuilder(int i){
         String result = "";
         if (correct_answer_index == i && i != answers.size())
-            result = "   *" + answers.get(i) + "*\n";
+            result = "  *" + answers.get(i) + "*\n";
         else if (correct_answer_index == i && i == answers.size())
-            result = "   *" + answers.get(i) + "*";
+            result = "  *" + answers.get(i) + "*";
         else if (i == answers.size())
             result = "    " + answers.get(i);
         else
