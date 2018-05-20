@@ -1,16 +1,24 @@
 package zonkbot.controller;
 
 import com.linecorp.bot.client.LineMessagingClient;
+import com.linecorp.bot.model.action.Action;
+import com.linecorp.bot.model.action.MessageAction;
 import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.Message;
+import com.linecorp.bot.model.message.TemplateMessage;
 import com.linecorp.bot.model.message.TextMessage;
+import com.linecorp.bot.model.message.template.CarouselColumn;
+import com.linecorp.bot.model.message.template.CarouselTemplate;
+import com.linecorp.bot.model.message.template.Template;
 import com.linecorp.bot.model.response.BotApiResponse;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -40,12 +48,12 @@ public class ZonkbotController {
                 event.getTimestamp(), event.getMessage()));
         TextMessageContent messageContent = event.getMessage();
         String textContent = messageContent.getText();
-        String replyText = responseMessage(textContent);
-        replyText(event.getReplyToken(),replyText);
-        return;
+        String replyText = responseMessage(textContent, event.getReplyToken());
+        if(!replyText.isEmpty())
+            replyText(event.getReplyToken(),replyText);
     }
 
-    private String responseMessage(String textContent) {
+    public String responseMessage(String textContent, String replyToken) {
         String replyText;
         //ACTIVATE ZONKBOT
         if (textContent.equals("/zonkbot") && !zonkbotActive) {
@@ -56,7 +64,7 @@ public class ZonkbotController {
             replyText = "zonkbot has already activated";
         }
         //DEACTIVATE ZONKBOT
-        else if (textContent.equals("/deactivate_zonkbot") && zonkbotActive) {
+        else if (textContent.equals("/deactivate") && zonkbotActive) {
             zonkbotActive = false;
             replyText = "zonkbot deactivated, all question will be deleted";
         }
@@ -68,16 +76,20 @@ public class ZonkbotController {
         }
         //ADD_QUESTION_SECTION
         else if (zonkbotActive && zonkbot.isAdd_question_section()) {
-            replyText = add_question(textContent);
+            replyText = add_question(textContent, replyToken);
         }
         //ECHO
         else if (textContent.substring(0,5).equals("/echo")) {
             replyText =  textContent.replace("/echo","");
         }
-        //OTHERS
-        else {
+        //ZONKBOT NOT AVAILABLE
+        else if (!zonkbotActive) {
             replyText = "zonkbot are not available."
                     + "To activate zonkbot please type \"/zonkbot\"";
+        }
+        //OTHERS
+        else {
+            replyText = textContent + " is not a command";
         }
         return replyText;
     }
@@ -92,20 +104,23 @@ public class ZonkbotController {
     }
 
 
-    public String add_question(String textContent) {
+    public String add_question(String textContent, String replyToken) {
         String result = "";
         int answerNumber = zonkbot.getAnswer_number();
         if (answerNumber == 0) {
             question = new Question(textContent);
+            zonkbot.setAnswer_number(++answerNumber);
             result = "Answer 1:";
-            zonkbot.setAnswer_number(++answerNumber);
         } else if (answerNumber < 4) {
-            zonkbot.setAnswer_number(++answerNumber);
             question.addAnswer(textContent);
+            zonkbot.setAnswer_number(++answerNumber);
             result = "Answer " + answerNumber + ":";
-        } else if (answerNumber > 4) {
+        } else if (answerNumber >= 4) {
+            question.addAnswer(textContent);
             zonkbot.add_question(question);
-            result = zonkbot.toString();
+            //RESULT GANTI DENGAN CAROUSEL
+            replyWithCarousel(question, replyToken);
+            //result = zonkbot.toString();
             questionReset();
         }
         return result;
@@ -115,6 +130,20 @@ public class ZonkbotController {
         zonkbot.setAnswer_number(0);
         zonkbot.setAdd_question_section(false);
         question = null;
+    }
+
+    private void replyWithCarousel(Question question, String replyToken) {
+        List<String> answers = question.getAnswers();
+        List<CarouselColumn> columns = new ArrayList<>();
+        for (String answer: answers) {
+            List<Action> actions = new ArrayList<>();
+            actions.add(new MessageAction("Choose",
+                    String.format("/answer %s", answer)));
+            columns.add(new CarouselColumn(null,answer,answer,actions));
+        }
+        Template carouselTemplate = new CarouselTemplate(columns);
+        TemplateMessage templateMessage = new TemplateMessage("Answers", carouselTemplate);
+        this.reply(replyToken, templateMessage);
     }
 
     @EventMapping
