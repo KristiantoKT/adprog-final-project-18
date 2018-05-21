@@ -10,9 +10,9 @@ import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 import java.util.logging.Logger;
 
 @LineMessageHandler
-public class EchoController {
+public class BotController {
 
-    private static final Logger LOGGER = Logger.getLogger(EchoController.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(BotController.class.getName());
 
     @EventMapping
     public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
@@ -21,8 +21,21 @@ public class EchoController {
         TextMessageContent content = event.getMessage();
         String contentText = content.getText();
 
-        String replyText = contentText.replace("/echo", "");
-        return new TextMessage(replyText.substring(1));
+        String replyText;
+        if (contentText.match("^/echo (.*)")){
+            replyText = contentText.replace("/echo ", "");
+        } else if (contentText.match("^/coin(.*)")) {
+            replyText = "";
+        } else if (contentText.match("^/roll \\dd\\d(.*)")) {
+            replyText = "";
+        } else if (contentText.match("^/multiroll \\d+ \\dd\\d(.*)")) {
+            replyText = "";
+        } else if (contentText.match("^/is_lucky \\d+ \\dd\\d(.*)")) {
+            replyText = "";
+        } else {
+            replyText = ":)";
+        }
+        return new TextMessage(replyText);
     }
 
     @EventMapping
