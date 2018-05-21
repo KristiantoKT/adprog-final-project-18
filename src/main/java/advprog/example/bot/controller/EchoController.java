@@ -1,11 +1,10 @@
 package advprog.example.bot.controller;
 
-import advprog.anison.bot.songSearch;
-import advprog.anison.bot.ituneSearch;
+import advprog.anison.bot.ItuneSearch;
+import advprog.anison.bot.SongSearch;
 
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
-import com.linecorp.bot.model.event.message.AudioMessageContent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.AudioMessage;
 import com.linecorp.bot.model.message.Message;
@@ -21,7 +20,7 @@ public class EchoController {
     private static final Logger LOGGER = Logger.getLogger(EchoController.class.getName());
 
     @EventMapping
-    public Message handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws Exception{
+    public Message handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws Exception {
         LOGGER.fine(String.format("TextMessageContent(timestamp='%s',content='%s')",
                 event.getTimestamp(), event.getMessage()));
         TextMessageContent content = event.getMessage();
@@ -30,7 +29,7 @@ public class EchoController {
 
         String reply = "";
         String url = "";
-        int itunes_id = 0;
+        int itunesid = 0;
 
         if (inputan[0].equals("/listen_song")) {
             StringBuilder songName = new StringBuilder();
@@ -39,16 +38,16 @@ public class EchoController {
                 songName.append(" ");
             }
             String song = songName.toString();
-            System.out.println(song.substring(0,song.length()-1));
+            System.out.println(song.substring(0,song.length() - 1));
 
-            itunes_id = songSearch.findItunesID(song);
+            itunesid = SongSearch.findItunesId(song);
 
-            if (itunes_id == -1) {
+            if (itunesid == -1) {
                 return new TextMessage("Song not found");
-            } else if (itunes_id == -2) {
+            } else if (itunesid == -2) {
                 return new TextMessage("Song not available on iTunes");
             }
-            url = ituneSearch.getSongClipLink(itunes_id);
+            url = ItuneSearch.getSongClipLink(itunesid);
 
             return new AudioMessage(url,30000);
 

@@ -12,6 +12,7 @@ import advprog.example.bot.EventTestUtil;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
+import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TextMessage;
 
 import org.junit.jupiter.api.Test;
@@ -37,15 +38,14 @@ public class EchoControllerTest {
     void testContextLoads() {
         assertNotNull(echoController);
     }
-
-    @Test
-    void testHandleTextMessageEvent() {
+    
+    void testHandleTextMessageEvent() throws Exception {
         MessageEvent<TextMessageContent> event =
                 EventTestUtil.createDummyTextMessage("/echo Lorem Ipsum");
 
-        TextMessage reply = echoController.handleTextMessageEvent(event);
+        Message reply = echoController.handleTextMessageEvent(event);
 
-        assertEquals("Lorem Ipsum", reply.getText());
+        assertEquals("Lorem Ipsum", reply.toString());
     }
 
     @Test

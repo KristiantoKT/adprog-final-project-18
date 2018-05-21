@@ -1,19 +1,19 @@
 package advprog.anison.bot;
 
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import org.json.JSONObject;
 
 
-public class songSearch {
+
+public class SongSearch {
 
     public static final String fixedURL = "https://schoolido.lu/api/songs/?search=";
 
-    public static int findItunesID(String song) throws Exception{
+    public static int findItunesId(String song) throws Exception {
         song = song.replace(" ","+");
         String urlString = fixedURL + song;
 
@@ -25,8 +25,8 @@ public class songSearch {
             connection = (HttpURLConnection) new URL(newUrl).openConnection();
         }
 
-        BufferedReader in = new BufferedReader
-                (new InputStreamReader(connection.getInputStream()));
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(connection.getInputStream()));
 
         String line;
         StringBuffer html = new StringBuffer();

@@ -1,14 +1,14 @@
 package advprog.anison.bot;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class ituneSearch {
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+public class ItuneSearch {
 
     public static final String fixedURL = "https://itunes.apple.com/lookup?id=";
 
@@ -17,13 +17,13 @@ public class ituneSearch {
     }
 
     public static String getSongClipLink(int id) throws Exception {
-        String urlString = fixedURL+id;
+        String urlString = fixedURL + id;
 
         URL url = new URL(urlString);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-        BufferedReader in = new BufferedReader
-                (new InputStreamReader(connection.getInputStream()));
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(connection.getInputStream()));
 
         String line;
         StringBuffer html = new StringBuffer();
