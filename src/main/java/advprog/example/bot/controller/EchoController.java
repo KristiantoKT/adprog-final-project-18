@@ -53,16 +53,24 @@ public class EchoController {
             String song = songName.toString();
             System.out.println(song.substring(0,song.length() - 1));
 
-            itunesid = SongSearch.findItunesId(song);
+            ArrayList<Song> songs = SongCsvReader.readSong("test");
 
-            if (itunesid == -1) {
-                return new TextMessage("Song not found");
-            } else if (itunesid == -2) {
-                return new TextMessage("Song not available on iTunes");
+            for (Song target : songs) {
+                if (target.getSongName().equalsIgnoreCase(song)) {
+                    itunesid = SongSearch.findItunesId(song);
+
+                    if (itunesid == -1) {
+                        return new TextMessage("Song not found");
+                    } else if (itunesid == -2) {
+                        return new TextMessage("Song not available on iTunes");
+                    }
+                    url = ItuneSearch.getSongClipLink(itunesid);
+
+                    return new AudioMessage(url,30000);
+                }
             }
-            url = ItuneSearch.getSongClipLink(itunesid);
 
-            return new AudioMessage(url,30000);
+            return new TextMessage("Song not added to list");
 
         } else if (inputan[0].equals("/carousel")) {
             String imageUrl = "https://i.schoolido.lu/songs/soldier_game.jpg";

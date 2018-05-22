@@ -14,7 +14,7 @@ public class CarouselManager {
 
     public static ArrayList<Song> deleteSong(ArrayList<Song> songs, String songName) {
         for (Song song : songs) {
-            if (song.getSongName().equals(songName)) {
+            if (song.getSongName().equalsIgnoreCase(songName)) {
                 songs.remove(song);
                 break;
             }
