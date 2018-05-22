@@ -85,7 +85,7 @@ public class ZonkbotController {
         String groupId = ((GroupSource) event.getSource()).getGroupId();
         String textContent = event.getMessage().getText();
         UserSource userSource = (UserSource) event.getSource();
-        GroupZonkbot group = getGroup(groupId);
+//        GroupZonkbot group = getGroup(groupId);
         return replyText;
 //        boolean hasGroup = group != null;
 
