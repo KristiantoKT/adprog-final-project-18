@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 public class BikunController {
+
     public static TemplateMessage requestLocation() {
         List<Action> actions = new ArrayList<Action>();
         actions.add(new URIAction("Share Location", "https://line.me/R/nv/location"));
@@ -37,7 +38,7 @@ public class BikunController {
         List<Message> result = new ArrayList<>();
         double latitudeUser = content.getLatitude();
         double longitudeUser = content.getLongitude();
-        double jarakTerdekat = 1000000000;
+        double jarakTerdekat = Double.MAX_VALUE;
         HalteBikun bikunTerdekat = null;
         for (HalteBikun halteBikun : halteBikuns) {
             double latitudeHalte = halteBikun.getLatitude();

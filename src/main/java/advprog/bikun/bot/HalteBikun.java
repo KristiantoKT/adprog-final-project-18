@@ -1,21 +1,16 @@
 package advprog.bikun.bot;
 
+import com.linecorp.bot.model.event.MessageEvent;
+import com.linecorp.bot.model.event.message.TextMessageContent;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 
 public class HalteBikun {
     private String nama;
     private double latitude;
     private double longitude;
-    private List<String> jadwal;
-
-//    public HalteBikun(String nama, double latitude, double longitude, List<String> jadwal) {
-//        this.nama = nama;
-//        this.latitude = latitude;
-//        this.longitude = longitude;
-//        this.jadwal = jadwal;
-//    }
+    private String imgUrl;
+    private String[] jadwal;
 
     public String getNama() {
         return nama;
@@ -29,7 +24,11 @@ public class HalteBikun {
         return longitude;
     }
 
-    public List<String> getJadwal() {
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public String[] getJadwal() {
         return jadwal;
     }
 
