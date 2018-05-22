@@ -36,14 +36,19 @@ import java.util.logging.Logger;
 
 @LineMessageHandler
 public class ZonkbotController {
-
     private static final Logger LOGGER = Logger.getLogger(ZonkbotController.class.getName());
+
     public Zonkbot zonkbot = new Zonkbot();
     private List<GroupZonkbot> groupZonkbots = new ArrayList<>();
 
     @Autowired
     private LineMessagingClient lineMessagingClient;
 
+    @EventMapping
+    void handleDefaultMessage(Event event) {
+        LOGGER.fine(String.format("Event(timestamp='%s',source='%s')",
+                event.getTimestamp(), event.getSource()));
+    }
 
     @EventMapping
     public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws ExecutionException, InterruptedException {
@@ -51,53 +56,59 @@ public class ZonkbotController {
                 event.getTimestamp(), event.getMessage()));
         TextMessageContent messageContent = event.getMessage();
         String textContent = messageContent.getText();
-        String replyText;
-        //USER SOURCE
         String replyToken = event.getReplyToken();
         if (event.getSource() instanceof UserSource) {
-            replyText = zonkbot.responseMessage(textContent);
-            if (replyText.equals("/Choose correct answer")) {
-                chooseCorrectAnswerWithCarousel(replyToken);
-            } else if (replyText.equals("/Choose question")) {
-                chooseQuestion(replyToken);
-            } else if (replyText.equals("/name")) {
-                replyText = getProfileName(event.getSource().getUserId());
-                this.replyText(replyToken, replyText);
-            } else if (!replyText.isEmpty()) {
-                this.replyText(replyToken, replyText);
-            }
-        }
-        //GROUP SOURCE
-        else if (event.getSource() instanceof GroupSource) {
-            replyText = groupResponseMessage(event);
-
-            if (replyText.equals("/Random question"))
-                replyWithRandomQuestion(replyToken);
-            else if (replyText.equals("show leaderboard")) {
-                String groupId = ((GroupSource) event.getSource()).getGroupId();
-                replyText = showLeaderboard(groupId);
-                groupZonkbots.remove(getGroup(groupId));
-                this.replyText(replyToken, replyText);
-            }
-            else if (!replyText.isEmpty())
-                this.replyText(replyToken, replyText);
+            personalResponseMessage(event, textContent, replyToken);
+        } else if (event.getSource() instanceof GroupSource) {
+            groupResponseMessage(event, replyToken);
         }
     }
 
-    public String showLeaderboard(String groupId) throws ExecutionException, InterruptedException {
-        String reply = "";
+    private void groupResponseMessage(MessageEvent<TextMessageContent> event, String replyToken) throws ExecutionException, InterruptedException {
+        String replyText;
+        replyText = responseMessageForGroup(event);
+
+        if (replyText.equals("/Random question"))
+            replyWithRandomQuestion(replyToken);
+        else if (replyText.equals("show leaderboard")) {
+            String groupId = ((GroupSource) event.getSource()).getGroupId();
+            replyText = showLeaderboard(groupId);
+            groupZonkbots.remove(getGroup(groupId));
+            this.replyText(replyToken, replyText);
+        }
+        else if (!replyText.isEmpty())
+            this.replyText(replyToken, replyText);
+    }
+
+    private void personalResponseMessage(MessageEvent<TextMessageContent> event, String textContent, String replyToken) throws ExecutionException, InterruptedException {
+        String replyText;
+        replyText = zonkbot.responseMessage(textContent);
+        if (replyText.equals("/Choose correct answer")) {
+            chooseCorrectAnswerWithCarousel(replyToken);
+        } else if (replyText.equals("/Choose question")) {
+            chooseQuestion(replyToken);
+        } else if (replyText.equals("/name")) {
+            replyText = getProfileName(event.getSource().getUserId());
+            this.replyText(replyToken, replyText);
+        } else if (!replyText.isEmpty()) {
+            this.replyText(replyToken, replyText);
+        }
+    }
+
+    private String showLeaderboard(String groupId) throws ExecutionException, InterruptedException {
+        StringBuilder reply = new StringBuilder();
         GroupZonkbot group = getGroup(groupId);
         List<User> users = group.getUsers();
         Collections.sort(users);
         for (User user: users) {
             String userId = user.getUserId();
             String name = getProfileName(userId);
-            reply += name + ": " + user.getScore() + "\n";
+            reply.append(name).append(": ").append(user.getScore()).append("\n");
         }
-        return reply;
+        return reply.toString();
     }
 
-    public String groupResponseMessage(MessageEvent<TextMessageContent> event) {
+    private String responseMessageForGroup(MessageEvent<TextMessageContent> event) {
         String replyText = "";
         String groupId = ((GroupSource) event.getSource()).getGroupId();
         String userId = event.getSource().getUserId();
@@ -121,7 +132,7 @@ public class ZonkbotController {
 
     }
 
-    public void replyWithRandomQuestion(String replyToken) {
+    private void replyWithRandomQuestion(String replyToken) {
         ArrayList<Question> questions = readFromJSON();
         Random rand = new Random();
         int questionIndex = rand.nextInt(questions.size());
@@ -141,7 +152,6 @@ public class ZonkbotController {
         this.reply(replyToken, templateMessage);
     }
 
-
     private GroupZonkbot getGroup(String groupId) {
         if(!groupZonkbots.isEmpty()) {
             for (GroupZonkbot group : groupZonkbots) {
@@ -151,8 +161,8 @@ public class ZonkbotController {
         }
         return null;
     }
-
     //CHOOSE QUESTIONS WITH CAROUSEL
+
     private void chooseQuestion(String replyToken) {
         List<Question> questions = readFromJSON();
         List<CarouselColumn> columns = new ArrayList<>();
@@ -167,9 +177,9 @@ public class ZonkbotController {
         TemplateMessage templateMessage = new TemplateMessage("Questions", carouselTemplate);
         reply(replyToken, templateMessage);
     }
-
     //CHOOSE CORRECT ANSWER WITH CAROUSEL
-    public void chooseCorrectAnswerWithCarousel(String replyToken) {
+
+    private void chooseCorrectAnswerWithCarousel(String replyToken) {
         Question question = zonkbot.getPresentQuestion();
         List<String> answers = question.getAnswers();
         List<CarouselColumn> columns = new ArrayList<>();
@@ -185,18 +195,11 @@ public class ZonkbotController {
         this.reply(replyToken, templateMessage);
     }
 
-    @EventMapping
-    public void handleDefaultMessage(Event event) {
-        LOGGER.fine(String.format("Event(timestamp='%s',source='%s')",
-                event.getTimestamp(), event.getSource()));
-    }
-
-
-    public void reply(@NonNull String replyToken, @NonNull Message message) {
+    private void reply(@NonNull String replyToken, @NonNull Message message) {
         reply(replyToken, Collections.singletonList(message));
     }
 
-    public void reply(@NonNull String replyToken, @NonNull List<Message> messages) {
+    private void reply(@NonNull String replyToken, @NonNull List<Message> messages) {
         try {
             BotApiResponse apiResponse = lineMessagingClient
                     .replyMessage(new ReplyMessage(replyToken, messages))
@@ -206,7 +209,7 @@ public class ZonkbotController {
         }
     }
 
-    public void replyText(@NonNull String replyToken, @NonNull String message) {
+    private void replyText(@NonNull String replyToken, @NonNull String message) {
         if (replyToken.isEmpty()) {
             throw new IllegalArgumentException("replyToken must not be empty");
         }
@@ -241,9 +244,8 @@ public class ZonkbotController {
         return resultList;
     }
 
-    public String getProfileName (String userId) throws ExecutionException, InterruptedException {
+    private String getProfileName(String userId) throws ExecutionException, InterruptedException {
         return lineMessagingClient.getProfile(userId).get().getDisplayName();
-
     }
 
     }

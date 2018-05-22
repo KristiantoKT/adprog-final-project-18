@@ -1,24 +1,17 @@
 package zonkbot;
 
-import com.linecorp.bot.model.action.Action;
-import com.linecorp.bot.model.action.MessageAction;
-import com.linecorp.bot.model.message.TemplateMessage;
-import com.linecorp.bot.model.message.template.CarouselColumn;
-import com.linecorp.bot.model.message.template.CarouselTemplate;
-import com.linecorp.bot.model.message.template.Template;
+import org.jetbrains.annotations.NotNull;
 import zonkbot.controller.ZonkbotController;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Zonkbot {
     private Question question;
-    private boolean add_question_section;
+    private boolean addQuestionSection;
     private int giveAnswerCount;
 
     public Zonkbot() {
-        add_question_section = false;
+        addQuestionSection = false;
         giveAnswerCount = 0;
     }
 
@@ -37,45 +30,33 @@ public class Zonkbot {
     }
 
     public String responseMessage(String textContent) {
-        String replyText = "";
+        String replyText;
         //ADD_QUESTION
-        if (textContent.equals("/add_question") && !add_question_section) {
-            replyText = "Please input your question";
-            add_question_section = true;
+        if (textContent.equals("/add_question") && !addQuestionSection) {
+            replyText = gettingToAddQuestionSection();
         }
         //ADD_QUESTION_SECTION
-        else if (add_question_section) {
-            replyText = add_question(textContent);
+        else if (addQuestionSection) {
+            replyText = addQuestionSection(textContent);
         }
         //CHANGE_ANSWER
         else if (textContent.equals("/change_answer")) {
-            List<Question> questions = ZonkbotController.readFromJSON();
-            if(questions.isEmpty())
-                replyText = "There is no question";
-            else
-                replyText = "/Choose question";
+            replyText = gettingToChangeAnswerSection();
         }
         //CHANGE_ANSWER_SECTION
         else if (this != null && textContent.length() > 10
                 && textContent.substring(0,9).equals("/Question")) {
-            int questionIndex = Integer.parseInt(textContent.substring(11)) - 1;
-            List<Question> questions = ZonkbotController.readFromJSON();
-            question = questions.get(questionIndex);
-            replyText = "/Choose correct answer";
+            replyText = changeAnswerSection(textContent);
         }
         //CHOOSE CORRECT ANSWER
         else if (textContent.length() >= 15
                 && textContent.substring(0,15).equals("/Correct answer")){
-            int correctAnswerIndex = Integer.parseInt(textContent.substring(17)) - 1;
-            question.setCorrectAnswer(correctAnswerIndex);
-            replyText = question.toString();
-            question = null;
+            replyText = chooseCorrectAnswer(textContent);
         }
         //ECHO
         else if (textContent.length() > 5
                 && textContent.substring(0,5).equals("/echo")) {
-            replyText =  textContent.replace("/echo","");
-            replyText = replyText.substring(1);
+            replyText = echo(textContent);
         }
         //OTHERS
         else {
@@ -84,7 +65,52 @@ public class Zonkbot {
         return replyText;
     }
 
-    public String add_question(String textContent) {
+    @NotNull
+    private String echo(String textContent) {
+        String replyText;
+        replyText =  textContent.replace("/echo","");
+        replyText = replyText.substring(1);
+        return replyText;
+    }
+
+    private String chooseCorrectAnswer(String textContent) {
+        String replyText;
+        int correctAnswerIndex = Integer.parseInt(textContent.substring(17)) - 1;
+        question.setCorrectAnswer(correctAnswerIndex);
+        replyText = question.toString();
+        question = null;
+        return replyText;
+    }
+
+    @NotNull
+    private String changeAnswerSection(String textContent) {
+        String replyText;
+        int questionIndex = Integer.parseInt(textContent.substring(11)) - 1;
+        List<Question> questions = ZonkbotController.readFromJSON();
+        question = questions.get(questionIndex);
+        replyText = "/Choose correct answer";
+        return replyText;
+    }
+
+    @NotNull
+    private String gettingToChangeAnswerSection() {
+        String replyText;List<Question> questions = ZonkbotController.readFromJSON();
+        if(questions.isEmpty())
+            replyText = "There is no question";
+        else
+            replyText = "/Choose question";
+        return replyText;
+    }
+
+    @NotNull
+    private String gettingToAddQuestionSection() {
+        String replyText;
+        replyText = "Please input your question";
+        addQuestionSection = true;
+        return replyText;
+    }
+
+    public String addQuestionSection(String textContent) {
         String result = "";
         if (giveAnswerCount == 0) {
             question = new Question(textContent);
@@ -105,7 +131,7 @@ public class Zonkbot {
 
     private void addQuestionReset() {
         giveAnswerCount = 0;
-        add_question_section = false;
+        addQuestionSection = false;
     }
 
     @Override

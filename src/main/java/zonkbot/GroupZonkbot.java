@@ -1,5 +1,6 @@
 package zonkbot;
 
+import org.jetbrains.annotations.NotNull;
 import zonkbot.controller.ZonkbotController;
 
 import java.util.ArrayList;
@@ -42,44 +43,64 @@ public class GroupZonkbot {
         int chance = user.getTakenChance();
         //ALL CHANCE IS 0
         if (chance == 0) {
-            if (isAllUserChanceIsZero()) {
-                resetChance();
-                return "/Random question";
-            }
-            return "";
+            replyText =  isAllChanceIsZero();
         }
         //INITIAL START ZONK
         else if (textContent.equals("start zonk")) {
-            ArrayList<Question> questions = ZonkbotController.readFromJSON();
-            if(questions.isEmpty())
-                return "Sorry but no question available";
-            isZonk = true;
-            return "/Random question";
+            replyText = startZonk();
         }
         //ANSWER QUESTION
         else if (textContent.length() == 5 && textContent.substring(0,2).equals("/Q")
                 && textContent.substring(3,4).equals("A")) {
-            int questionIndex = Integer.parseInt(textContent.substring(2, 3)) - 1;
-            int answerIndex = Integer.parseInt(textContent.substring(4, 5)) - 1 ;
-            ArrayList<Question> questions = ZonkbotController.readFromJSON();
-            Question question = questions.get(questionIndex);
-            boolean answerCorrect = answerIndex == question.getCorrectAnswerIndex();
-            if (answerCorrect && user.getTakenChance() > 0) {
-                user.setScore(user.getScore() + 1);
-                return responseMessage("start zonk", userId);
-            } else if (!answerCorrect && user.getTakenChance() > 0) {
-                user.setTakenChance(user.getTakenChance() - 1);
-                return "";
-            }
+            replyText = QandA(textContent, userId, replyText, user);
         }
         //STOP ZONK
         else if (textContent.length() == 9 && textContent.equals("stop zonk")) {
-            isZonk = false;
-            return "show leaderboard";
+            replyText = stopZonk();
         }
-
-
         return replyText;
+    }
+
+    @NotNull
+    private String stopZonk() {
+        String replyText;
+        isZonk = false;
+        replyText =  "show leaderboard";
+        return replyText;
+    }
+
+    private String QandA(String textContent, String userId, String replyText, User user) {
+        int questionIndex = Integer.parseInt(textContent.substring(2, 3)) - 1;
+        int answerIndex = Integer.parseInt(textContent.substring(4, 5)) - 1 ;
+        ArrayList<Question> questions = ZonkbotController.readFromJSON();
+        Question question = questions.get(questionIndex);
+        boolean answerCorrect = answerIndex == question.getCorrectAnswerIndex();
+        if (answerCorrect && user.getTakenChance() > 0) {
+            user.setScore(user.getScore() + 1);
+            replyText =  responseMessage("start zonk", userId);
+        } else if (!answerCorrect && user.getTakenChance() > 0) {
+            user.setTakenChance(user.getTakenChance() - 1);
+            replyText = "";
+        }
+        return replyText;
+    }
+
+    @NotNull
+    private String startZonk() {
+        ArrayList<Question> questions = ZonkbotController.readFromJSON();
+        if(questions.isEmpty())
+            return "Sorry but no question available";
+        isZonk = true;
+        return "/Random question";
+    }
+
+    @NotNull
+    private String isAllChanceIsZero() {
+        if (isAllUserChanceIsZero()) {
+            resetChance();
+            return "/Random question";
+        }
+        return "";
     }
 
 
