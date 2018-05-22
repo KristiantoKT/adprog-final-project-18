@@ -95,11 +95,11 @@ public class ZonkbotController {
             User user = new User(userId);
             group = new GroupZonkbot(groupId, user);
             groupZonkbots.add(group);
-            group.responseMessage(textContent, userId, replyToken);
+            replyText = group.responseMessage(textContent, userId, replyToken);
         }
 
         //        UserSource userSource = event.getSource();
-        return event.getSource().getUserId();
+        return replyText;
 
 
 
