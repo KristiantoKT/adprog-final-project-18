@@ -40,6 +40,7 @@ repositories {
 
 
 dependencies {
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "com.linecorp.bot:line-bot-spring-boot:1.15.0"
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junit5_version"

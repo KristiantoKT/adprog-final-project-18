@@ -14,9 +14,8 @@ public class Question {
         answers = new ArrayList<String>();
     }
 
-    public void setCorrectAnswer(String string){
-        int i = Integer.parseInt(string);
-        correct_answer_index = i;
+    public void setCorrectAnswer(int index){
+        correct_answer_index = index;
     }
 
     public void addAnswer(String answer) {

@@ -8,9 +8,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 import com.linecorp.bot.model.event.Event;
-import com.linecorp.bot.model.event.MessageEvent;
-import com.linecorp.bot.model.event.message.TextMessageContent;
-import com.linecorp.bot.model.message.TextMessage;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,10 +15,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import zonkbot.EventTestUtil;
-
-import java.util.ArrayList;
 
 
 @SpringBootTest(properties = "line.bot.handler.enabled=false")
@@ -45,15 +38,15 @@ public class ZonkbotControllerTest {
         @Test
         void testDeactivateZonkbot() {
             deactivateZonkbot();
-            zonkbotController.responseMessage("/zonkbot", "skajdhfkjl");
-            String reply = zonkbotController.responseMessage("/deactivate", "sakjdfhk");
+            zonkbotController.zonkbot.responseMessage("/zonkbot", "skajdhfkjl", zonkbotController);
+            String reply = zonkbotController.zonkbot.responseMessage("/deactivate", "sakjdfhk", zonkbotController);
             assertEquals("zonkbot deactivated, all question will be deleted", reply);
         }
 
         @Test
         void testHandleTextMessageEvent() {
             deactivateZonkbot();
-            String reply = zonkbotController.responseMessage("/zonkbot", "sakjdfhk");
+            String reply = zonkbotController.zonkbot.responseMessage("/zonkbot", "sakjdfhk", zonkbotController);
             assertEquals("zonkbot activated!", reply);
         }
 
@@ -62,7 +55,7 @@ public class ZonkbotControllerTest {
         @Test
         void testZonkbotControllerTextDefault() {
             deactivateZonkbot();
-            String reply = zonkbotController.responseMessage("/echo ayams", "sakjdfhk");
+            String reply = zonkbotController.zonkbot.responseMessage("/echo ayams", "sakjdfhk", zonkbotController);
             assertEquals("ayams", reply);
 
         }
@@ -71,8 +64,8 @@ public class ZonkbotControllerTest {
         @Test
         void testZonkbotControllerAddQuestion() {
             deactivateZonkbot();
-            zonkbotController.responseMessage("/zonkbot", "sdfsad");
-            String reply = zonkbotController.responseMessage("/add_question", "asdf");
+            zonkbotController.zonkbot.responseMessage("/zonkbot", "sdfsad", zonkbotController);
+            String reply = zonkbotController.zonkbot.responseMessage("/add_question", "asdf", zonkbotController);
             assertEquals("Please input your question",reply);
         }
 
@@ -100,12 +93,12 @@ public class ZonkbotControllerTest {
     @Test
     void testResponseMessageWithQuestion() {
         String reply;
-        zonkbotController.responseMessage("/zonkbot","2");
-        zonkbotController.responseMessage("/add_question","2");
-        zonkbotController.responseMessage("ayam?","2");
-        zonkbotController.responseMessage("1","2");
-        zonkbotController.responseMessage("2","2");
-        reply = zonkbotController.responseMessage("3","2");
+        zonkbotController.zonkbot.responseMessage("/zonkbot","2", zonkbotController);
+        zonkbotController.zonkbot.responseMessage("/add_question","2", zonkbotController);
+        zonkbotController.zonkbot.responseMessage("ayam?","2", zonkbotController);
+        zonkbotController.zonkbot.responseMessage("1","2", zonkbotController);
+        zonkbotController.zonkbot.responseMessage("2","2", zonkbotController);
+        reply = zonkbotController.zonkbot.responseMessage("3","2", zonkbotController);
         assertEquals("Answer 4:", reply);
     }
 
@@ -113,14 +106,14 @@ public class ZonkbotControllerTest {
     void testResponseMessageWithEcho() {
         deactivateZonkbot();
         String reply;
-        reply = zonkbotController.responseMessage("/echo ayam","2");
+        reply = zonkbotController.zonkbot.responseMessage("/echo ayam","2", zonkbotController);
         assertEquals("ayam", reply);
     }
     @Test
     void testResponseMessageWithRandomStringWhileNotActive() {
         String reply;
         deactivateZonkbot();
-        reply = zonkbotController.responseMessage("ayam kepo","2");
+        reply = zonkbotController.zonkbot.responseMessage("ayam kepo","2", zonkbotController);
         String replyText = "zonkbot are not available."
                 + "To activate zonkbot please type \"/zonkbot\"";
         assertEquals(replyText, reply);
@@ -130,12 +123,12 @@ public class ZonkbotControllerTest {
     void testResponseMessageWithRandomStringWhileActive() {
         deactivateZonkbot();
         String reply;
-        zonkbotController.responseMessage("/zonkbot", "asdf");
-        reply = zonkbotController.responseMessage("ayam","sadlfkj");
+        zonkbotController.zonkbot.responseMessage("/zonkbot", "asdf", zonkbotController);
+        reply = zonkbotController.zonkbot.responseMessage("ayam","sadlfkj", zonkbotController);
         String replyText = "ayam is not a command";
         assertEquals(replyText,reply);
     }
     void deactivateZonkbot() {
-        zonkbotController.responseMessage("/deactivate", "sdfh");
+        zonkbotController.zonkbot.responseMessage("/deactivate", "sdfh", zonkbotController);
     }
 }
