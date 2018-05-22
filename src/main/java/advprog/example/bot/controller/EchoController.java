@@ -84,7 +84,7 @@ public class EchoController {
                     new PostbackAction("Say hello1",
                             "hello こんにちは")
             ));
-            columns[1] = new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
+            /*columns[1] = new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
                     new PostbackAction("言 hello2",
                             "hello こんにちは",
                             "hello こんにちは"),
@@ -114,7 +114,7 @@ public class EchoController {
                             "06:15",
                             "23:59",
                             "00:00")
-            ));
+            ));*/
             CarouselTemplate carouselTemplate = new CarouselTemplate(
                     Arrays.asList(columns)
             );

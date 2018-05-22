@@ -41,6 +41,7 @@ public class CarouselManager {
         CarouselTemplate carouselTemplate = new CarouselTemplate(
                 Arrays.asList(columns)
         );
+
         TemplateMessage templateMessage = new TemplateMessage(
                 "Carousel alt text", carouselTemplate);
         return templateMessage;
