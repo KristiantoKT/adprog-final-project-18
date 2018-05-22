@@ -58,7 +58,7 @@ public class EchoController {
             //SongCsvWriter.writeSongArray("test",songs);
 
             for (Song target : songs) {
-                if (target.getSongName().equalsIgnoreCase(song)) {
+                if (target.getSongName().equalsIgnoreCase(SongSearch.findSongTrueName(song))) {
                     itunesid = SongSearch.findItunesId(song);
 
                     if (itunesid == -1) {

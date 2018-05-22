@@ -15,9 +15,8 @@ public class SongSearch {
     public static final String fixedURL = "https://schoolido.lu/api/songs/?search=";
 
     public static void main(String[] args) throws Exception{
-        //SongCsvWriter.writeSong("test","Soldier Game");
+        SongCsvWriter.writeSong("test","Soldier Game");
         //SongCsvReader.readSong("test");
-        findItunesId("bokutachi wa hitotsu no hikari");
     }
 
     public static String findSongTrueName(String song) throws Exception {
@@ -49,7 +48,7 @@ public class SongSearch {
 
         target = json.getJSONArray("results").getJSONObject(0);
         trueName = target.getString("romaji_name");
-        if (trueName == null) {
+        if (trueName.equalsIgnoreCase("null")) {
             trueName = target.getString("name");
         }
         return trueName;

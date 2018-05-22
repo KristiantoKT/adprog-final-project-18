@@ -46,9 +46,12 @@ public class SongCsvWriter {
         try {
             fileWriter = new FileWriter(fileName,true);
 
-
             int songId = SongSearch.findItunesId(songName);
+            System.out.println(songId);
             String songAudioClipUrl = ItuneSearch.getSongClipLink(songId);
+            System.out.println(songAudioClipUrl);
+
+            System.out.println(SongSearch.findSongTrueName(songName));
 
             Song song = new Song(SongSearch.findSongTrueName(songName)
                     ,songId,songAudioClipUrl);
