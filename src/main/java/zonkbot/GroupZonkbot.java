@@ -61,7 +61,7 @@ public class GroupZonkbot {
         if (chance == 0) {
             if (isAllUserChanceIsZero()) {
                 resetChance();
-                responseMessage("start zonk", userId, replyToken);
+                return responseMessage("start zonk", userId, replyToken);
             }
             return "";
         }
