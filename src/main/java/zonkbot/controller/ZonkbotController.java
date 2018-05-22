@@ -124,9 +124,11 @@ public class ZonkbotController {
 
 
     private GroupZonkbot getGroup(String groupId) {
-        for (GroupZonkbot group: groupZonkbots) {
-            if (group.getGroupId().equals(groupId))
-                return group;
+        if(!groupZonkbots.isEmpty()) {
+            for (GroupZonkbot group : groupZonkbots) {
+                if (group.getGroupId().equals(groupId))
+                    return group;
+            }
         }
         return null;
     }
