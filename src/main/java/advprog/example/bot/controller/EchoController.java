@@ -67,9 +67,9 @@ public class EchoController {
 
             ArrayList<Song> songs = SongCsvReader.readSong("test");
 
-            if (songs.size() == 2) {
+            /*if (songs.size() == 2) {
                 return new AudioMessage(songs.get(0).getSongAudioClipUrl(),30000);
-            }
+            }*/
 
             CarouselColumn[] columns = new CarouselColumn[songs.size()];
 
