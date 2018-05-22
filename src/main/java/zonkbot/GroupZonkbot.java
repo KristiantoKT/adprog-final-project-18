@@ -55,7 +55,7 @@ public class GroupZonkbot {
 
     public String responseMessage(String textContent, UserSource userSource, String replyToken) throws IOException {
         String replyText = "";
-        User user = getUser(userSource);
+//        User user = getUser(userSource);
         replyText =  "nyampe sini";
 //        int chance = user.getTakenChance();
 //        if (chance == 0) {
@@ -112,9 +112,9 @@ public class GroupZonkbot {
 //    }
 
 
-    public User getUser(UserSource userSource) {
+    public User getUser(String userId) {
         for (User user: users) {
-            if (user.getUserSource() == userSource)
+            if (user.getUserId().equals(userId))
                 return user;
         }
         return null;

@@ -7,12 +7,12 @@ import zonkbot.controller.ZonkbotController;
 import java.util.ArrayList;
 
 public class User implements Comparable<User>{
-    private UserSource userSource;
+    private String userId;
     private int score;
     private int takenChance;
 
-    public User(UserSource userSource) {
-        this.userSource = userSource;
+    public User(String userId) {
+        this.userId = userId;
         score = 0;
         takenChance = 0;
     }
@@ -25,8 +25,8 @@ public class User implements Comparable<User>{
         this.takenChance = takenChance;
     }
 
-    public UserSource getUserSource() {
-        return userSource;
+    public String getUserId() {
+        return userId;
     }
 
     public int getScore() {

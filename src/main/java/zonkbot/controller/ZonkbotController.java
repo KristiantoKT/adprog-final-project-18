@@ -83,10 +83,12 @@ public class ZonkbotController {
         String replyText = "nyampe group responese message";
         String replyToken = event.getReplyToken();
         String groupId = ((GroupSource) event.getSource()).getGroupId();
+        String userId = event.getSource().getUserId();
         String textContent = event.getMessage().getText();
-//        UserSource userSource = (UserSource) event.getSource();
+
+//        UserSource userSource = event.getSource();
 //        GroupZonkbot group = getGroup(groupId);
-        return replyText;
+        return event.getSource().getUserId();
 //        boolean hasGroup = group != null;
 
 
