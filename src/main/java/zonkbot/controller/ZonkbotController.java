@@ -63,7 +63,6 @@ public class ZonkbotController {
     }
 
     public void chooseCorrectAnswerWithCarousel(String replyToken) {
-        this.replyText(replyToken, "masuk sampe sini");
         Question question = zonkbot.getPresentQuestion();
         List<String> answers = question.getAnswers();
         List<CarouselColumn> columns = new ArrayList<>();
