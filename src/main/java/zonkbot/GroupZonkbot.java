@@ -85,7 +85,7 @@ public class GroupZonkbot {
 //                responseMessage("start zonk", userId, replyToken);
 //                return "";
             } else if (!answerCorrect && user.getTakenChance() > 0) {
-                return "jawaban salah";
+                return ("jawaban salah. pilihan kamu : " + answerIndex + " jawaban benar: %s" + question.getCorrectAnswerIndex());
 //                user.setTakenChance(user.getTakenChance() - 1);
             }
         }
