@@ -57,7 +57,6 @@ public class GroupZonkbot {
     public String responseMessage(String textContent, String userId, String replyToken) throws IOException {
         String replyText = "";
         User user = getUser(userId);
-        replyText =  "nyampe sini";
         int chance = user.getTakenChance();
         if (chance == 0) {
             if (isAllUserChanceIsZero()) {
@@ -81,12 +80,13 @@ public class GroupZonkbot {
             boolean answerCorrect = answerIndex == question.getCorrectAnswerIndex();
             if (answerCorrect && user.getTakenChance() > 0) {
                 user.setScore(user.getScore() + 1);
-                return "jawaban bener";
-//                responseMessage("start zonk", userId, replyToken);
-//                return "";
+//                return "jawaban bener";
+                responseMessage("start zonk", userId, replyToken);
+                return "";
             } else if (!answerCorrect && user.getTakenChance() > 0) {
-                return ("jawaban salah. pilihan kamu : " + answerIndex + " jawaban benar: %s" + question.getCorrectAnswerIndex());
-//                user.setTakenChance(user.getTakenChance() - 1);
+//                return ("jawaban salah. pilihan kamu : " + answerIndex + " jawaban benar: %s" + question.getCorrectAnswerIndex());
+                user.setTakenChance(user.getTakenChance() - 1);
+                return "";
             }
         }
 //        else if (textContent.length() == 9 && textContent.equals("stop zonk") ) {
