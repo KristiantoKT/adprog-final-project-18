@@ -75,7 +75,9 @@ public class EchoController {
             return new TextMessage("Song not added to list");
 
         } else if (inputan[0].equals("/carousel")) {
-            String imageUrl = "https://i.schoolido.lu/songs/soldier_game.jpg";
+            return CarouselManager.carouselMaker();
+        }
+            /*String imageUrl = "https://i.schoolido.lu/songs/soldier_game.jpg";
             List<CarouselColumn> columns = new ArrayList<>();
             columns.add(new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
                     new URIAction("Go to line.me",
@@ -85,7 +87,7 @@ public class EchoController {
                     new PostbackAction("Say hello1",
                             "hello こんにちは")
             )));
-            /*columns[1] = new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
+            *//*columns[1] = new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
                     new PostbackAction("言 hello2",
                             "hello こんにちは",
                             "hello こんにちは"),
@@ -115,7 +117,7 @@ public class EchoController {
                             "06:15",
                             "23:59",
                             "00:00")
-            ));*/
+            ));*//*
             CarouselTemplate carouselTemplate = new CarouselTemplate(
                     columns
             );
@@ -148,7 +150,7 @@ public class EchoController {
             }
             SongCsvWriter.writeSongArray("test",songs);
             return new TextMessage(songList.toString());
-        }
+        }*/
 
         String replyText = contentText.replace("/echo", "");
         return new TextMessage(replyText.substring(1));

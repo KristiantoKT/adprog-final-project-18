@@ -7,6 +7,7 @@ import com.linecorp.bot.model.message.template.CarouselTemplate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class CarouselManager {
 
@@ -23,23 +24,19 @@ public class CarouselManager {
     }
 
     public static TemplateMessage carouselMaker() {
-        CarouselColumn[] columns = new CarouselColumn[songs.size()];
+        List<CarouselColumn> columns = new ArrayList<>();
 
-        for (int i = 0; i < columns.length; i++) {
+        for (int i = 0; i < songs.size(); i++) {
             Song current = songs.get(i);
-            columns[i] = new CarouselColumn(current.getSongImgUrl(),
+            columns.add(new CarouselColumn(current.getSongImgUrl(),
                     current.getSongName(),"anison-radio", Arrays.asList(
                             new MessageAction("Listen!",
-                                    "/listen_song " + current.getSongName()),
-                            new MessageAction("Listen!",
-                                    "/listen_song " + current.getSongName()),
-                            new MessageAction("Listen!",
                                     "/listen_song " + current.getSongName())
-            ));
+            )));
         }
 
         CarouselTemplate carouselTemplate = new CarouselTemplate(
-                Arrays.asList(columns)
+                columns
         );
 
         TemplateMessage templateMessage = new TemplateMessage(
