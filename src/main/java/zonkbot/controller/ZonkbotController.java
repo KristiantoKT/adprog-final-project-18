@@ -84,9 +84,10 @@ public class ZonkbotController {
         String replyToken = event.getReplyToken();
         String groupId = ((GroupSource) event.getSource()).getGroupId();
         String textContent = event.getMessage().getText();
-        UserSource userSource = (UserSource) event.getSource();
-        GroupZonkbot group = getGroup(groupId);
-        boolean hasGroup = group != null;
+        return replyText;
+//        UserSource userSource = (UserSource) event.getSource();
+//        GroupZonkbot group = getGroup(groupId);
+//        boolean hasGroup = group != null;
 
 
 //        if (hasGroup) {
@@ -99,7 +100,6 @@ public class ZonkbotController {
 //        }
 
 
-        return replyText;
     }
 
     public void replyWithRandomQuestion(String replyToken) throws IOException {
