@@ -36,16 +36,15 @@ public class PrintController {
     private BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
     private ObjectMapper objectMapper = new ObjectMapper();
     private HalteBikun[] halteBikuns = objectMapper.readValue(bufferedReader, HalteBikun[].class);
+
+    public static String getState() {
+        return state;
+    }
+
     private static String state = "";
     private static final Logger LOGGER = Logger.getLogger(PrintController.class.getName());
 
     public PrintController() throws IOException {
-    }
-
-    public String hehe(MessageEvent<TextMessageContent> event) {
-        LOGGER.fine(String.format("Event(timestamp='%s',source='%s')",
-                event.getTimestamp(), event.getSource()));
-        return event.getTimestamp().toString();
     }
 
 
@@ -139,9 +138,12 @@ public class PrintController {
                     carouselTemplate);
             messageList.add(templateMessage);
             return messageList;
-        } else {
+        } else if (event.getSource() instanceof UserSource
+                && !(contentText.equals("/bikun") || contentText.equals("/bikun_stop"))) {
             return Collections.singletonList(new TextMessage("Perintah tidak ditemukan!"
                     + " Keyword yang tersedia adalah /bikun dan /bikun_stop"));
+        } else {
+            return null;
         }
     }
 
@@ -155,6 +157,7 @@ public class PrintController {
 
     @EventMapping
     public List<Message> handleLocationMessageEvent(MessageEvent<LocationMessageContent> event) {
+
         if (state.equals("halteTerdekat") || event.getSource() instanceof GroupSource) {
             LOGGER.fine(String.format("TextMessageContent(timestamp='%s',content='%s')",
                     event.getTimestamp(), event.getMessage()));
