@@ -9,6 +9,8 @@ import com.linecorp.bot.model.action.MessageAction;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
+import com.linecorp.bot.model.event.source.GroupSource;
+import com.linecorp.bot.model.event.source.UserSource;
 import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TemplateMessage;
 import com.linecorp.bot.model.message.TextMessage;
@@ -23,16 +25,15 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
+import zonkbot.GroupZonkbot;
 import zonkbot.Question;
+import zonkbot.User;
 import zonkbot.Zonkbot;
 
 @LineMessageHandler
@@ -41,6 +42,8 @@ public class ZonkbotController {
     private static final Logger LOGGER = Logger.getLogger(ZonkbotController.class.getName());
     public Zonkbot zonkbot = new Zonkbot();
     private Question question = null;
+    private List<GroupZonkbot> groupZonkbots = new ArrayList<GroupZonkbot>();
+
     @Autowired
     private LineMessagingClient lineMessagingClient;
 
@@ -51,17 +54,82 @@ public class ZonkbotController {
                 event.getTimestamp(), event.getMessage()));
         TextMessageContent messageContent = event.getMessage();
         String textContent = messageContent.getText();
-        String replyText = zonkbot.responseMessage(textContent, event.getReplyToken());
-        if (replyText.equals("/Choose correct answer")) {
-            chooseCorrectAnswerWithCarousel(event.getReplyToken());
-        } else if (replyText.equals("/Choose question")) {
-            chooseQuestion(event.getReplyToken());
+        String replyText = "";
+        //USER SOURCE
+        String replyToken = event.getReplyToken();
+        if (event.getSource() instanceof UserSource) {
+            replyText = zonkbot.responseMessage(textContent, replyToken);
+            if (replyText.equals("/Choose correct answer")) {
+                chooseCorrectAnswerWithCarousel(replyToken);
+            } else if (replyText.equals("/Choose question")) {
+                chooseQuestion(replyToken);
+            } else if (!replyText.isEmpty())
+                this.replyText(replyToken, replyText);
+            else
+                this.replyText(replyToken, "masuk ke class pertama");
         }
-        else if (!replyText.isEmpty())
-            this.replyText(event.getReplyToken(),replyText);
-        else
-            this.replyText(event.getReplyToken(), "masuk ke class pertama");
+        //GROUP SOURCE
+        else if (event.getSource() instanceof GroupSource) {
+            replyText = groupResponseMessage(event);
+            if (replyText.equals("/Random question"))
+                replyWithRandomQuestion(replyToken);
+            else
+                this.replyText(replyToken, replyText);
+        }
     }
+
+    public String groupResponseMessage(MessageEvent<TextMessageContent> event) throws IOException {
+        String replyText = "";
+        String replyToken = event.getReplyToken();
+        String groupId = ((GroupSource) event.getSource()).getGroupId();
+        String textContent = event.getMessage().getText();
+        UserSource userSource = (UserSource) event.getSource();
+        GroupZonkbot group = getGroup(groupId);
+        boolean hasGroup = group != null;
+
+
+        if (hasGroup) {
+            replyText = group.responseMessage(textContent, userSource, replyToken);
+        } else if (!hasGroup && textContent.equals("start zonk")) {
+            User user = new User(userSource);
+            group = new GroupZonkbot(groupId, user);
+            groupZonkbots.add(group);
+            group.responseMessage(textContent, userSource, replyToken);
+        }
+
+
+        return replyText;
+    }
+
+    public void replyWithRandomQuestion(String replyToken) throws IOException {
+        ArrayList<Question> questions = readFromJSON();
+        Random rand = new Random();
+        int questionIndex = rand.nextInt(questions.size());
+        Question question = questions.get(questionIndex);
+        List<String> answers = question.getAnswers();
+        List<CarouselColumn> columns = new ArrayList<>();
+        for (int i = 0; i < answers.size(); i++) {
+            List<Action> actions = new ArrayList<>();
+            actions.add(new MessageAction("Select",
+                    String.format("/Q%sA%s",
+                            questionIndex, i+1)));
+            columns.add(new CarouselColumn(null,
+                    question.getQuestion(), answers.get(i), actions));
+        }
+        Template carouselTemplate = new CarouselTemplate(columns);
+        TemplateMessage templateMessage = new TemplateMessage("Answers", carouselTemplate);
+        this.reply(replyToken, templateMessage);
+    }
+
+
+    private GroupZonkbot getGroup(String groupId) {
+        for (GroupZonkbot group: groupZonkbots) {
+            if (group.getGroupId().equals(groupId))
+                return group;
+        }
+        return null;
+    }
+
 
     private void chooseQuestion(String replyToken) {
         List<Question> questions = readFromJSON();

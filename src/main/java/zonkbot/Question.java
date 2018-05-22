@@ -14,6 +14,10 @@ public class Question {
         answers = new ArrayList<String>();
     }
 
+    public int getCorrectAnswerIndex() {
+        return correct_answer_index;
+    }
+
     public void setCorrectAnswer(int index){
         correct_answer_index = index;
     }
