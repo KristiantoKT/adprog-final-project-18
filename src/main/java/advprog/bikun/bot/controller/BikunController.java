@@ -2,7 +2,6 @@ package advprog.bikun.bot.controller;
 
 import advprog.bikun.bot.HalteBikun;
 import com.linecorp.bot.model.action.Action;
-import com.linecorp.bot.model.action.MessageAction;
 import com.linecorp.bot.model.action.URIAction;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.LocationMessageContent;
@@ -37,7 +36,7 @@ public class BikunController {
                 }
             }
         } catch (ParseException e) {
-            return  0;
+            return 0;
         }
         return (int) (min / 1000 / 60);
     }
@@ -83,17 +82,31 @@ public class BikunController {
                 bikunTerdekat = halteBikun;
             }
         }
+        int remainingMinutes = BikunController.getWaitingTime(bikunTerdekat);
+
+        String pesan = "";
+
+        if (remainingMinutes == -1) {
+            pesan = String.format("Kami merekomendasikan Anda untuk ke %s\n\n"
+                            + "%s berjarak %s meter dari posisi Anda\n"
+                            + "Namun karena bikun sudah tidak lewat hari ini,"
+                            + " kami sarankan untuk memesan ojek online atau"
+                            + " kalau mau menunggu sampai besok pukul %s",
+                    bikunTerdekat.getNama(), bikunTerdekat.getNama(),
+                    jarakTerdekat, bikunTerdekat.getJadwal()[0]);
+        } else if (remainingMinutes >= 0) {
+            pesan = String.format("Kami merekomendasikan Anda untuk ke %s\n\n"
+                            + "%s berjarak %s meter dari posisi Anda\n"
+                            + "Bikun akan datang dalam waktu %s menit",
+                    bikunTerdekat.getNama(), bikunTerdekat.getNama(), jarakTerdekat,
+                    BikunController.getWaitingTime(bikunTerdekat));
+        }
+
         LocationMessage halteBikunLocation = new LocationMessage(
                 bikunTerdekat.getNama(), "UI",
                 bikunTerdekat.getLatitude(), bikunTerdekat.getLongitude()
         );
-        TextMessage halteBikunDetail = new TextMessage(
-                String.format("Kami merekomendasikan Anda untuk ke %s\n\n"
-                                + "%s berjarak %s meter dari posisi Anda\n"
-                                + "Bikun akan datang dalam waktu %s menit",
-                        bikunTerdekat.getNama(), bikunTerdekat.getNama(), jarakTerdekat,
-                        BikunController.getWaitingTime(bikunTerdekat))
-        );
+        TextMessage halteBikunDetail = new TextMessage(pesan);
         result.add(halteBikunLocation);
         result.add(halteBikunDetail);
         return result;
@@ -114,15 +127,6 @@ public class BikunController {
 
         distance = Math.pow(distance, 2);
 
-        return Math.sqrt(distance);
-    }
-
-    public static long differenceMinutes(String time1, String time2) throws ParseException {
-
-        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-        Date date1 = format.parse(time1);
-        Date date2 = format.parse(time2);
-        long difference = date2.getTime() - date1.getTime();
-        return difference / 1000 / 60;
+        return (int) Math.sqrt(distance);
     }
 }

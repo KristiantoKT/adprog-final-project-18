@@ -8,6 +8,7 @@ import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.PostbackEvent;
 import com.linecorp.bot.model.event.message.LocationMessageContent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
+import com.linecorp.bot.model.event.source.GroupSource;
 import com.linecorp.bot.model.event.source.UserSource;
 import com.linecorp.bot.model.message.LocationMessage;
 import com.linecorp.bot.model.message.Message;
@@ -22,7 +23,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -35,7 +36,7 @@ public class PrintController {
     private BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
     private ObjectMapper objectMapper = new ObjectMapper();
     private HalteBikun[] halteBikuns = objectMapper.readValue(bufferedReader, HalteBikun[].class);
-
+    private static String state = "";
     private static final Logger LOGGER = Logger.getLogger(PrintController.class.getName());
 
     public PrintController() throws IOException {
@@ -71,7 +72,6 @@ public class PrintController {
                 String.format("Anda memilih %s\n%s", halteTerpilih.getNama(), pesanWaktu)
         );
 
-
         result.add(halteBikunLocation);
         result.add(halteBikunDetail);
         return result;
@@ -86,6 +86,7 @@ public class PrintController {
         String contentText = content.getText();
 
         if (contentText.equals("/bikun") && event.getSource() instanceof UserSource) {
+            state = "halteTerdekat";
             return BikunController.requestLocation();
         } else if (contentText.equals("/bikun_stop") && event.getSource() instanceof UserSource) {
             List<Message> messageList = new ArrayList<>();
@@ -139,7 +140,8 @@ public class PrintController {
             messageList.add(templateMessage);
             return messageList;
         } else {
-            return null;
+            return Collections.singletonList(new TextMessage("Perintah tidak ditemukan!"
+                    + " Keyword yang tersedia adalah /bikun dan /bikun_stop"));
         }
     }
 
@@ -153,11 +155,15 @@ public class PrintController {
 
     @EventMapping
     public List<Message> handleLocationMessageEvent(MessageEvent<LocationMessageContent> event) {
-        LOGGER.fine(String.format("TextMessageContent(timestamp='%s',content='%s')",
-                event.getTimestamp(), event.getMessage()));
-        LocationMessageContent content = event.getMessage();
-        return BikunController.searchHalte(event, halteBikuns);
+        if (state.equals("halteTerdekat") || event.getSource() instanceof GroupSource) {
+            LOGGER.fine(String.format("TextMessageContent(timestamp='%s',content='%s')",
+                    event.getTimestamp(), event.getMessage()));
+            LocationMessageContent content = event.getMessage();
+            state = "";
+            return BikunController.searchHalte(event, halteBikuns);
+        } else {
+            return Collections.singletonList(new TextMessage("Silahkan mengikuti alur yang ada "
+                    + "yaitu mengetik /bikun terlebih dahulu"));
+        }
     }
-
-
 }
