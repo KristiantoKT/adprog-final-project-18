@@ -1,10 +1,13 @@
 package advprog.anison.bot;
 
+import com.linecorp.bot.model.action.Action;
 import com.linecorp.bot.model.action.MessageAction;
 import com.linecorp.bot.model.message.TemplateMessage;
 import com.linecorp.bot.model.message.template.CarouselColumn;
 import com.linecorp.bot.model.message.template.CarouselTemplate;
 
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,15 +27,21 @@ public class CarouselManager {
     }
 
     public static TemplateMessage carouselMaker() {
-        List<CarouselColumn> columns = new ArrayList<>();
+        ArrayList<CarouselColumn> columns = new ArrayList<>();
+
+        System.out.println(songs.size());
 
         for (int i = 0; i < songs.size(); i++) {
             Song current = songs.get(i);
+
+            ArrayList<Action> act = new ArrayList<>();
+
+            act.add(new MessageAction("Listen!",
+                    "/listen_song " + current.getSongName()));
+
             columns.add(new CarouselColumn(current.getSongImgUrl(),
-                    current.getSongName(),"anison-radio", Arrays.asList(
-                            new MessageAction("Listen!",
-                                    "/listen_song " + current.getSongName())
-            )));
+                    current.getSongName(),"itunes id="+current.getSongId(),act
+            ));
         }
 
         CarouselTemplate carouselTemplate = new CarouselTemplate(
