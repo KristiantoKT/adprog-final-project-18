@@ -76,8 +76,8 @@ public class ZonkbotController {
             if (replyText.equals("/Random question"))
                 replyWithRandomQuestion(replyToken);
             else if (replyText.equals("show leaderboard")) {
-                String groupId = ((GroupSource) event.getSource()).getGroupId();
-                replyText = showLeaderboard(groupId);
+//                String groupId = ((GroupSource) event.getSource()).getGroupId();
+//                replyText = showLeaderboard(groupId);
                 this.replyText(replyToken, replyText);
             }
             else
