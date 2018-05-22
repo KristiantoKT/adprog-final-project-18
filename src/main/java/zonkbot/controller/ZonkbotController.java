@@ -59,6 +59,7 @@ public class ZonkbotController {
         //USER SOURCE
         String replyToken = event.getReplyToken();
         if (event.getSource() instanceof UserSource) {
+            replyText = zonkbot.responseMessage(textContent, replyToken);
             if (textContent.equals("/Choose correct answer")) {
                 chooseCorrectAnswerWithCarousel(replyToken);
             } else if (textContent.equals("/Choose question")) {
@@ -68,7 +69,6 @@ public class ZonkbotController {
                 this.replyText(replyToken, replyText);
 
             } else if (!textContent.isEmpty()) {
-                replyText = zonkbot.responseMessage(textContent, replyToken);
                 this.replyText(replyToken, replyText);
             } else
                 this.replyText(replyToken, "masuk ke class pertama");
@@ -159,7 +159,7 @@ public class ZonkbotController {
         return null;
     }
 
-
+    //CHOOSE QUESTIONS WITH CAROUSEL
     private void chooseQuestion(String replyToken) {
         List<Question> questions = readFromJSON();
         List<CarouselColumn> columns = new ArrayList<>();
@@ -175,6 +175,7 @@ public class ZonkbotController {
         reply(replyToken, templateMessage);
     }
 
+    //CHOOSE CORRECT ANSWER WITH CAROUSEL
     public void chooseCorrectAnswerWithCarousel(String replyToken) {
         Question question = zonkbot.getPresentQuestion();
         List<String> answers = question.getAnswers();
