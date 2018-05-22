@@ -98,9 +98,8 @@ public class Zonkbot {
         } else if (giveAnswerCount >= 4) {
             question.addAnswer(textContent);
             result = "Carousel";
-//            questions.add(question);
-//            ZonkbotController.writeToJson(question);
-//            addQuestionReset();
+            addQuestionReset();
+            ZonkbotController.writeToJson(question);
         }
         return result;
     }

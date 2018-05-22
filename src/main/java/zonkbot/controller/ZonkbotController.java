@@ -112,7 +112,7 @@ public class ZonkbotController {
         Gson gson = new Gson();
         ArrayList<Question> questions = readFromJSON();
         questions.add(question);
-        try (FileWriter writer = new FileWriter("src/file.json")) {
+        try (FileWriter writer = new FileWriter("src\\file.json")) {
             gson.toJson(questions,writer);
         } catch (IOException e) {
             e.printStackTrace();
