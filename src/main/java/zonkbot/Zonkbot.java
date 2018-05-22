@@ -6,7 +6,6 @@ import com.linecorp.bot.model.message.TemplateMessage;
 import com.linecorp.bot.model.message.template.CarouselColumn;
 import com.linecorp.bot.model.message.template.CarouselTemplate;
 import com.linecorp.bot.model.message.template.Template;
-import zonkbot.controller.ReplyController;
 import zonkbot.controller.ZonkbotController;
 
 import java.io.IOException;
@@ -19,7 +18,6 @@ public class Zonkbot {
     private boolean add_question_section;
     private boolean change_answer_section;
     private int giveAnswerCount;
-    private ReplyController replyController;
 
     public Zonkbot() {
         questions = new ArrayList<Question>();
@@ -104,7 +102,8 @@ public class Zonkbot {
 
     private void initialize(String replyToken) throws IOException {
         ZonkbotController.writeToJson(question);
-        chooseCorrectAnswer(question, replyToken);
+        ZonkbotController zc = new ZonkbotController();
+        zc.chooseCorrectAnswer(question, replyToken);
         addQuestionReset();
     }
 
@@ -113,20 +112,7 @@ public class Zonkbot {
         add_question_section = false;
     }
 
-    private void chooseCorrectAnswer(Question question, String replyToken) {
-        List<String> answers = question.getAnswers();
-        List<CarouselColumn> columns = new ArrayList<>();
-        for (int i = 0; i < answers.size(); i++) {
-            List<Action> actions = new ArrayList<>();
-            actions.add(new MessageAction("Select",
-                    String.format("/Correct answer: %s", i+1)));
-            columns.add(new CarouselColumn(null,
-                    "Choose The Correct Answer", answers.get(i), actions));
-        }
-        Template carouselTemplate = new CarouselTemplate(columns);
-        TemplateMessage templateMessage = new TemplateMessage("Answers", carouselTemplate);
-        replyController.reply(replyToken, templateMessage);
-    }
+    
 
     @Override
     public String toString() {
