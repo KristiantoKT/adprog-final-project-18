@@ -12,6 +12,16 @@ public class CarouselManager {
 
     public static ArrayList<Song> songs = SongCsvReader.readSong("test");
 
+    public static ArrayList<Song> deleteSong(ArrayList<Song> songs, String songName) {
+        for (Song song : songs) {
+            if (song.getSongName().equals(songName)) {
+                songs.remove(song);
+                break;
+            }
+        }
+        return songs;
+    }
+
     public static TemplateMessage carouselMaker() {
         CarouselColumn[] columns = new CarouselColumn[songs.size()];
 

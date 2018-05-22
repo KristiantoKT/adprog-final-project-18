@@ -2,6 +2,9 @@ package advprog.example.bot.controller;
 
 import advprog.anison.bot.CarouselManager;
 import advprog.anison.bot.ItuneSearch;
+import advprog.anison.bot.Song;
+import advprog.anison.bot.SongCsvReader;
+import advprog.anison.bot.SongCsvWriter;
 import advprog.anison.bot.SongSearch;
 
 import com.linecorp.bot.model.action.DatetimePickerAction;
@@ -20,6 +23,7 @@ import com.linecorp.bot.model.message.template.CarouselTemplate;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
@@ -61,8 +65,7 @@ public class EchoController {
             return new AudioMessage(url,30000);
 
         } else if (inputan[0].equals("/carousel")) {
-            return CarouselManager.carouselMaker();
-            /*String imageUrl = "https://i.schoolido.lu/songs/soldier_game.jpg";
+            String imageUrl = "https://i.schoolido.lu/songs/soldier_game.jpg";
             CarouselColumn[] columns = new CarouselColumn[3];
             columns[0] = new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
                     new URIAction("Go to line.me",
@@ -108,7 +111,32 @@ public class EchoController {
             );
             TemplateMessage templateMessage = new TemplateMessage(
                     "Carousel alt text", carouselTemplate);
-            return templateMessage;*/
+            return templateMessage;
+        } else if (inputan[0].equals("/add_song")) {
+            StringBuilder songName = new StringBuilder();
+            for (int i = 1; i < inputan.length; i++) {
+                songName.append(inputan[i]);
+                songName.append(" ");
+            }
+            String song = songName.toString();
+            SongCsvWriter.writeSong("test",song);
+        } else if (inputan[0].equals("/delete_song")) {
+            StringBuilder songName = new StringBuilder();
+            for (int i = 1; i < inputan.length; i++) {
+                songName.append(inputan[i]);
+                songName.append(" ");
+            }
+            String song = songName.toString();
+            ArrayList<Song> songs = SongCsvReader.readSong("test");
+            SongCsvWriter.writeSongArray("test", CarouselManager.deleteSong(songs,song));
+        } else if (inputan[0].equals("/list_song")) {
+            ArrayList<Song> songs = SongCsvReader.readSong("test");
+            StringBuilder songList = new StringBuilder();
+            for (Song song : songs) {
+                songList.append(song.getSongName());
+                songList.append("\n");
+            }
+            return new TextMessage(songList.toString());
         }
 
         String replyText = contentText.replace("/echo", "");

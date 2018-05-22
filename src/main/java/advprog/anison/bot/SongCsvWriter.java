@@ -1,6 +1,7 @@
 package advprog.anison.bot;
 
 import java.io.FileWriter;
+import java.util.ArrayList;
 
 public class SongCsvWriter {
 
@@ -10,6 +11,34 @@ public class SongCsvWriter {
 
     //CSV file header
     private static final String HEADER = "songName,songId,songAudioClipUrl,songImageUrl";
+
+    public static void writeSongArray(String fileName, ArrayList<Song> songs) {
+        FileWriter fileWriter = null;
+
+        try {
+            fileWriter = new FileWriter(fileName,false);
+
+            for (Song song : songs) {
+                fileWriter.append(song.getSongName());
+                fileWriter.append(COMMA);
+                fileWriter.append(String.valueOf(song.getSongId()));
+                fileWriter.append(COMMA);
+                fileWriter.append(song.getSongAudioClipUrl());
+                fileWriter.append(COMMA);
+                fileWriter.append(song.getSongImgUrl());
+                fileWriter.append(NEWLINE);
+            }
+        } catch (Exception e) {
+            System.out.println("error in filewriter");
+        } finally {
+            try {
+                fileWriter.flush();
+                fileWriter.close();
+            } catch (Exception e) {
+                System.out.println("Flush or close error");
+            }
+        }
+    }
 
     public static void writeSong(String fileName, String songName) {
         FileWriter fileWriter = null;
