@@ -56,35 +56,36 @@ public class GroupZonkbot {
     public String responseMessage(String textContent, UserSource userSource, String replyToken) throws IOException {
         String replyText = "";
         User user = getUser(userSource);
-        int chance = user.getTakenChance();
-        if (chance == 0) {
-            if (isAllUserChanceIsZero()) {
-                resetChance();
-                responseMessage("start zonk", userSource, replyToken);
-            }
-            return "";
-        }
-        else if (textContent.equals("start zonk")) {
-            ArrayList<Question> questions = ZonkbotController.readFromJSON();
-            if(questions.isEmpty())
-                return "Sorry but no question available";
-             return "/Random question";
-        }
-        else if (textContent.length() == 4 && textContent.substring(0,2).equals("/Q")
-                && textContent.substring(3,4).equals("A")) {
-            int questionIndex = Integer.parseInt(textContent.substring(2, 3));
-            int answerIndex = Integer.parseInt(textContent.substring(4, 5));
-            ArrayList<Question> questions = ZonkbotController.readFromJSON();
-            Question question = questions.get(questionIndex);
-            boolean answerCorrect = answerIndex == question.getCorrectAnswerIndex();
-            if (answerCorrect && user.getTakenChance() > 0) {
-                user.setScore(user.getScore() + 1);
-                responseMessage("start zonk", userSource, replyToken);
-                return "";
-            } else if (!answerCorrect && user.getTakenChance() > 0) {
-                user.setTakenChance(user.getTakenChance() - 1);
-            }
-        }
+        replyText =  "nyampe sini";
+//        int chance = user.getTakenChance();
+//        if (chance == 0) {
+//            if (isAllUserChanceIsZero()) {
+//                resetChance();
+//                responseMessage("start zonk", userSource, replyToken);
+//            }
+//            return "";
+//        }
+//        else if (textContent.equals("start zonk")) {
+//            ArrayList<Question> questions = ZonkbotController.readFromJSON();
+//            if(questions.isEmpty())
+//                return "Sorry but no question available";
+//             return "/Random question";
+//        }
+//        else if (textContent.length() == 4 && textContent.substring(0,2).equals("/Q")
+//                && textContent.substring(3,4).equals("A")) {
+//            int questionIndex = Integer.parseInt(textContent.substring(2, 3));
+//            int answerIndex = Integer.parseInt(textContent.substring(4, 5));
+//            ArrayList<Question> questions = ZonkbotController.readFromJSON();
+//            Question question = questions.get(questionIndex);
+//            boolean answerCorrect = answerIndex == question.getCorrectAnswerIndex();
+//            if (answerCorrect && user.getTakenChance() > 0) {
+//                user.setScore(user.getScore() + 1);
+//                responseMessage("start zonk", userSource, replyToken);
+//                return "";
+//            } else if (!answerCorrect && user.getTakenChance() > 0) {
+//                user.setTakenChance(user.getTakenChance() - 1);
+//            }
+//        }
 //        else if (textContent.length() == 9 && textContent.equals("stop zonk") ) {
 //            replyText = showLeaderBoard();
 //            deactivate();
