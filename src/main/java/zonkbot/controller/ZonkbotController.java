@@ -70,11 +70,12 @@ public class ZonkbotController {
         }
         //GROUP SOURCE
         else if (event.getSource() instanceof GroupSource) {
-            replyText = groupResponseMessage(event);
-            if (replyText.equals("/Random question"))
-                replyWithRandomQuestion(replyToken);
-            else
-                this.replyText(replyToken, replyText);
+            this.replyText(replyToken, "sampe sini masbro");
+//            replyText = groupResponseMessage(event);
+//            if (replyText.equals("/Random question"))
+//                replyWithRandomQuestion(replyToken);
+//            else
+//                this.replyText(replyToken, replyText);
         }
     }
 
