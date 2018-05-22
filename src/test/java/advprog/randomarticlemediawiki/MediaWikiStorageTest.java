@@ -1,11 +1,9 @@
 package advprog.randomarticlemediawiki;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MediaWikiStorageTest {
     MediaWikiStorage store = new MediaWikiStorage();
@@ -14,7 +12,7 @@ public class MediaWikiStorageTest {
     public void getUrlTest() {
         store.addUrl("hallo");
         String[] hasil = store.getUrl();
-        assertTrue(hasil[hasil.length-1].equals("hallo"));
+        assertTrue(hasil[hasil.length - 1].equals("hallo"));
     }
 
     @Test

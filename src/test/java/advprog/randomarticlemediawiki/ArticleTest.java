@@ -1,10 +1,9 @@
 package advprog.randomarticlemediawiki;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class ArticleTest {
     Article article;
@@ -14,13 +13,14 @@ public class ArticleTest {
         article = new Article("A", "B", "C");
     }
 
+    @Test
     public void getTitleTest() {
         assertEquals("A", article.getTitle());
     }
 
     public void setTitleTest() {
         article.setTitle("Z");
-        assertEquals("Z", article.getTitle())
+        assertEquals("Z", article.getTitle());
     }
 
 }
