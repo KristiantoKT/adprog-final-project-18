@@ -116,7 +116,7 @@ public class ZonkbotController {
             List<Action> actions = new ArrayList<>();
             actions.add(new MessageAction("Select",
                     String.format("/Q%sA%s",
-                            questionIndex, i+1)));
+                            questionIndex + 1, i + 1)));
             columns.add(new CarouselColumn(null,
                     question.getQuestion(), answers.get(i), actions));
         }

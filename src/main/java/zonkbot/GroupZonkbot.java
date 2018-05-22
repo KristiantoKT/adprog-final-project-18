@@ -74,8 +74,8 @@ public class GroupZonkbot {
         }
         else if (textContent.length() == 5 && textContent.substring(0,2).equals("/Q")
                 && textContent.substring(3,4).equals("A")) {
-            int questionIndex = Integer.parseInt(textContent.substring(2, 3));
-            int answerIndex = Integer.parseInt(textContent.substring(4, 5));
+            int questionIndex = Integer.parseInt(textContent.substring(2, 3)) - 1;
+            int answerIndex = Integer.parseInt(textContent.substring(4, 5)) - 1 ;
             ArrayList<Question> questions = ZonkbotController.readFromJSON();
             Question question = questions.get(questionIndex);
             boolean answerCorrect = answerIndex == question.getCorrectAnswerIndex();
