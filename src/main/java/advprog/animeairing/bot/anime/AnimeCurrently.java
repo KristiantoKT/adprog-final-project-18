@@ -51,7 +51,7 @@ public class AnimeCurrently {
             String status = str.split("\n")[10].replace("<status>", "")
                     .replace("</status>", "").replace("    ", "");
             String startDate = str.split("\n")[11].replace("<start_date>", "")
-                    .replace("</star_date>", "").replace("    ", "");
+                    .replace("</start_date>", "").replace("    ", "");
             String endDate = str.split("\n")[12].replace("<end_date>", "")
                     .replace("</end_date>", "").replace("    ", "");
 
@@ -64,7 +64,7 @@ public class AnimeCurrently {
 
     public String infoAiring() {
         if (currentAiring.size() == 0) {
-            System.out.println("Sorry, Anime cannot be found");
+            return "Sorry, Anime cannot be found";
         }
 
         StringBuilder str = new StringBuilder();
