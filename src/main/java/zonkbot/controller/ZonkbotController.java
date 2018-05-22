@@ -17,6 +17,7 @@ import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.message.template.CarouselColumn;
 import com.linecorp.bot.model.message.template.CarouselTemplate;
 import com.linecorp.bot.model.message.template.Template;
+import com.linecorp.bot.model.profile.UserProfileResponse;
 import com.linecorp.bot.model.response.BotApiResponse;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
@@ -74,9 +75,27 @@ public class ZonkbotController {
 
             if (replyText.equals("/Random question"))
                 replyWithRandomQuestion(replyToken);
+            else if (replyText.equals("show leaderboard")) {
+                String groupId = ((GroupSource) event.getSource()).getGroupId();
+                replyText = showLeaderboard(groupId);
+                this.replyText(replyToken, replyText);
+            }
             else
                 this.replyText(replyToken, replyText);
         }
+    }
+
+    public String showLeaderboard(String groupId) {
+        String reply = "";
+        GroupZonkbot group = getGroup(groupId);
+        List<User> users = group.getUsers();
+        Collections.sort(users);
+        for (User user: users) {
+            String userId = user.getUserId();
+            UserProfileResponse upr = getProfile(userId);
+            reply += upr.getDisplayName() + ": " + user.getScore() + "\n";
+        }
+        return reply;
     }
 
     public String groupResponseMessage(MessageEvent<TextMessageContent> event) throws IOException {
@@ -223,4 +242,21 @@ public class ZonkbotController {
         ArrayList<Question> resultList = new ArrayList<Question>(Arrays.asList(result));
         return resultList;
     }
-}
+
+    public UserProfileResponse getProfile (String userId) {
+
+        final LineMessagingClient client = LineMessagingClient
+                .builder(System.getProperty("line.bot.channelToken"))
+                .build();
+
+        final UserProfileResponse userProfileResponse;
+        try {
+            userProfileResponse = client.getProfile(userId).get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return userProfileResponse;
+    }
+
+    }

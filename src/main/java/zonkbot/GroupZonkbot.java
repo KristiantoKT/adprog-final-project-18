@@ -80,20 +80,17 @@ public class GroupZonkbot {
             boolean answerCorrect = answerIndex == question.getCorrectAnswerIndex();
             if (answerCorrect && user.getTakenChance() > 0) {
                 user.setScore(user.getScore() + 1);
-//                return "jawaban bener";
                 return responseMessage("start zonk", userId, replyToken);
             } else if (!answerCorrect && user.getTakenChance() > 0) {
-//                return ("jawaban salah. pilihan kamu : " + answerIndex + " jawaban benar: %s" + question.getCorrectAnswerIndex());
                 user.setTakenChance(user.getTakenChance() - 1);
                 return "";
             }
         } else if (textContent.length() == 4 && textContent.equals("/All")) {
             return getAllUserId();
         }
-//        else if (textContent.length() == 9 && textContent.equals("stop zonk") ) {
-//            replyText = showLeaderBoard();
-//            deactivate();
-//        }
+        else if (textContent.length() == 9 && textContent.equals("stop zonk") ) {
+            return "show leaderboard";
+        }
 
 
         return replyText;
@@ -104,16 +101,16 @@ public class GroupZonkbot {
         resetScore();
     }
 
-//    public String showLeaderBoard() {
-//        Collections.sort(users);
-//        String reply ="";
-//        for (User user: users) {
-//            String userId = user.getUserId();
-//            UserProfileResponse upr = zonkbotController.getProfile(userId);
-//            reply += upr.getDisplayName() + ": " + user.getScore() + "\n";
-//        }
-//        return reply;
-//    }
+    public String showLeaderBoard() {
+        Collections.sort(users);
+        String reply ="";
+        for (User user: users) {
+            String userId = user.getUserId();
+            UserProfileResponse upr = zonkbotController.getProfile(userId);
+            reply += upr.getDisplayName() + ": " + user.getScore() + "\n";
+        }
+        return reply;
+    }
 
 
     public User getUser(String userId) {
