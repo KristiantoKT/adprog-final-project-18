@@ -84,7 +84,7 @@ public class ZonkbotController {
                 groupZonkbots.remove(getGroup(groupId));
                 this.replyText(replyToken, replyText);
             }
-            else
+            else if (!replyText.isEmpty())
                 this.replyText(replyToken, replyText);
         }
     }
@@ -103,7 +103,7 @@ public class ZonkbotController {
     }
 
     public String groupResponseMessage(MessageEvent<TextMessageContent> event) throws IOException {
-        String replyText = "nyampe group responese message";
+        String replyText = "";
         String replyToken = event.getReplyToken();
         String groupId = ((GroupSource) event.getSource()).getGroupId();
         String userId = event.getSource().getUserId();

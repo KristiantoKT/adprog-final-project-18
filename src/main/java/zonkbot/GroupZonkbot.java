@@ -42,12 +42,6 @@ public class GroupZonkbot {
         }
     }
 
-    public void resetScore() {
-        for (User user: users) {
-            user.setScore(0);
-        }
-    }
-
     public String getGroupId() {
         return groupId;
     }
@@ -100,7 +94,6 @@ public class GroupZonkbot {
         //STOP ZONK
         else if (textContent.length() == 9 && textContent.equals("stop zonk")) {
             isZonk = false;
-            resetScore();
             return "show leaderboard";
         }
 
