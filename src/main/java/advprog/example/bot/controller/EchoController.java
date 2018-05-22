@@ -1,6 +1,5 @@
 package advprog.example.bot.controller;
 
-import advprog.anison.bot.CarouselManager;
 import advprog.anison.bot.ItuneSearch;
 import advprog.anison.bot.SongSearch;
 
@@ -61,11 +60,9 @@ public class EchoController {
             return new AudioMessage(url,30000);
 
         } else if (inputan[0].equals("/carousel")) {
-            return CarouselManager.carouselMaker();
-        }
-        /*String imageUrl = "https://i.schoolido.lu/songs/soldier_game.jpg";
+            String imageUrl = "https://i.schoolido.lu/songs/soldier_game.jpg";
             CarouselColumn[] columns = new CarouselColumn[3];
-            columns[0] = new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
+            columns[0] = new CarouselColumn(imageUrl, "hoge", "", Arrays.asList(
                     new URIAction("Go to line.me",
                             "https://line.me"),
                     new URIAction("Go to line.me",
@@ -110,7 +107,7 @@ public class EchoController {
             TemplateMessage templateMessage = new TemplateMessage(
                     "Carousel alt text", carouselTemplate);
             return templateMessage;
-        }*/
+        }
 
         String replyText = contentText.replace("/echo", "");
         return new TextMessage(replyText.substring(1));
