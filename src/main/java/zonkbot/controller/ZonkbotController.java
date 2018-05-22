@@ -66,7 +66,7 @@ public class ZonkbotController {
             } else if (replyText.equals("/Choose question")) {
                 chooseQuestion(replyToken);
             } else if (replyText.equals("/name")) {
-                getProfileName(replyToken, event.getSource().getUserId());
+                replyText = getProfileName(event.getSource().getUserId());
             } else if (!replyText.isEmpty()) {
                 this.replyText(replyToken, replyText);
             }
@@ -95,8 +95,8 @@ public class ZonkbotController {
         Collections.sort(users);
         for (User user: users) {
             String userId = user.getUserId();
-//            String name = getProfileName(userId);
-//            reply += name + ": " + user.getScore() + "\n";
+            String name = getProfileName(userId);
+            reply += name + ": " + user.getScore() + "\n";
         }
         return reply;
     }
@@ -126,7 +126,7 @@ public class ZonkbotController {
 
     }
 
-    public void replyWithRandomQuestion(String replyToken) throws IOException {
+    public void replyWithRandomQuestion(String replyToken) {
         ArrayList<Question> questions = readFromJSON();
         Random rand = new Random();
         int questionIndex = rand.nextInt(questions.size());
@@ -246,24 +246,8 @@ public class ZonkbotController {
         return resultList;
     }
 
-    public void getProfileName (String replyToken, String userId) {
-        lineMessagingClient
-                .getProfile(userId)
-                .whenComplete((profile, throwable) -> {
-                    if (throwable != null) {
-                        this.replyText(replyToken, throwable.getMessage());
-                        return;
-                    }
-
-                    this.reply(
-                            replyToken,
-                            Arrays.asList(new TextMessage(
-                                            "Display name: " + profile.getDisplayName()),
-                                    new TextMessage("Status message: "
-                                            + profile.getStatusMessage()))
-                    );
-
-                });
+    public String getProfileName (String userId) throws ExecutionException, InterruptedException {
+        return lineMessagingClient.getProfile(userId).get().getDisplayName();
 
     }
 
