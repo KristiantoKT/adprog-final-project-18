@@ -86,9 +86,9 @@ public class GroupZonkbot {
 //                return ("jawaban salah. pilihan kamu : " + answerIndex + " jawaban benar: %s" + question.getCorrectAnswerIndex());
                 user.setTakenChance(user.getTakenChance() - 1);
                 return "";
-            } else if (textContent.length() == 4) {
-                return getAllUserId();
             }
+        } else if (textContent.length() == 4 && textContent.equals("/All")) {
+            return getAllUserId();
         }
 //        else if (textContent.length() == 9 && textContent.equals("stop zonk") ) {
 //            replyText = showLeaderBoard();
