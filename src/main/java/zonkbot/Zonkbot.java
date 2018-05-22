@@ -13,20 +13,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Zonkbot {
-    ArrayList<Question> questions;
     private Question question;
     private boolean add_question_section;
-    private boolean change_answer_section;
     private int giveAnswerCount;
 
     public Zonkbot() {
-        questions = new ArrayList<Question>();
         add_question_section = false;
-        change_answer_section = false;
         giveAnswerCount = 0;
     }
 
     public int getQuestionIndex(String question) {
+        List<Question> questions = ZonkbotController.readFromJSON();
         for (int i = 0; i < questions.size(); i++) {
             if (questions.get(i).getQuestion().equals(question)) {
                 return i;
@@ -52,6 +49,7 @@ public class Zonkbot {
         }
         //CHANGE_ANSWER
         else if (textContent.equals("/change_answer")) {
+            List<Question> questions = ZonkbotController.readFromJSON();
             if(questions.isEmpty())
                 replyText = "There is no question";
             else
@@ -113,6 +111,7 @@ public class Zonkbot {
     @Override
     public String toString() {
         String result = "";
+        List<Question> questions = ZonkbotController.readFromJSON();
         for (Question element: questions) {
             result += element.toString();
         }
