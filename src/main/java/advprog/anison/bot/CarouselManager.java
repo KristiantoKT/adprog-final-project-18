@@ -20,6 +20,10 @@ public class CarouselManager {
             columns[i] = new CarouselColumn(current.getSongImgUrl(),
                     current.getSongName(),"", Arrays.asList(
                             new MessageAction("Listen!",
+                                    "/listen_song " + current.getSongName()),
+                            new MessageAction("Listen!",
+                                    "/listen_song " + current.getSongName()),
+                            new MessageAction("Listen!",
                                     "/listen_song " + current.getSongName())
             ));
         }

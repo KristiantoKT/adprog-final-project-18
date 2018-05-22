@@ -63,7 +63,7 @@ public class EchoController {
         } else if (inputan[0].equals("/carousel")) {
             return CarouselManager.carouselMaker();
         }
-            /*String imageUrl = "https://i.schoolido.lu/songs/soldier_game.jpg";
+        /*String imageUrl = "https://i.schoolido.lu/songs/soldier_game.jpg";
             CarouselColumn[] columns = new CarouselColumn[3];
             columns[0] = new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
                     new URIAction("Go to line.me",
