@@ -81,8 +81,7 @@ public class GroupZonkbot {
             if (answerCorrect && user.getTakenChance() > 0) {
                 user.setScore(user.getScore() + 1);
 //                return "jawaban bener";
-                responseMessage("start zonk", userId, replyToken);
-                return "";
+                return responseMessage("start zonk", userId, replyToken);
             } else if (!answerCorrect && user.getTakenChance() > 0) {
 //                return ("jawaban salah. pilihan kamu : " + answerIndex + " jawaban benar: %s" + question.getCorrectAnswerIndex());
                 user.setTakenChance(user.getTakenChance() - 1);
