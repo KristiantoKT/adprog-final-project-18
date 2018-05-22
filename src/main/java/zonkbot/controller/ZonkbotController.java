@@ -27,6 +27,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
 
@@ -50,7 +51,7 @@ public class ZonkbotController {
 
 
     @EventMapping
-    public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws IOException {
+    public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws IOException, ExecutionException, InterruptedException {
         LOGGER.fine(String.format("TextMessageContent(timestamp='%s',content='%s')",
                 event.getTimestamp(), event.getMessage()));
         TextMessageContent messageContent = event.getMessage();
@@ -65,8 +66,7 @@ public class ZonkbotController {
             } else if (replyText.equals("/Choose question")) {
                 chooseQuestion(replyToken);
             } else if (replyText.equals("/name")) {
-                replyText = getProfile(event.getSource().getUserId()).getDisplayName();
-                this.replyText(replyToken, replyText);
+                replyText = getProfileName(event.getSource().getUserId());
             } else if (!replyText.isEmpty()) {
                 this.replyText(replyToken, replyText);
             }
@@ -88,15 +88,15 @@ public class ZonkbotController {
         }
     }
 
-    public String showLeaderboard(String groupId) {
+    public String showLeaderboard(String groupId) throws ExecutionException, InterruptedException {
         String reply = "";
         GroupZonkbot group = getGroup(groupId);
         List<User> users = group.getUsers();
         Collections.sort(users);
         for (User user: users) {
             String userId = user.getUserId();
-            UserProfileResponse upr = getProfile(userId);
-            reply += upr.getDisplayName() + ": " + user.getScore() + "\n";
+            String name = getProfileName(userId);
+            reply += name + ": " + user.getScore() + "\n";
         }
         return reply;
     }
@@ -246,20 +246,11 @@ public class ZonkbotController {
         return resultList;
     }
 
-    public UserProfileResponse getProfile (String userId) {
+    public String getProfileName (String userId) throws ExecutionException, InterruptedException {
+        String replyText = "";
+        UserProfileResponse profile = lineMessagingClient.getProfile(userId).get();
+        return profile.getDisplayName();
 
-        final LineMessagingClient client = LineMessagingClient
-                .builder(System.getProperty("line.bot.channelToken"))
-                .build();
-
-        final UserProfileResponse userProfileResponse;
-        try {
-            userProfileResponse = client.getProfile(userId).get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return userProfileResponse;
     }
 
     }
