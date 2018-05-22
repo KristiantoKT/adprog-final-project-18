@@ -51,6 +51,15 @@ public class EchoControllerTest {
     }
 
     @Test
+    void testHandleTextMessageRequestRandomHospitalByUser() {
+        TextMessageContent textMessageContent = new TextMessageContent("123", "/random_hospital");
+        MessageEvent<TextMessageContent> event = new MessageEvent<>(
+                "123", new UserSource("1234"), textMessageContent, Instant.now()
+        );
+        echoController.handleTextMessageEvent(event);
+    }
+
+    @Test
     void testHandleDefaultMessage() {
         Event event = mock(Event.class);
 
