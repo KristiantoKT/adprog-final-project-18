@@ -1,4 +1,4 @@
-package advprog.current_weather;
+package advprog.currentweather;
 
 public class CurrentWeatherInfo {
     private String city;

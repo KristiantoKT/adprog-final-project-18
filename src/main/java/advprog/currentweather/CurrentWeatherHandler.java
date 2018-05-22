@@ -1,4 +1,4 @@
-package advprog.current_weather;
+package advprog.currentweather;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -7,9 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 public class CurrentWeatherHandler {
-    private final static String apiKey = "69330a92f9cd35a7e2f898df3f157ced";
-    private final static String apiLink = "https://api.openweathermap.org/data/2.5/weather?";
-    private final static String errorMsg = "Invalid City name / coordinate";
+    private final String apiKey = "69330a92f9cd35a7e2f898df3f157ced";
+    private final String apiLink = "https://api.openweathermap.org/data/2.5/weather?";
+    private final String errorMsg = "Invalid City name / coordinate";
     private static CurrentWeatherHandler instance = new CurrentWeatherHandler();
     private static String unitType = "metric";
 
@@ -59,7 +59,8 @@ public class CurrentWeatherHandler {
 
             String city = (String) json.get("name");
             String country = (String) ((JSONObject) json.get("sys")).get("country");
-            String weather = (String) ((JSONObject)((JSONArray)json.get("weather")).get(0)).get("main");
+            String weather = (String) ((JSONObject)((JSONArray)json.get("weather"))
+                    .get(0)).get("main");
             String weatherIcon = (String) ((JSONObject)((JSONArray)json.get("weather")).get(0))
                     .get("description");
             String windUnit = getUnitType().equals("metric") ? "km/h" : "mph";

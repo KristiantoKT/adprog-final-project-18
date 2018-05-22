@@ -59,7 +59,8 @@ public class EchoControllerTest {
         reply = echoController.handleTextMessageEvent(event);
         assertTrue(reply.getText().contains("Weather at your position (Depok, ID)"));
 
-        event = EventTestUtil.createDummyGroupTextMessage("gua pengen tau cuaca di wadidiw_wadidaw dah");
+        event = EventTestUtil.createDummyGroupTextMessage(
+                "gua pengen tau cuaca di wadidiw_wadidaw dah");
         reply = (TextMessage) echoController.handleTextMessageEvent(event);
         assertEquals("Invalid City name / coordinate",reply.getText());
     }

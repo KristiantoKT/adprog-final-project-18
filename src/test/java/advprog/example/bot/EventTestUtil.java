@@ -26,7 +26,8 @@ public class EventTestUtil {
                 Instant.parse("2018-01-01T00:00:00.000Z"));
     }
 
-    public static MessageEvent<LocationMessageContent> createDummyLocationMessage(Double lat, Double lon) {
+    public static MessageEvent<LocationMessageContent>
+        createDummyLocationMessage(Double lat, Double lon) {
         return new MessageEvent<>("replyToken", new UserSource("userId"),
                 new LocationMessageContent("id","title","address",lat,lon),
                 Instant.parse("2018-01-01T00:00:00.000Z"));
