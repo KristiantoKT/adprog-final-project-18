@@ -48,7 +48,8 @@ public class EchoController {
     @Autowired
     private LineMessagingClient lineMessagingClient;
     private static final Logger LOGGER = Logger.getLogger(EchoController.class.getName());
-    private static boolean canDoMethod = false;
+    static boolean canDoMethod = false;
+    static File file = new File("acronyms/acronyms.csv");
 
     @EventMapping
     public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
@@ -110,8 +111,9 @@ public class EchoController {
                         LOGGER.fine(e.getLocalizedMessage());
                         e.printStackTrace();
                     }
-                    reply(event.getReplyToken(), new TextMessage(text.getSpeechText() != ""
-                            ? text.getSpeechText() : "Gaada"));
+                    reply(event.getReplyToken(), new TextMessage(text.getSpeechText()
+                            != null || text.getSpeechText() != "" ? text.getSpeechText() : "Gaada"));
+                    canDoMethod = false;
                 });
         } else {
             reply(event.getReplyToken(), new TextMessage("tulis /speech-to-text "
