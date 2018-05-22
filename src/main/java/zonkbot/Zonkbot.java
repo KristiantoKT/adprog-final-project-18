@@ -39,7 +39,7 @@ public class Zonkbot {
         return question;
     }
 
-    public String responseMessage(String textContent, String replyToken, ZonkbotController zonkbotController) throws IOException {
+    public String responseMessage(String textContent, String replyToken) throws IOException {
         String replyText = "";
         //ADD_QUESTION
         if (textContent.equals("/add_question") && !add_question_section) {
@@ -67,7 +67,7 @@ public class Zonkbot {
         //CHOOSE CORRECT ANSWER
         else if (textContent.length() >= 15
                 && textContent.substring(0,15).equals("/Correct answer")){
-            int correctAnswerIndex = Integer.parseInt(textContent.substring(17));
+            int correctAnswerIndex = Integer.parseInt(textContent.substring(17)) - 1;
             question.setCorrectAnswer(correctAnswerIndex);
             replyText = question.toString();
             question = null;
@@ -99,7 +99,7 @@ public class Zonkbot {
             question.addAnswer(textContent);
             result = "Carousel";
             addQuestionReset();
-//            ZonkbotController.writeToJson(question);
+            ZonkbotController.writeToJson(question);
         }
         return result;
     }
@@ -108,8 +108,6 @@ public class Zonkbot {
         giveAnswerCount = 0;
         add_question_section = false;
     }
-
-    
 
     @Override
     public String toString() {

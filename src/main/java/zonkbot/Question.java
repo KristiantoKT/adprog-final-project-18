@@ -42,9 +42,9 @@ public class Question {
 
     private String answerStringBuilder(int i){
         String result = "";
-        if (correct_answer_index == i && i != answers.size())
+        if (correct_answer_index == i && i != answers.size() - 1)
             result = "  *" + answers.get(i) + "*\n";
-        else if (correct_answer_index == i && i == answers.size())
+        else if (correct_answer_index == i && i == answers.size() - 1)
             result = "  *" + answers.get(i) + "*";
         else if (i == answers.size())
             result = "    " + answers.get(i);

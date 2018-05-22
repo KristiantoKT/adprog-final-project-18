@@ -51,7 +51,7 @@ public class ZonkbotController {
                 event.getTimestamp(), event.getMessage()));
         TextMessageContent messageContent = event.getMessage();
         String textContent = messageContent.getText();
-        String replyText = zonkbot.responseMessage(textContent, event.getReplyToken(), this);
+        String replyText = zonkbot.responseMessage(textContent, event.getReplyToken());
         if (replyText.equals("Carousel")) {
             chooseCorrectAnswerWithCarousel(event.getReplyToken());
         }
@@ -112,14 +112,14 @@ public class ZonkbotController {
         Gson gson = new Gson();
         ArrayList<Question> questions = readFromJSON();
         questions.add(question);
-        try (FileWriter writer = new FileWriter("src\\file.json")) {
+        try (FileWriter writer = new FileWriter("file.json")) {
             gson.toJson(questions,writer);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static ArrayList<Question> readFromJSON() throws IOException {
+    public static ArrayList<Question> readFromJSON() {
         Gson gson = new Gson();
         Question[] result = null;
 
