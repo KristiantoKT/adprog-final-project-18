@@ -85,21 +85,22 @@ public class ZonkbotController {
         String groupId = ((GroupSource) event.getSource()).getGroupId();
         String userId = event.getSource().getUserId();
         String textContent = event.getMessage().getText();
+        GroupZonkbot group = getGroup(groupId);
+        boolean hasGroup = group != null;
 
-//        UserSource userSource = event.getSource();
-//        GroupZonkbot group = getGroup(groupId);
+
+        if (hasGroup) {
+            replyText = group.responseMessage(textContent, userId, replyToken);
+        } else if (!hasGroup && textContent.equals("start zonk")) {
+            User user = new User(userId);
+            group = new GroupZonkbot(groupId, user);
+            groupZonkbots.add(group);
+            group.responseMessage(textContent, userId, replyToken);
+        }
+
+        //        UserSource userSource = event.getSource();
         return event.getSource().getUserId();
-//        boolean hasGroup = group != null;
 
-
-//        if (hasGroup) {
-//            replyText = group.responseMessage(textContent, userSource, replyToken);
-//        } else if (!hasGroup && textContent.equals("start zonk")) {
-//            User user = new User(userSource);
-//            group = new GroupZonkbot(groupId, user);
-//            groupZonkbots.add(group);
-//            group.responseMessage(textContent, userSource, replyToken);
-//        }
 
 
     }
