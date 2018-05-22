@@ -36,7 +36,7 @@ public class Zonkbot {
         return question;
     }
 
-    public String responseMessage(String textContent) throws IOException {
+    public String responseMessage(String textContent) {
         String replyText = "";
         //ADD_QUESTION
         if (textContent.equals("/add_question") && !add_question_section) {
@@ -71,10 +71,6 @@ public class Zonkbot {
             replyText = question.toString();
             question = null;
         }
-        //NAME
-        else if (textContent.equals("/name")) {
-            replyText = "/name";
-        }
         //ECHO
         else if (textContent.length() > 5
                 && textContent.substring(0,5).equals("/echo")) {
@@ -88,7 +84,7 @@ public class Zonkbot {
         return replyText;
     }
 
-    public String add_question(String textContent) throws IOException {
+    public String add_question(String textContent) {
         String result = "";
         if (giveAnswerCount == 0) {
             question = new Question(textContent);

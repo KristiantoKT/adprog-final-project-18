@@ -1,7 +1,6 @@
 package zonkbot.controller;
 
 import com.google.gson.Gson;
-
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.action.Action;
@@ -17,20 +16,9 @@ import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.message.template.CarouselColumn;
 import com.linecorp.bot.model.message.template.CarouselTemplate;
 import com.linecorp.bot.model.message.template.Template;
-import com.linecorp.bot.model.profile.UserProfileResponse;
 import com.linecorp.bot.model.response.BotApiResponse;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
-
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Reader;
-import java.util.*;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.logging.Logger;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import zonkbot.GroupZonkbot;
@@ -38,25 +26,32 @@ import zonkbot.Question;
 import zonkbot.User;
 import zonkbot.Zonkbot;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.logging.Logger;
+
 @LineMessageHandler
 public class ZonkbotController {
 
     private static final Logger LOGGER = Logger.getLogger(ZonkbotController.class.getName());
     public Zonkbot zonkbot = new Zonkbot();
-    private Question question = null;
-    private List<GroupZonkbot> groupZonkbots = new ArrayList<GroupZonkbot>();
+    private List<GroupZonkbot> groupZonkbots = new ArrayList<>();
 
     @Autowired
     private LineMessagingClient lineMessagingClient;
 
 
     @EventMapping
-    public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws IOException, ExecutionException, InterruptedException {
+    public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws ExecutionException, InterruptedException {
         LOGGER.fine(String.format("TextMessageContent(timestamp='%s',content='%s')",
                 event.getTimestamp(), event.getMessage()));
         TextMessageContent messageContent = event.getMessage();
         String textContent = messageContent.getText();
-        String replyText = "";
+        String replyText;
         //USER SOURCE
         String replyToken = event.getReplyToken();
         if (event.getSource() instanceof UserSource) {
@@ -102,9 +97,8 @@ public class ZonkbotController {
         return reply;
     }
 
-    public String groupResponseMessage(MessageEvent<TextMessageContent> event) throws IOException {
+    public String groupResponseMessage(MessageEvent<TextMessageContent> event) {
         String replyText = "";
-        String replyToken = event.getReplyToken();
         String groupId = ((GroupSource) event.getSource()).getGroupId();
         String userId = event.getSource().getUserId();
         String textContent = event.getMessage().getText();
@@ -113,12 +107,12 @@ public class ZonkbotController {
 
 
         if (hasGroup) {
-            replyText = group.responseMessage(textContent, userId, replyToken);
+            replyText = group.responseMessage(textContent, userId);
         } else if (!hasGroup && textContent.equals("start zonk")) {
             User user = new User(userId);
             group = new GroupZonkbot(groupId, user);
             groupZonkbots.add(group);
-            replyText = group.responseMessage(textContent, userId, replyToken);
+            replyText = group.responseMessage(textContent, userId);
         }
 
         return replyText;

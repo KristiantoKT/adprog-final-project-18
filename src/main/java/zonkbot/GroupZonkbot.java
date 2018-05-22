@@ -1,28 +1,13 @@
 package zonkbot;
 
-import com.linecorp.bot.model.action.Action;
-import com.linecorp.bot.model.action.MessageAction;
-import com.linecorp.bot.model.event.source.UserSource;
-import com.linecorp.bot.model.message.TemplateMessage;
-import com.linecorp.bot.model.message.template.CarouselColumn;
-import com.linecorp.bot.model.message.template.CarouselTemplate;
-import com.linecorp.bot.model.message.template.Template;
-import com.linecorp.bot.model.profile.UserProfileResponse;
 import zonkbot.controller.ZonkbotController;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
 
 public class GroupZonkbot {
     ArrayList<User> users;
     String groupId;
-    Question currentQuestion;
     boolean isZonk;
-
-    ZonkbotController zonkbotController;
 
 
     public GroupZonkbot(String groupId, User user) {
@@ -50,7 +35,7 @@ public class GroupZonkbot {
         return users;
     }
 
-    public String responseMessage(String textContent, String userId, String replyToken) throws IOException {
+    public String responseMessage(String textContent, String userId) {
         String replyText = "";
 
         User user = getUser(userId);
@@ -81,15 +66,11 @@ public class GroupZonkbot {
             boolean answerCorrect = answerIndex == question.getCorrectAnswerIndex();
             if (answerCorrect && user.getTakenChance() > 0) {
                 user.setScore(user.getScore() + 1);
-                return responseMessage("start zonk", userId, replyToken);
+                return responseMessage("start zonk", userId);
             } else if (!answerCorrect && user.getTakenChance() > 0) {
                 user.setTakenChance(user.getTakenChance() - 1);
                 return "";
             }
-        }
-        //ALL ID
-        else if (textContent.length() == 4 && textContent.equals("/All")) {
-            return getAllUserId();
         }
         //STOP ZONK
         else if (textContent.length() == 9 && textContent.equals("stop zonk")) {
@@ -119,11 +100,4 @@ public class GroupZonkbot {
         return true;
     }
 
-    public String getAllUserId() {
-        String result = "";
-        for (User user: users) {
-            result = user.getUserId() + " chance:" + user.getTakenChance() + " score: " + user.getScore() + " \n\n";
-        }
-        return result;
-    }
 }
