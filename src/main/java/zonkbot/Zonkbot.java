@@ -48,22 +48,23 @@ public class Zonkbot {
         }
         //ADD_QUESTION_SECTION
         else if (add_question_section) {
-            replyText = add_question(textContent, replyToken);
+            replyText = add_question(textContent);
         }
-//        //CHANGE_ANSWER
-//        else if (textContent.equals("/change_answer")) {
-//            if(questions.isEmpty())
-//                replyText = "There is no question";
-//            else
-//                zonkbotController.chooseQuestion(replyToken);
-//        }
-//        //CHANGE_ANSWER_SECTION
-//        else if (this != null && textContent.length() > 10
-//                && textContent.substring(0,9).equals("/Question")) {
-//            int questionIndex = Integer.parseInt(textContent.substring(11));
-//            zonkbotController.question = chooseQuestion(questionIndex);
-//            zonkbotController.chooseCorrectAnswer(zonkbotController.question, replyToken);
-//        }
+        //CHANGE_ANSWER
+        else if (textContent.equals("/change_answer")) {
+            if(questions.isEmpty())
+                replyText = "There is no question";
+            else
+                replyText = "/Choose question";
+        }
+        //CHANGE_ANSWER_SECTION
+        else if (this != null && textContent.length() > 10
+                && textContent.substring(0,9).equals("/Question")) {
+            int questionIndex = Integer.parseInt(textContent.substring(11)) - 1;
+            List<Question> questions = ZonkbotController.readFromJSON();
+            question = questions.get(questionIndex);
+            replyText = "/Choose correct answer";
+        }
         //CHOOSE CORRECT ANSWER
         else if (textContent.length() >= 15
                 && textContent.substring(0,15).equals("/Correct answer")){
@@ -85,7 +86,7 @@ public class Zonkbot {
         return replyText;
     }
 
-    public String add_question(String textContent, String replyToken) throws IOException {
+    public String add_question(String textContent) throws IOException {
         String result = "";
         if (giveAnswerCount == 0) {
             question = new Question(textContent);
@@ -97,7 +98,7 @@ public class Zonkbot {
             result = "Answer " + giveAnswerCount + ":";
         } else if (giveAnswerCount >= 4) {
             question.addAnswer(textContent);
-            result = "Carousel";
+            result = "/Choose correct answer";
             addQuestionReset();
             ZonkbotController.writeToJson(question);
         }

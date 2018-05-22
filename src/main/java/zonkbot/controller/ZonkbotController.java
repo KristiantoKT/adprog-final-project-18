@@ -52,13 +52,30 @@ public class ZonkbotController {
         TextMessageContent messageContent = event.getMessage();
         String textContent = messageContent.getText();
         String replyText = zonkbot.responseMessage(textContent, event.getReplyToken());
-        if (replyText.equals("Carousel")) {
+        if (replyText.equals("/Choose correct answer")) {
             chooseCorrectAnswerWithCarousel(event.getReplyToken());
+        } else if (replyText.equals("/Choose question")) {
+            chooseQuestion(event.getReplyToken());
         }
         else if (!replyText.isEmpty())
             this.replyText(event.getReplyToken(),replyText);
         else
             this.replyText(event.getReplyToken(), "masuk ke class pertama");
+    }
+
+    private void chooseQuestion(String replyToken) {
+        List<Question> questions = readFromJSON();
+        List<CarouselColumn> columns = new ArrayList<>();
+        for (int i = 0; i < questions.size(); i++) {
+            List<Action> actions = new ArrayList<>();
+            actions.add(new MessageAction("Select",
+                    String.format("/Question: %s", i+1)));
+            columns.add(new CarouselColumn(null,
+                    "Choose Question", questions.get(i).getQuestion(), actions));
+        }
+        Template carouselTemplate = new CarouselTemplate(columns);
+        TemplateMessage templateMessage = new TemplateMessage("Questions", carouselTemplate);
+        reply(replyToken, templateMessage);
     }
 
     public void chooseCorrectAnswerWithCarousel(String replyToken) {
