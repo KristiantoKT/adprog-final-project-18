@@ -240,7 +240,6 @@ public class ZonkbotController {
             e.printStackTrace();
         }
 
-
         ArrayList<Question> resultList = new ArrayList<Question>(Arrays.asList(result));
         return resultList;
     }
