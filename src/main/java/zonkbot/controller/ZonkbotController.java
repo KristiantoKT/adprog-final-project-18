@@ -38,6 +38,8 @@ public class ZonkbotController {
         String replyText = zonkbot.responseMessage(textContent, event.getReplyToken(), this);
         if(!replyText.isEmpty())
             reply.replyText(event.getReplyToken(),replyText);
+        else
+            reply.replyText(event.getReplyToken(), "masuk ke class pertama");
     }
 
 
