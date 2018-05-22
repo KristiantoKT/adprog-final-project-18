@@ -1,1 +1,5 @@
-[{"question":"pertanyaan1","answers":["jawaban1","jawaban2","jawaban3","jawaban4"],"correct_answer_index":0},{"question":"pertanyaan2","answers":["a","b","c","d"],"correct_answer_index":0},{"question":"pertanyaan","answers":["jawaban1","jawaban2","jawaban3","jawaban4"],"correct_answer_index":0},{"question":"pertanyaan","answers":["jawaban1","jawaban2","jawaban3","jawaban4"],"correct_answer_index":0}]
+[{"question":"Ayam ayam apa yang dijero?","answers":["Ayam mekdi","Yamro","Yamin","Ayam Smekdon"],"correct_answer_index":1},
+	{"question":"Apa itu combro?","answers":["Oncom dijero","Compact bro","Computer brother","Oncom lenca bro"],"correct_answer_index":0},
+	{"question":"UAS atau Tugas?","answers":["UAS","Tugas","Skip","Dua-duanya"],"correct_answer_index":3},
+	{"question":"Adprog atau Anum?","answers":["Anum","Adprog","Tidak dua-duanya","Alin"],"correct_answer_index":2},
+	{"question":"Kepanjangan dari sadas","answers":["Sayap pedas","Saya pedas","Santai pedas","Sarung bodas"],"correct_answer_index":0}]
