@@ -1,6 +1,7 @@
 package advprog.anison.bot;
 
 import com.linecorp.bot.model.action.MessageAction;
+import com.linecorp.bot.model.message.TemplateMessage;
 import com.linecorp.bot.model.message.template.CarouselColumn;
 import com.linecorp.bot.model.message.template.CarouselTemplate;
 
@@ -11,7 +12,7 @@ public class CarouselManager {
 
     public static ArrayList<Song> songs = SongCsvReader.readSong("test");
 
-    public static CarouselTemplate carouselMaker() {
+    public static TemplateMessage carouselMaker() {
         CarouselColumn[] columns = new CarouselColumn[songs.size()];
 
         for (int i = 0; i < columns.length; i++) {
@@ -26,9 +27,9 @@ public class CarouselManager {
         CarouselTemplate carouselTemplate = new CarouselTemplate(
                 Arrays.asList(columns)
         );
-        System.out.println(columns[1].getActions());
-        System.out.println(carouselTemplate.getColumns().size());
-        return carouselTemplate;
+        TemplateMessage templateMessage = new TemplateMessage(
+                "Carousel alt text", carouselTemplate);
+        return templateMessage;
     }
 
     /*else if (inputan[0].equals("/carousel")) {
