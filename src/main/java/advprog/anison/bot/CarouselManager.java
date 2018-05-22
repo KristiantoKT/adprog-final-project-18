@@ -14,8 +14,6 @@ import java.util.List;
 
 public class CarouselManager {
 
-    public static ArrayList<Song> songs = SongCsvReader.readSong("test");
-
     public static ArrayList<Song> deleteSong(ArrayList<Song> songs, String songName) {
         for (Song song : songs) {
             if (song.getSongName().equalsIgnoreCase(songName)) {
@@ -26,7 +24,7 @@ public class CarouselManager {
         return songs;
     }
 
-    public static TemplateMessage carouselMaker() {
+    public static TemplateMessage carouselMaker(ArrayList<Song> songs) {
         ArrayList<CarouselColumn> columns = new ArrayList<>();
 
         System.out.println(songs.size());

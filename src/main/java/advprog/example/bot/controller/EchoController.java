@@ -75,7 +75,8 @@ public class EchoController {
             return new TextMessage("Song not added to list");
 
         } else if (inputan[0].equals("/carousel")) {
-            return CarouselManager.carouselMaker();
+            ArrayList<Song> songs = SongCsvReader.readSong("test");
+            return CarouselManager.carouselMaker(songs);
            /* String imageUrl = "https://i.schoolido.lu/songs/soldier_game.jpg";
             List<CarouselColumn> columns = new ArrayList<>();
             columns.add(new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(

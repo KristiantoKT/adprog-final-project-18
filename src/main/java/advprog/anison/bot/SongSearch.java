@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 import org.json.JSONObject;
 
@@ -13,11 +14,12 @@ public class SongSearch {
 
     public static final String fixedURL = "https://schoolido.lu/api/songs/?search=";
 
-    /*public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception{
         //SongCsvWriter.writeSong("test","Soldier Game");
         //SongCsvReader.readSong("test");
-         CarouselManager.carouselMaker();
-    }*/
+        ArrayList<Song> songs = SongCsvReader.readSong("test");
+         CarouselManager.carouselMaker(songs);
+    }
 
     public static int findItunesId(String song) throws Exception {
         song = song.replace(" ","+");
