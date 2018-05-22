@@ -71,7 +71,7 @@ public class EchoController {
                 return new AudioMessage(songs.get(0).getSongAudioClipUrl(),30000);
             }
 
-            CarouselColumn[] columns = new CarouselColumn[songs.size() - 1];
+            CarouselColumn[] columns = new CarouselColumn[songs.size()];
 
             String imageUrl = "https://i.schoolido.lu/songs/soldier_game.jpg";
             for (int i = 0; i < columns.length - 1; i++) {
