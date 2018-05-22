@@ -13,9 +13,10 @@ public class SongSearch {
 
     public static final String fixedURL = "https://schoolido.lu/api/songs/?search=";
 
-    /* public static void main(String[] args) throws Exception{
+     /*public static void main(String[] args) throws Exception{
         //SongCsvWriter.writeSong("test","Soldier Game");
         //SongCsvReader.readSong("test");
+         CarouselManager.carouselMaker();
     }*/
 
     public static int findItunesId(String song) throws Exception {

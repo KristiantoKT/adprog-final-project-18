@@ -22,6 +22,7 @@ public class CarouselManager {
                                     "/listen_song " + current.getSongName())
             ));
         }
+
         CarouselTemplate carouselTemplate = new CarouselTemplate(
                 Arrays.asList(columns)
         );
