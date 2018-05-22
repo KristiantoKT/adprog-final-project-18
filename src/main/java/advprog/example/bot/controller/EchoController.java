@@ -55,7 +55,7 @@ public class EchoController {
             System.out.println(song.substring(0,song.length() - 1));
 
             ArrayList<Song> songs = SongCsvReader.readSong("test");
-            SongCsvWriter.writeSongArray("test",songs);
+            //SongCsvWriter.writeSongArray("test",songs);
 
             for (Song target : songs) {
                 if (target.getSongName().equalsIgnoreCase(song)) {
@@ -75,9 +75,7 @@ public class EchoController {
             return new TextMessage("Song not added to list");
 
         } else if (inputan[0].equals("/carousel")) {
-            return CarouselManager.carouselMaker();
-        }
-            /*String imageUrl = "https://i.schoolido.lu/songs/soldier_game.jpg";
+           /* String imageUrl = "https://i.schoolido.lu/songs/soldier_game.jpg";
             List<CarouselColumn> columns = new ArrayList<>();
             columns.add(new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
                     new URIAction("Go to line.me",
@@ -123,6 +121,28 @@ public class EchoController {
             );
             TemplateMessage templateMessage = new TemplateMessage(
                     "Carousel alt text", carouselTemplate);
+            return templateMessage;*/
+
+
+            List<CarouselColumn> columns = new ArrayList<>();
+
+            ArrayList<Song> songs = SongCsvReader.readSong("test");
+
+            for (int i = 0; i < songs.size(); i++) {
+                Song current = songs.get(i);
+                columns.add(new CarouselColumn(current.getSongImgUrl(),
+                        current.getSongName(),"anison-radio", Arrays.asList(
+                        new MessageAction("Listen!",
+                                "/listen_song " + current.getSongName())
+                )));
+            }
+
+            CarouselTemplate carouselTemplate = new CarouselTemplate(
+                    columns
+            );
+
+            TemplateMessage templateMessage = new TemplateMessage(
+                    "Carousel alt text", carouselTemplate);
             return templateMessage;
         } else if (inputan[0].equals("/add_song")) {
             StringBuilder songName = new StringBuilder();
@@ -150,7 +170,7 @@ public class EchoController {
             }
             SongCsvWriter.writeSongArray("test",songs);
             return new TextMessage(songList.toString());
-        }*/
+        }
 
         String replyText = contentText.replace("/echo", "");
         return new TextMessage(replyText.substring(1));
