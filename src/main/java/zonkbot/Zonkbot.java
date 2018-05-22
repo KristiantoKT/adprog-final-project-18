@@ -6,6 +6,7 @@ import com.linecorp.bot.model.message.TemplateMessage;
 import com.linecorp.bot.model.message.template.CarouselColumn;
 import com.linecorp.bot.model.message.template.CarouselTemplate;
 import com.linecorp.bot.model.message.template.Template;
+import zonkbot.controller.ReplyController;
 import zonkbot.controller.ZonkbotController;
 
 import java.io.IOException;
@@ -18,6 +19,7 @@ public class Zonkbot {
     private boolean add_question_section;
     private boolean change_answer_section;
     private int giveAnswerCount;
+    private ReplyController replyController;
 
     public Zonkbot() {
         questions = new ArrayList<Question>();
@@ -34,8 +36,6 @@ public class Zonkbot {
         }
         return -1;
     }
-
-
 
     public String responseMessage(String textContent, String replyToken, ZonkbotController zonkbotController) throws IOException {
         String replyText = "";
@@ -125,7 +125,7 @@ public class Zonkbot {
         }
         Template carouselTemplate = new CarouselTemplate(columns);
         TemplateMessage templateMessage = new TemplateMessage("Answers", carouselTemplate);
-        ZonkbotController.reply(replyToken, templateMessage);
+        replyController.reply(replyToken, templateMessage);
     }
 
     @Override
