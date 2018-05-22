@@ -117,39 +117,7 @@ public class PrintController {
                             new CarouselColumn(halteBikuns[9].getImgUrl(), "Halte Bikun 10",
                                     halteBikuns[9].getNama(), Collections.singletonList(
                                     new PostbackAction(
-                                            "Pilih", halteBikuns[9].getNama()))),
-                            new CarouselColumn(halteBikuns[10].getImgUrl(), "Halte Bikun 11",
-                                    halteBikuns[10].getNama(), Collections.singletonList(
-                                    new PostbackAction(
-                                            "Pilih", halteBikuns[10].getNama()))),
-                            new CarouselColumn(halteBikuns[11].getImgUrl(), "Halte Bikun 12",
-                                    halteBikuns[11].getNama(), Collections.singletonList(
-                                    new PostbackAction(
-                                            "Pilih", halteBikuns[11].getNama()))),
-                            new CarouselColumn(halteBikuns[12].getImgUrl(), "Halte Bikun 13",
-                                    halteBikuns[12].getNama(), Collections.singletonList(
-                                    new PostbackAction(
-                                            "Pilih", halteBikuns[12].getNama()))),
-                            new CarouselColumn(halteBikuns[13].getImgUrl(), "Halte Bikun 14",
-                                    halteBikuns[13].getNama(), Collections.singletonList(
-                                    new PostbackAction(
-                                            "Pilih", halteBikuns[13].getNama()))),
-                            new CarouselColumn(halteBikuns[14].getImgUrl(), "Halte Bikun 15",
-                                    halteBikuns[14].getNama(), Collections.singletonList(
-                                    new PostbackAction(
-                                            "Pilih", halteBikuns[14].getNama()))),
-                            new CarouselColumn(halteBikuns[15].getImgUrl(), "Halte Bikun 16",
-                                    halteBikuns[15].getNama(), Collections.singletonList(
-                                    new PostbackAction(
-                                            "Pilih", halteBikuns[15].getNama()))),
-                            new CarouselColumn(halteBikuns[16].getImgUrl(), "Halte Bikun 17",
-                                    halteBikuns[16].getNama(), Collections.singletonList(
-                                    new PostbackAction(
-                                            "Pilih", halteBikuns[16].getNama()))),
-                            new CarouselColumn(halteBikuns[17].getImgUrl(), "Halte Bikun 18",
-                                    halteBikuns[17].getNama(), Collections.singletonList(
-                                    new PostbackAction(
-                                            "Pilih", halteBikuns[17].getNama())))
+                                            "Pilih", halteBikuns[9].getNama())))
                     )
             );
 
