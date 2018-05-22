@@ -12,8 +12,6 @@ import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TemplateMessage;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.message.template.ButtonsTemplate;
-import com.linecorp.bot.model.message.template.ImageCarouselColumn;
-import com.linecorp.bot.model.message.template.ImageCarouselTemplate;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,10 +21,41 @@ import java.util.List;
 
 public class BikunController {
 
+    public static int getWaitingTime(HalteBikun halteBikun) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+        long min = -1;
+        try {
+            Date currentTime = dateFormat.parse(dateFormat.format(new Date()));
+            for (String time : halteBikun.getJadwal()) {
+                Date endTime = dateFormat.parse(time);
+                long difference = endTime.getTime() - currentTime.getTime();
+                if (difference >= 0) {
+                    min = difference;
+                    break;
+                }
+            }
+        } catch (ParseException e) {
+            return  0;
+        }
+        return (int) (min / 1000 / 60);
+    }
+
+    public static String pesanWaktu(int remainingMinutes, HalteBikun halteBikun) {
+        String pesanWaktu = "";
+        if (remainingMinutes == -1) {
+            pesanWaktu = "Silahkan pesan gojek, karena bikun sudah tidak beroperasi, "
+                    + "atau tunggu sampai esok hari pukul " + halteBikun.getJadwal()[0];
+        } else {
+            pesanWaktu = "Bikun akan datang dalam waktu " + remainingMinutes + " menit lagi";
+        }
+        return pesanWaktu;
+    }
+
+
     public static List<Message> requestLocation() {
         List<Action> actions = new ArrayList<Action>();
         actions.add(new URIAction("Share Location", "https://line.me/R/nv/location"));
-        TemplateMessage templateMessage= new TemplateMessage("Confirm Location", new ButtonsTemplate("https://cdn.pixabay.com/photo/2017/10/12/18/34/gps-2845363_960_720.png",
+        TemplateMessage templateMessage = new TemplateMessage("Confirm Location", new ButtonsTemplate("https://cdn.pixabay.com/photo/2017/10/12/18/34/gps-2845363_960_720.png",
                 "Cari Halte Bikun Terdekat",
                 "Please share your current location",
                 actions));
@@ -58,8 +87,10 @@ public class BikunController {
         );
         TextMessage halteBikunDetail = new TextMessage(
                 String.format("Kami merekomendasikan Anda untuk ke %s\n\n"
-                                + "%s berjarak %s meter dari posisi Anda",
-                        bikunTerdekat.getNama(), bikunTerdekat.getNama(), jarakTerdekat)
+                                + "%s berjarak %s meter dari posisi Anda\n"
+                                + "Bikun akan datang dalam waktu %s menit",
+                        bikunTerdekat.getNama(), bikunTerdekat.getNama(), jarakTerdekat,
+                        BikunController.getWaitingTime(bikunTerdekat))
         );
         result.add(halteBikunLocation);
         result.add(halteBikunDetail);
@@ -84,14 +115,12 @@ public class BikunController {
         return Math.sqrt(distance);
     }
 
-    public static String differenceMinutes() throws ParseException {
-        String time1 = "12:00:00";
-        String time2 = "12:01:00";
+    public static long differenceMinutes(String time1, String time2) throws ParseException {
 
         SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
         Date date1 = format.parse(time1);
         Date date2 = format.parse(time2);
         long difference = date2.getTime() - date1.getTime();
-        return "";
+        return difference / 1000 / 60;
     }
 }

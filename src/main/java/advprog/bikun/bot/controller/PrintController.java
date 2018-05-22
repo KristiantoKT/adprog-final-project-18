@@ -21,6 +21,8 @@ import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -39,11 +41,16 @@ public class PrintController {
     public PrintController() throws IOException {
     }
 
+    public String hehe(MessageEvent<TextMessageContent> event) {
+        LOGGER.fine(String.format("Event(timestamp='%s',source='%s')",
+                event.getTimestamp(), event.getSource()));
+        return event.getTimestamp().toString();
+    }
+
 
     @EventMapping
-    public List<Message> handlePostbackEvent(PostbackEvent event) {
+    public List<Message> handlePostbackEvent(PostbackEvent event) throws ParseException {
         String namaHalte = event.getPostbackContent().getData();
-        String waktu = event.getTimestamp().toString();
         List<Message> result = new ArrayList<>();
         HalteBikun halteTerpilih = null;
         for (HalteBikun halteBikun : halteBikuns) {
@@ -51,13 +58,19 @@ public class PrintController {
                 halteTerpilih = halteBikun;
             }
         }
+
+        int remainingMinutes = BikunController.getWaitingTime(halteTerpilih);
+
+        String pesanWaktu = BikunController.pesanWaktu(remainingMinutes, halteTerpilih);
+
         LocationMessage halteBikunLocation = new LocationMessage(
                 halteTerpilih.getNama(), "UI",
                 halteTerpilih.getLatitude(), halteTerpilih.getLongitude()
         );
         TextMessage halteBikunDetail = new TextMessage(
-                String.format("Anda memilih %s\n\n", halteTerpilih.getNama())
+                String.format("Anda memilih %s\n%s", halteTerpilih.getNama(), pesanWaktu)
         );
+
 
         result.add(halteBikunLocation);
         result.add(halteBikunDetail);
@@ -134,6 +147,7 @@ public class PrintController {
     public void handleDefaultMessage(Event event) {
         LOGGER.fine(String.format("Event(timestamp='%s',source='%s')",
                 event.getTimestamp(), event.getSource()));
+
     }
 
 
