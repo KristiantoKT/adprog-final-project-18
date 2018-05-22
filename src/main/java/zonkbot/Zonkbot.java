@@ -99,8 +99,8 @@ public class Zonkbot {
             question.addAnswer(textContent);
             questions.add(question);
             ZonkbotController.writeToJson(question);
-            result = "Carousel";
             addQuestionReset();
+            result = "Cr";
         }
         return result;
     }

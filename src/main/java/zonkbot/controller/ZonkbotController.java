@@ -53,6 +53,7 @@ public class ZonkbotController {
         String textContent = messageContent.getText();
         String replyText = zonkbot.responseMessage(textContent, event.getReplyToken(), this);
         if (replyText.equals("Carousel")) {
+            this.replyText(event.getReplyToken(),"sampe Carousel sini");
             chooseCorrectAnswerWithCarousel(event.getReplyToken());
         }
         else if (!replyText.isEmpty())
