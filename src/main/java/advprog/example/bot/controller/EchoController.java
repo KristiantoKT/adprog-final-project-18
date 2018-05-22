@@ -59,7 +59,7 @@ public class EchoController {
 
             return new AudioMessage(url,30000);
 
-        } else if (inputan[0].equals("/carousel")) {
+        } /*else if (inputan[0].equals("/carousel")) {
             String imageUrl = "https://i.schoolido.lu/songs/soldier_game.jpg";
             CarouselTemplate carouselTemplate = new CarouselTemplate(
                     Arrays.asList(
@@ -106,7 +106,7 @@ public class EchoController {
             TemplateMessage templateMessage = new TemplateMessage(
                     "Carousel alt text", carouselTemplate);
             return templateMessage;
-        }
+        }*/
 
         String replyText = contentText.replace("/echo", "");
         return new TextMessage(replyText.substring(1));
