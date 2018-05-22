@@ -19,6 +19,7 @@ import java.util.Random;
 public class GroupZonkbot {
     ArrayList<User> users;
     String groupId;
+    Question currentQuestion;
 
     ZonkbotController zonkbotController;
 
@@ -71,7 +72,7 @@ public class GroupZonkbot {
                 return "Sorry but no question available";
              return "/Random question";
         }
-        else if (textContent.length() == 4 && textContent.substring(0,2).equals("/Q")
+        else if (textContent.length() == 5 && textContent.substring(0,2).equals("/Q")
                 && textContent.substring(3,4).equals("A")) {
             int questionIndex = Integer.parseInt(textContent.substring(2, 3));
             int answerIndex = Integer.parseInt(textContent.substring(4, 5));
@@ -80,10 +81,12 @@ public class GroupZonkbot {
             boolean answerCorrect = answerIndex == question.getCorrectAnswerIndex();
             if (answerCorrect && user.getTakenChance() > 0) {
                 user.setScore(user.getScore() + 1);
-                responseMessage("start zonk", userId, replyToken);
-                return "";
+                return "jawaban bener";
+//                responseMessage("start zonk", userId, replyToken);
+//                return "";
             } else if (!answerCorrect && user.getTakenChance() > 0) {
-                user.setTakenChance(user.getTakenChance() - 1);
+                return "jawaban salah";
+//                user.setTakenChance(user.getTakenChance() - 1);
             }
         }
 //        else if (textContent.length() == 9 && textContent.equals("stop zonk") ) {
