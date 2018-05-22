@@ -37,7 +37,9 @@ public class CarouselManager {
             act.add(new MessageAction("Listen!",
                     "/listen_song " + current.getSongName()));
 
-            columns.add(new CarouselColumn(null,
+            String imgUrl = current.getSongImgUrl();
+
+            columns.add(new CarouselColumn("https:"+imgUrl,
                     current.getSongName(),"itunes id="+current.getSongId(),act
             ));
         }
