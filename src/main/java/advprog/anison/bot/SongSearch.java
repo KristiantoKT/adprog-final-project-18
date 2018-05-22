@@ -13,6 +13,11 @@ public class SongSearch {
 
     public static final String fixedURL = "https://schoolido.lu/api/songs/?search=";
 
+    /* public static void main(String[] args) throws Exception{
+        //SongCsvWriter.writeSong("test","Soldier Game");
+        //SongCsvReader.readSong("test");
+    }*/
+
     public static int findItunesId(String song) throws Exception {
         song = song.replace(" ","+");
         String urlString = fixedURL + song;
@@ -53,6 +58,38 @@ public class SongSearch {
 
         return id;
 
+    }
+
+    public static String findImageUrl(String song) throws Exception {
+        song = song.replace(" ","+");
+        String urlString = fixedURL + song;
+
+        URL url = new URL(urlString);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+        if (connection.getResponseCode() == 301) {
+            String newUrl = connection.getHeaderField("Location");
+            connection = (HttpURLConnection) new URL(newUrl).openConnection();
+        }
+
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(connection.getInputStream()));
+
+        String line;
+        StringBuffer html = new StringBuffer();
+
+        while ((line = in.readLine()) != null) {
+            html.append(line);
+        }
+        in.close();
+
+        JSONObject json = new JSONObject(html.toString());
+        String imageUrl;
+        JSONObject target;
+
+        target = json.getJSONArray("results").getJSONObject(0);
+        imageUrl = target.getString("image");
+        return imageUrl;
     }
 
 }

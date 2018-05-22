@@ -29,6 +29,8 @@ public class ItuneSearch {
         }
         in.close();
 
+        System.out.println(html.toString());
+
         JSONObject song = new JSONObject(html.toString());
         JSONArray songArr = song.getJSONArray("results");
         String link = songArr.getJSONObject(0).getString("previewUrl");
