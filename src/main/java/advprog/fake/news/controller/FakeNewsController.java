@@ -19,42 +19,35 @@ public class FakeNewsController {
                 event.getTimestamp(), event.getMessage()));
         TextMessageContent content = event.getMessage();
         String contentText = content.getText();
-
-        try {
-            if (content.getText().contains("/is_fake")) {
-                boolean isFake = determineFake();
-                return new TextMessage("ehe");
-            } else if (content.getText().contains("/is_satire")) {
-                boolean isSatire = determineSatire();
-                return new TextMessage("ehe");
-            } else if (content.getText().contains("/is_conspiracy")) {
-                boolean isConspiracy = determineConspiracy();
-                return new TextMessage("ehe");
-            } else if (content.getText().contains("/add_filter")) {
-                addFilter();
-                return new TextMessage("ehe");
+        if (contentText.contains("/echo")) {
+            String replyText = contentText.replace("/echo", "");
+            return new TextMessage(replyText.substring(1));
+        } else {
+            if (event.getSource().getClass().getTypeName().endsWith("UserSource")) {
+                return checkPersonalMessage(contentText);
             } else {
-                throw new IllegalArgumentException();
+                return checkGroupMessage(contentText);
             }
-        } catch (IllegalArgumentException e) {
-            return new TextMessage("Command not found!");
         }
-
     }
 
-    private void addFilter() {
+    private TextMessage checkGroupMessage(String contentText) {
+        return new TextMessage(contentText);
     }
 
-    private boolean determineConspiracy() {
-        return true;
-    }
-
-    private boolean determineSatire() {
-        return true;
-    }
-
-    private boolean determineFake() {
-        return true;
+    private TextMessage checkPersonalMessage(String contentText) {
+        String command = contentText.split(" ")[0];
+        if (command.equals("/is_fake")) {
+            return new TextMessage("");
+        } else if (command.equals("/is_satire")) {
+            return new TextMessage("");
+        } else if (command.equals("/is_conspiracy")) {
+            return new TextMessage("");
+        } else if (command.equals("/add_filter")) {
+            return new TextMessage("");
+        } else {
+            return new TextMessage("");
+        }
     }
 
     @EventMapping
