@@ -19,8 +19,8 @@ public class Zonkbot {
     private boolean change_answer_section;
     private int giveAnswerCount;
 
-    public Zonkbot() throws IOException {
-        questions = ZonkbotController.readFromJSON();
+    public Zonkbot() {
+        questions = new ArrayList<Question>();
         add_question_section = false;
         change_answer_section = false;
         giveAnswerCount = 0;
@@ -95,6 +95,7 @@ public class Zonkbot {
             result = "Answer " + giveAnswerCount + ":";
         } else if (giveAnswerCount >= 4) {
             question.addAnswer(textContent);
+            ZonkbotController.writeToJson(question);
             questions.add(question);
             initialize(replyToken);
         }
