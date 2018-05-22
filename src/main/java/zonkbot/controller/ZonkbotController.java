@@ -66,7 +66,7 @@ public class ZonkbotController {
             } else if (replyText.equals("/Choose question")) {
                 chooseQuestion(replyToken);
             } else if (replyText.equals("/name")) {
-                replyText = getProfileName(event.getSource().getUserId());
+                getProfileName(replyToken, event.getSource().getUserId());
             } else if (!replyText.isEmpty()) {
                 this.replyText(replyToken, replyText);
             }
@@ -95,8 +95,8 @@ public class ZonkbotController {
         Collections.sort(users);
         for (User user: users) {
             String userId = user.getUserId();
-            String name = getProfileName(userId);
-            reply += name + ": " + user.getScore() + "\n";
+//            String name = getProfileName(userId);
+//            reply += name + ": " + user.getScore() + "\n";
         }
         return reply;
     }
@@ -221,7 +221,7 @@ public class ZonkbotController {
         reply(replyToken, new TextMessage(message));
     }
 
-    public static void writeToJson(Question question) throws IOException {
+    public static void writeToJson(Question question) {
         Gson gson = new Gson();
         ArrayList<Question> questions = readFromJSON();
         questions.add(question);
@@ -246,10 +246,24 @@ public class ZonkbotController {
         return resultList;
     }
 
-    public String getProfileName (String userId) throws ExecutionException, InterruptedException {
-        String replyText = "";
-        UserProfileResponse profile = lineMessagingClient.getProfile(userId).get();
-        return profile.getDisplayName();
+    public void getProfileName (String replyToken, String userId) {
+        lineMessagingClient
+                .getProfile(userId)
+                .whenComplete((profile, throwable) -> {
+                    if (throwable != null) {
+                        this.replyText(replyToken, throwable.getMessage());
+                        return;
+                    }
+
+                    this.reply(
+                            replyToken,
+                            Arrays.asList(new TextMessage(
+                                            "Display name: " + profile.getDisplayName()),
+                                    new TextMessage("Status message: "
+                                            + profile.getStatusMessage()))
+                    );
+
+                });
 
     }
 
