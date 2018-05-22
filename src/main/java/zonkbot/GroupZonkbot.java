@@ -70,7 +70,7 @@ public class GroupZonkbot {
             return "";
         }
         //INITIAL START ZONK
-        else if (textContent.equals("start zonk") && !isZonk) {
+        else if (textContent.equals("start zonk")) {
             ArrayList<Question> questions = ZonkbotController.readFromJSON();
             if(questions.isEmpty())
                 return "Sorry but no question available";
@@ -79,7 +79,7 @@ public class GroupZonkbot {
         }
         //ANSWER QUESTION
         else if (textContent.length() == 5 && textContent.substring(0,2).equals("/Q")
-                && textContent.substring(3,4).equals("A") && isZonk) {
+                && textContent.substring(3,4).equals("A") ) {
             int questionIndex = Integer.parseInt(textContent.substring(2, 3)) - 1;
             int answerIndex = Integer.parseInt(textContent.substring(4, 5)) - 1 ;
             ArrayList<Question> questions = ZonkbotController.readFromJSON();
@@ -94,11 +94,11 @@ public class GroupZonkbot {
             }
         }
         //ALL ID
-        else if (textContent.length() == 4 && textContent.equals("/All") && isZonk) {
+        else if (textContent.length() == 4 && textContent.equals("/All")) {
             return getAllUserId();
         }
         //STOP ZONK
-        else if (textContent.length() == 9 && textContent.equals("stop zonk") && isZonk) {
+        else if (textContent.length() == 9 && textContent.equals("stop zonk")) {
             isZonk = false;
             resetScore();
             return "show leaderboard";
