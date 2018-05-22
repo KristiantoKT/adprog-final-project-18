@@ -66,7 +66,7 @@ public class PrintController {
 
 
     @EventMapping
-    public TemplateMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
+    public List<Message> handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
         LOGGER.fine(String.format("TextMessageContent(timestamp='%s',content='%s')",
                 event.getTimestamp(), event.getMessage()));
         TextMessageContent content = event.getMessage();
@@ -75,6 +75,7 @@ public class PrintController {
         if (contentText.equals("/bikun") && event.getSource() instanceof UserSource) {
             return BikunController.requestLocation();
         } else if (contentText.equals("/bikun_stop") && event.getSource() instanceof UserSource) {
+            List<Message> messageList = new ArrayList<>();
             CarouselTemplate carouselTemplate = new CarouselTemplate(
                     Arrays.asList(
                             new CarouselColumn(halteBikuns[0].getImgUrl(), "Halte Bikun 1",
@@ -154,7 +155,8 @@ public class PrintController {
 
             TemplateMessage templateMessage = new TemplateMessage("Pilih Halte Bikun",
                     carouselTemplate);
-            return templateMessage;
+            messageList.add(templateMessage);
+            return messageList;
         } else {
             return null;
         }

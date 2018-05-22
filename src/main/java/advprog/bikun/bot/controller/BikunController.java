@@ -23,13 +23,16 @@ import java.util.List;
 
 public class BikunController {
 
-    public static TemplateMessage requestLocation() {
+    public static List<Message> requestLocation() {
         List<Action> actions = new ArrayList<Action>();
         actions.add(new URIAction("Share Location", "https://line.me/R/nv/location"));
-        return new TemplateMessage("Confirm Location", new ButtonsTemplate("https://cdn.pixabay.com/photo/2017/10/12/18/34/gps-2845363_960_720.png",
+        TemplateMessage templateMessage= new TemplateMessage("Confirm Location", new ButtonsTemplate("https://cdn.pixabay.com/photo/2017/10/12/18/34/gps-2845363_960_720.png",
                 "Cari Halte Bikun Terdekat",
                 "Please share your current location",
                 actions));
+        List<Message> messageList = new ArrayList<>();
+        messageList.add(templateMessage);
+        return messageList;
     }
 
     public static List<Message> searchHalte(MessageEvent<LocationMessageContent> event,
