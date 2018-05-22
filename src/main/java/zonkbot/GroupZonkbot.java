@@ -20,6 +20,7 @@ public class GroupZonkbot {
     ArrayList<User> users;
     String groupId;
     Question currentQuestion;
+    boolean isZonk;
 
     ZonkbotController zonkbotController;
 
@@ -27,6 +28,7 @@ public class GroupZonkbot {
     public GroupZonkbot(String groupId, User user) {
         users = new ArrayList<User>();
         this.groupId = groupId;
+        isZonk = false;
         addUser(user);
     }
 
@@ -56,8 +58,10 @@ public class GroupZonkbot {
 
     public String responseMessage(String textContent, String userId, String replyToken) throws IOException {
         String replyText = "";
+
         User user = getUser(userId);
         int chance = user.getTakenChance();
+        //ALL CHANCE IS 0
         if (chance == 0) {
             if (isAllUserChanceIsZero()) {
                 resetChance();
@@ -65,14 +69,17 @@ public class GroupZonkbot {
             }
             return "";
         }
-        else if (textContent.equals("start zonk")) {
+        //INITIAL START ZONK
+        else if (textContent.equals("start zonk") && !isZonk) {
             ArrayList<Question> questions = ZonkbotController.readFromJSON();
             if(questions.isEmpty())
                 return "Sorry but no question available";
-             return "/Random question";
+            isZonk = true;
+            return "/Random question";
         }
+        //ANSWER QUESTION
         else if (textContent.length() == 5 && textContent.substring(0,2).equals("/Q")
-                && textContent.substring(3,4).equals("A")) {
+                && textContent.substring(3,4).equals("A") && isZonk) {
             int questionIndex = Integer.parseInt(textContent.substring(2, 3)) - 1;
             int answerIndex = Integer.parseInt(textContent.substring(4, 5)) - 1 ;
             ArrayList<Question> questions = ZonkbotController.readFromJSON();
@@ -85,31 +92,20 @@ public class GroupZonkbot {
                 user.setTakenChance(user.getTakenChance() - 1);
                 return "";
             }
-        } else if (textContent.length() == 4 && textContent.equals("/All")) {
+        }
+        //ALL ID
+        else if (textContent.length() == 4 && textContent.equals("/All") && isZonk) {
             return getAllUserId();
         }
-        else if (textContent.length() == 9 && textContent.equals("stop zonk") ) {
+        //STOP ZONK
+        else if (textContent.length() == 9 && textContent.equals("stop zonk") && isZonk) {
+            isZonk = false;
+            resetScore();
             return "show leaderboard";
         }
 
 
         return replyText;
-    }
-
-    public void deactivate() {
-        resetChance();
-        resetScore();
-    }
-
-    public String showLeaderBoard() {
-        Collections.sort(users);
-        String reply ="";
-        for (User user: users) {
-            String userId = user.getUserId();
-            UserProfileResponse upr = zonkbotController.getProfile(userId);
-            reply += upr.getDisplayName() + ": " + user.getScore() + "\n";
-        }
-        return reply;
     }
 
 
@@ -121,14 +117,6 @@ public class GroupZonkbot {
         return null;
     }
 
-    public int getQuestionIndex (String question) throws IOException {
-        ArrayList<Question> questions = ZonkbotController.readFromJSON();
-        for (int i = 0; i < questions.size(); i++) {
-            if (questions.get(i).getQuestion().equals(question))
-                return i;
-        }
-        return -1;
-    }
 
     private boolean isAllUserChanceIsZero() {
         for (User user: users) {
@@ -136,15 +124,6 @@ public class GroupZonkbot {
                 return false;
         }
         return true;
-    }
-
-    public Question getQuestion() throws IOException {
-        ArrayList<Question> questions = ZonkbotController.readFromJSON();
-        Random rand = new Random();
-        if (questions.isEmpty())
-            return null;
-        int i = rand.nextInt(questions.size());
-        return questions.get(i);
     }
 
     public String getAllUserId() {
