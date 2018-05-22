@@ -1,7 +1,7 @@
 package advprog.animeairing.bot.controller;
 
 import advprog.animeairing.bot.anime.AnimeAiringToday;
-import advprog.animeairing.bot.anime.AnimeParsing;
+import advprog.animeairing.bot.anime.AnimeCurrently;
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.event.Event;
@@ -42,8 +42,8 @@ public class AnimeController {
         } else if (contentText.contains("/is_airing")) {
             String replyTextFix = contentText.replace("/is_airing", "");
             String animeTitle = replyTextFix.substring(1);
-            AnimeParsing currentAiring = new AnimeParsing(animeTitle);
-            result = "";
+            AnimeCurrently currentAiring = new AnimeCurrently(animeTitle);
+            result = currentAiring.infoAiring();
             String replyToken = event.getReplyToken();
             replyText(result, replyToken);
             return new TextMessage(result);
@@ -53,6 +53,7 @@ public class AnimeController {
             replyText(result, replyToken);
             return new TextMessage(result);
         }
+
 
 
     }

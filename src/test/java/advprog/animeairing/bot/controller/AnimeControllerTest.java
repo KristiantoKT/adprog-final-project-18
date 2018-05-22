@@ -58,7 +58,7 @@ public class AnimeControllerTest {
 
         reply = animeController.handleTextMessageEvent(event);
 
-        assertEquals("",
+        assertEquals("Naruto has finished airing at 2007-02-08",
                 reply.getText());
 
     }
