@@ -54,6 +54,7 @@ public class EchoController {
             System.out.println(song.substring(0,song.length() - 1));
 
             ArrayList<Song> songs = SongCsvReader.readSong("test");
+            SongCsvWriter.writeSongArray("test",songs);
 
             for (Song target : songs) {
                 if (target.getSongName().equalsIgnoreCase(song)) {
@@ -144,6 +145,7 @@ public class EchoController {
                 songList.append(song.getSongName());
                 songList.append("\n");
             }
+            SongCsvWriter.writeSongArray("test",songs);
             return new TextMessage(songList.toString());
         }
 
