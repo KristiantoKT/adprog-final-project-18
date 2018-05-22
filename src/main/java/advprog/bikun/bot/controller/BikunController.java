@@ -18,11 +18,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 public class BikunController {
 
     public static int getWaitingTime(HalteBikun halteBikun) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
         long min = -1;
         try {
             Date currentTime = dateFormat.parse(dateFormat.format(new Date()));
