@@ -1,19 +1,14 @@
 package advprog.randomarticlemediawiki;
 
-public class ArticleMediaWiki {
+public class Article {
     private String title;
     private String summary;
     private String link;
 
-    public ArticleMediaWiki(String title, String summary, String link) {
+    public Article(String title, String summary, String link) {
         this.title = title;
         this.summary = summary;
         this.link = link;
-    }
-
-    public String getRandomArticle() {
-        //TODO
-        return null;
     }
 
     public String getTitle() {
@@ -39,4 +34,5 @@ public class ArticleMediaWiki {
     public void setLink(String link) {
         this.link = link;
     }
+
 }
