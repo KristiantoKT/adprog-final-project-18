@@ -97,10 +97,10 @@ public class Zonkbot {
             result = "Answer " + giveAnswerCount + ":";
         } else if (giveAnswerCount >= 4) {
             question.addAnswer(textContent);
-            questions.add(question);
-            ZonkbotController.writeToJson(question);
-            addQuestionReset();
             result = "Cr";
+//            questions.add(question);
+//            ZonkbotController.writeToJson(question);
+//            addQuestionReset();
         }
         return result;
     }
