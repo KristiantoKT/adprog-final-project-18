@@ -60,7 +60,7 @@ public class EchoController {
             return new AudioMessage(url,30000);
 
         } else if (inputan[0].equals("/carousel")) {
-            String imageUrl = "https://vignette.wikia.nocookie.net/yuripedia/images/a/a3/1397768504009.png/revision/latest?cb=20140729170724";
+            String imageUrl = "https://i.schoolido.lu/songs/soldier_game.jpg";
             CarouselTemplate carouselTemplate = new CarouselTemplate(
                     Arrays.asList(
                             new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
@@ -78,8 +78,8 @@ public class EchoController {
                                     new PostbackAction("言 hello2",
                                             "hello こんにちは",
                                             "hello こんにちは"),
-                                    new MessageAction("Say message",
-                                            "Rice=米")
+                                    new MessageAction("Listen!!",
+                                            "/listen_song Soldier Game")
                             )),
                             new CarouselColumn(imageUrl, "Datetime Picker",
                                     "Please select a date, time or datetime", Arrays.asList(
