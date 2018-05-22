@@ -27,6 +27,7 @@ public class CarouselManager {
                 Arrays.asList(columns)
         );
         System.out.println(columns[1].getActions());
+        System.out.println(carouselTemplate.getColumns().size());
         return carouselTemplate;
     }
 

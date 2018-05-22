@@ -1,6 +1,7 @@
 package advprog.example.bot.controller;
 
-import advprog.anison.bot.*;
+import advprog.anison.bot.ItuneSearch;
+import advprog.anison.bot.SongSearch;
 
 import com.linecorp.bot.model.action.DatetimePickerAction;
 import com.linecorp.bot.model.action.MessageAction;
@@ -60,36 +61,8 @@ public class EchoController {
             return new AudioMessage(url,30000);
 
         } else if (inputan[0].equals("/carousel")) {
-           /* CarouselTemplate carouselTemplate = CarouselManager.carouselMaker();
-            TemplateMessage templateMessage = new TemplateMessage(
-                    "Carousel alt text", carouselTemplate);
-            return templateMessage;*/
-
-            ArrayList<Song> songs = SongCsvReader.readSong("test");
-
-            /*if (songs.size() == 2) {
-                return new AudioMessage(songs.get(0).getSongAudioClipUrl(),30000);
-            }*/
-
-            CarouselColumn[] columns = new CarouselColumn[songs.size()];
 
             String imageUrl = "https://i.schoolido.lu/songs/soldier_game.jpg";
-            for (int i = 0; i < columns.length; i++) {
-                Song current = songs.get(i);
-                columns[i] = new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
-                        new URIAction("Go to line.me",
-                                "https://line.me"),
-                        new URIAction("Go to line.me",
-                                "https://line.me"),
-                        new PostbackAction("Say hello1",
-                                "hello こんにちは")
-                ));
-            }
-
-            CarouselTemplate carouselTemplate = new CarouselTemplate(
-                    Arrays.asList(columns)
-            );
-            /*String imageUrl = "https://i.schoolido.lu/songs/soldier_game.jpg";
             CarouselTemplate carouselTemplate = new CarouselTemplate(
                     Arrays.asList(
                             new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
@@ -131,7 +104,7 @@ public class EchoController {
                                             "23:59",
                                             "00:00")
                             ))
-                    ));*/
+                    ));
             TemplateMessage templateMessage = new TemplateMessage(
                     "Carousel alt text", carouselTemplate);
             return templateMessage;
