@@ -67,6 +67,10 @@ public class EchoController {
 
             ArrayList<Song> songs = SongCsvReader.readSong("test");
 
+            if (songs.size() == 0) {
+                return new TextMessage("Song list empty");
+            }
+
             CarouselColumn[] columns = new CarouselColumn[songs.size() - 1];
 
             String imageUrl = "https://i.schoolido.lu/songs/soldier_game.jpg";
