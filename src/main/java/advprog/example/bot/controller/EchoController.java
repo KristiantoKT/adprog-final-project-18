@@ -25,6 +25,7 @@ import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Logger;
 
 @LineMessageHandler
@@ -75,15 +76,15 @@ public class EchoController {
 
         } else if (inputan[0].equals("/carousel")) {
             String imageUrl = "https://i.schoolido.lu/songs/soldier_game.jpg";
-            CarouselColumn[] columns = new CarouselColumn[3];
-            columns[0] = new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
+            List<CarouselColumn> columns = new ArrayList<>();
+            columns.add(new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
                     new URIAction("Go to line.me",
                             "https://line.me"),
                     new URIAction("Go to line.me",
                             "https://line.me"),
                     new PostbackAction("Say hello1",
                             "hello こんにちは")
-            ));
+            )));
             /*columns[1] = new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
                     new PostbackAction("言 hello2",
                             "hello こんにちは",
