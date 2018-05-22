@@ -74,7 +74,7 @@ public class EchoController {
             CarouselColumn[] columns = new CarouselColumn[songs.size()];
 
             String imageUrl = "https://i.schoolido.lu/songs/soldier_game.jpg";
-            for (int i = 0; i < columns.length - 1; i++) {
+            for (int i = 0; i < columns.length; i++) {
                 Song current = songs.get(i);
                 columns[i] = new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
                         new URIAction("Go to line.me",

@@ -12,9 +12,9 @@ public class CarouselManager {
     public static ArrayList<Song> songs = SongCsvReader.readSong("test");
 
     public static CarouselTemplate carouselMaker() {
-        CarouselColumn[] columns = new CarouselColumn[songs.size() - 1];
+        CarouselColumn[] columns = new CarouselColumn[songs.size()];
 
-        for (int i = 0; i < columns.length - 1; i++) {
+        for (int i = 0; i < columns.length; i++) {
             Song current = songs.get(i);
             columns[i] = new CarouselColumn(current.getSongImgUrl(),
                     current.getSongName(),"", Arrays.asList(
@@ -26,6 +26,7 @@ public class CarouselManager {
         CarouselTemplate carouselTemplate = new CarouselTemplate(
                 Arrays.asList(columns)
         );
+        System.out.println(columns[1].getActions());
         return carouselTemplate;
     }
 
