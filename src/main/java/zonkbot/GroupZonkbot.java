@@ -86,6 +86,8 @@ public class GroupZonkbot {
 //                return ("jawaban salah. pilihan kamu : " + answerIndex + " jawaban benar: %s" + question.getCorrectAnswerIndex());
                 user.setTakenChance(user.getTakenChance() - 1);
                 return "";
+            } else if (textContent.length() == 4) {
+                return getAllUserId();
             }
         }
 //        else if (textContent.length() == 9 && textContent.equals("stop zonk") ) {
@@ -146,5 +148,13 @@ public class GroupZonkbot {
             return null;
         int i = rand.nextInt(questions.size());
         return questions.get(i);
+    }
+
+    public String getAllUserId() {
+        String result = "";
+        for (User user: users) {
+            result = user.getUserId() + "\n\n";
+        }
+        return result;
     }
 }
