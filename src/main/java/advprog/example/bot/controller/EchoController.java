@@ -14,6 +14,7 @@ public class EchoController {
 
     private static final Logger LOGGER = Logger.getLogger(EchoController.class.getName());
     private boolean stateStatus = false;
+    
     @EventMapping
     public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
         LOGGER.fine(String.format("TextMessageContent(timestamp='%s',content='%s')",
