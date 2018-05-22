@@ -153,7 +153,7 @@ public class GroupZonkbot {
     public String getAllUserId() {
         String result = "";
         for (User user: users) {
-            result = user.getUserId() + "\n\n";
+            result = user.getUserId() + " chance:" + user.getTakenChance() + " score: " + user.getScore() + " \n\n";
         }
         return result;
     }
