@@ -62,15 +62,40 @@ public class EchoController {
         } else if (inputan[0].equals("/carousel")) {
             CarouselTemplate carouselTemplate = new CarouselTemplate(
                     Arrays.asList(
-                            new CarouselColumn("https://i.schoolido.lu/songs/soldier_game.jpg",
-                                    "Soldier Game", "", Arrays.asList(
+                            new CarouselColumn("https://i.schoolido.lu/songs/Snow_halation.jpg", "hoge", "fuga", Arrays.asList(
                                     new MessageAction("Listen",
-                                            "/listen_song Soldier Game")
+                                            "listen_song Snow Halation")
                             )),
-                            new CarouselColumn("https://i.schoolido.lu/songs/Snow_halation.jpg",
-                                    "Snow Halation", "", Arrays.asList(
-                                    new MessageAction("Listen",
-                                            "/listen_song Snow Halation")
+                            new CarouselColumn("https://i.schoolido.lu/songs/soldier_game.jpg", "hoge", "fuga", Arrays.asList(
+                                    new PostbackAction("言 hello2",
+                                            "hello こんにちは",
+                                            "hello こんにちは"),
+                                    new PostbackAction("言 hello2",
+                                            "hello こんにちは",
+                                            "hello こんにちは"),
+                                    new MessageAction("Say message",
+                                            "Rice=米")
+                            )),
+                            new CarouselColumn("https://i.schoolido.lu/songs/soldier_game.jpg", "Datetime Picker",
+                                    "Please select a date, time or datetime", Arrays.asList(
+                                    new DatetimePickerAction("Datetime",
+                                            "action=sel",
+                                            "datetime",
+                                            "2017-06-18T06:15",
+                                            "2100-12-31T23:59",
+                                            "1900-01-01T00:00"),
+                                    new DatetimePickerAction("Date",
+                                            "action=sel&only=date",
+                                            "date",
+                                            "2017-06-18",
+                                            "2100-12-31",
+                                            "1900-01-01"),
+                                    new DatetimePickerAction("Time",
+                                            "action=sel&only=time",
+                                            "time",
+                                            "06:15",
+                                            "23:59",
+                                            "00:00")
                             ))
                     ));
             TemplateMessage templateMessage = new TemplateMessage(
