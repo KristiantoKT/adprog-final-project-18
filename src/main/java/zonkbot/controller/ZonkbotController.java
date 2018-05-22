@@ -59,17 +59,17 @@ public class ZonkbotController {
         //USER SOURCE
         String replyToken = event.getReplyToken();
         if (event.getSource() instanceof UserSource) {
-            if (replyText.equals("/Choose correct answer")) {
+            if (textContent.equals("/Choose correct answer")) {
                 chooseCorrectAnswerWithCarousel(replyToken);
-            } else if (replyText.equals("/Choose question")) {
+            } else if (textContent.equals("/Choose question")) {
                 chooseQuestion(replyToken);
-            } else if (replyText.equals("/name")) {
+            } else if (textContent.equals("/name")) {
                 replyText = getProfile(event.getSource().getUserId()).getDisplayName();
                 this.replyText(replyToken, replyText);
 
-            } else if (!replyText.isEmpty()) {
-                this.replyText(replyToken, replyText);
+            } else if (!textContent.isEmpty()) {
                 replyText = zonkbot.responseMessage(textContent, replyToken);
+                this.replyText(replyToken, replyText);
             } else
                 this.replyText(replyToken, "masuk ke class pertama");
         }
