@@ -70,17 +70,17 @@ public class ZonkbotController {
         }
         //GROUP SOURCE
         else if (event.getSource() instanceof GroupSource) {
-            this.replyText(replyToken, "sampe sini masbro");
-//            replyText = groupResponseMessage(event);
+            replyText = groupResponseMessage(event);
+
 //            if (replyText.equals("/Random question"))
 //                replyWithRandomQuestion(replyToken);
 //            else
-//                this.replyText(replyToken, replyText);
+            this.replyText(replyToken, replyText);
         }
     }
 
     public String groupResponseMessage(MessageEvent<TextMessageContent> event) throws IOException {
-        String replyText = "";
+        String replyText = "nyampe group responese message";
         String replyToken = event.getReplyToken();
         String groupId = ((GroupSource) event.getSource()).getGroupId();
         String textContent = event.getMessage().getText();
@@ -89,14 +89,14 @@ public class ZonkbotController {
         boolean hasGroup = group != null;
 
 
-        if (hasGroup) {
-            replyText = group.responseMessage(textContent, userSource, replyToken);
-        } else if (!hasGroup && textContent.equals("start zonk")) {
-            User user = new User(userSource);
-            group = new GroupZonkbot(groupId, user);
-            groupZonkbots.add(group);
-            group.responseMessage(textContent, userSource, replyToken);
-        }
+//        if (hasGroup) {
+//            replyText = group.responseMessage(textContent, userSource, replyToken);
+//        } else if (!hasGroup && textContent.equals("start zonk")) {
+//            User user = new User(userSource);
+//            group = new GroupZonkbot(groupId, user);
+//            groupZonkbots.add(group);
+//            group.responseMessage(textContent, userSource, replyToken);
+//        }
 
 
         return replyText;
