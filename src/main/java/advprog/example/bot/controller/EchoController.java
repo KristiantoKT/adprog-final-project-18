@@ -60,16 +60,18 @@ public class EchoController {
             return new AudioMessage(url,30000);
 
         } else if (inputan[0].equals("/carousel")) {
+            String imageUrl = "https://vignette.wikia.nocookie.net/yuripedia/images/a/a3/1397768504009.png/revision/latest?cb=20140729170724";
             CarouselTemplate carouselTemplate = new CarouselTemplate(
                     Arrays.asList(
-                            new CarouselColumn("https://i.schoolido.lu/songs/Snow_halation.jpg", "hoge", "fuga", Arrays.asList(
-                                    new MessageAction("Listen",
-                                            "listen_song Snow Halation"),
-                                    new PostbackAction("wut",
-                                            "ez",
-                                            "is this needed?")
+                            new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
+                                    new URIAction("Go to line.me",
+                                            "https://line.me"),
+                                    new URIAction("Go to line.me",
+                                            "https://line.me"),
+                                    new PostbackAction("Say hello1",
+                                            "hello こんにちは")
                             )),
-                            new CarouselColumn("https://i.schoolido.lu/songs/soldier_game.jpg", "hoge", "fuga", Arrays.asList(
+                            new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
                                     new PostbackAction("言 hello2",
                                             "hello こんにちは",
                                             "hello こんにちは"),
@@ -79,7 +81,7 @@ public class EchoController {
                                     new MessageAction("Say message",
                                             "Rice=米")
                             )),
-                            new CarouselColumn("https://i.schoolido.lu/songs/soldier_game.jpg", "Datetime Picker",
+                            new CarouselColumn(imageUrl, "Datetime Picker",
                                     "Please select a date, time or datetime", Arrays.asList(
                                     new DatetimePickerAction("Datetime",
                                             "action=sel",
