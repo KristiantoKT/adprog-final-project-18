@@ -34,7 +34,7 @@ public class AnimeCurrently {
 
     private void animeAiring(String anime) {
         try {
-            String plainCreds = "advprobeb:Advpro";
+            String plainCreds = "advpro:Advprobeb";
             String basicAuth = "Basic " + printBase64Binary(plainCreds.getBytes());
             String convertTitle = anime.replace(" ", "+");
             String url = urlApi + convertTitle;
