@@ -117,7 +117,7 @@ public class EchoController {
                             "00:00")
             ));*/
             CarouselTemplate carouselTemplate = new CarouselTemplate(
-                    Arrays.asList(columns)
+                    columns
             );
             TemplateMessage templateMessage = new TemplateMessage(
                     "Carousel alt text", carouselTemplate);
