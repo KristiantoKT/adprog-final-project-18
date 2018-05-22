@@ -53,30 +53,10 @@ public class EchoController {
     public EchoController() throws IOException {
     }
 
-    private List<Message> requestLocationMessage() {
-        List<Message> messageList = new ArrayList<>();
-        TextMessage textMessage = new TextMessage("Silakan kirim lokasi kamu "
-                + "dengan menekan opsi 'Kirim Lokasi'");
-        CarouselTemplate carouselTemplate = new CarouselTemplate(
-                Arrays.asList(
-                        new CarouselColumn("https://www.google.com/maps/about/images/"
-                                + "home/home-benefits-1-1.jpg?"
-                                + "mmfb=670787c0b70b970d52c3101316182a15",
-                                "Kirim Lokasi", "Kirim lokasimu sekarang!",
-                                Collections.singletonList(new URIAction("Kirim Lokasi",
-                                        "line://nv/location")))
-                )
-        );
-        TemplateMessage templateMessage =
-                new TemplateMessage("Kirim lokasi kamu", carouselTemplate);
-
-        messageList.add(textMessage);
-        messageList.add(templateMessage);
-        return messageList;
-    }
-
     @EventMapping
     public List<Message> handlePostbackEvent(PostbackEvent event) {
+        LOGGER.fine(String.format("PostbackEvent(timestamp='%s',source='%s')",
+                event.getTimestamp(), event.getSource()));
         int chosenNumber = Integer.parseInt(event.getPostbackContent().getData());
         chosenRandomHospital = randomHospital[chosenNumber];
         return requestLocationMessage();
@@ -127,6 +107,33 @@ public class EchoController {
         }
     }
 
+    @EventMapping
+    public List<Message> handleLocationMessageEvent(MessageEvent<LocationMessageContent> event)
+            throws Exception {
+        LOGGER.fine(String.format("Event(timestamp='%s',source='%s')",
+                event.getTimestamp(), event.getSource()));
+        LocationMessageContent locationMessage = event.getMessage();
+        double currentLatitude = locationMessage.getLatitude();
+        double currentLongitude = locationMessage.getLongitude();
+        countDistanceToHospital(currentLatitude, currentLongitude);
+
+        if (currentStage.equals("nearest_hospital")) {
+            Arrays.sort(hospitals);
+            Hospital nearestHospital = hospitals[0];
+            return sendHospitalInfo(nearestHospital);
+        } else if (currentStage.equals("random_hospital")) {
+            return sendHospitalInfo(chosenRandomHospital);
+        } else {
+            return Collections.singletonList(new TextMessage("Perintah tidak ditemukan!"));
+        }
+    }
+
+    @EventMapping
+    public void handleDefaultMessage(Event event) {
+        LOGGER.fine(String.format("Event(timestamp='%s',source='%s')",
+                event.getTimestamp(), event.getSource()));
+    }
+
     private void countDistanceToHospital(double currentLatitude, double currentLongitude)
             throws IOException {
         for (Hospital hospital : hospitals) {
@@ -165,6 +172,28 @@ public class EchoController {
         }
     }
 
+    private List<Message> requestLocationMessage() {
+        List<Message> messageList = new ArrayList<>();
+        TextMessage textMessage = new TextMessage("Silakan kirim lokasi kamu "
+                + "dengan menekan opsi 'Kirim Lokasi'");
+        CarouselTemplate carouselTemplate = new CarouselTemplate(
+                Arrays.asList(
+                        new CarouselColumn("https://www.google.com/maps/about/images/"
+                                + "home/home-benefits-1-1.jpg?"
+                                + "mmfb=670787c0b70b970d52c3101316182a15",
+                                "Kirim Lokasi", "Kirim lokasimu sekarang!",
+                                Collections.singletonList(new URIAction("Kirim Lokasi",
+                                        "line://nv/location")))
+                )
+        );
+        TemplateMessage templateMessage =
+                new TemplateMessage("Kirim lokasi kamu", carouselTemplate);
+
+        messageList.add(textMessage);
+        messageList.add(templateMessage);
+        return messageList;
+    }
+
     private List<Message> sendHospitalInfo(Hospital hospital) {
         List<Message> messageList = new ArrayList<>();
 
@@ -187,30 +216,5 @@ public class EchoController {
         messageList.add(hospitalDetail);
         currentStage = "";
         return messageList;
-    }
-
-    @EventMapping
-    public List<Message> handleLocationMessageEvent(MessageEvent<LocationMessageContent> event)
-            throws Exception {
-        LocationMessageContent locationMessage = event.getMessage();
-        double currentLatitude = locationMessage.getLatitude();
-        double currentLongitude = locationMessage.getLongitude();
-        countDistanceToHospital(currentLatitude, currentLongitude);
-
-        if (currentStage.equals("nearest_hospital")) {
-            Arrays.sort(hospitals);
-            Hospital nearestHospital = hospitals[0];
-            return sendHospitalInfo(nearestHospital);
-        } else if (currentStage.equals("random_hospital")) {
-            return sendHospitalInfo(chosenRandomHospital);
-        } else {
-            return Collections.singletonList(new TextMessage("Perintah tidak ditemukan!"));
-        }
-    }
-
-    @EventMapping
-    public void handleDefaultMessage(Event event) {
-        LOGGER.fine(String.format("Event(timestamp='%s',source='%s')",
-                event.getTimestamp(), event.getSource()));
     }
 }
