@@ -17,8 +17,42 @@ public class SongSearch {
     public static void main(String[] args) throws Exception{
         //SongCsvWriter.writeSong("test","Soldier Game");
         //SongCsvReader.readSong("test");
-        ArrayList<Song> songs = SongCsvReader.readSong("test");
-         CarouselManager.carouselMaker(songs);
+        findItunesId("bokutachi wa hitotsu no hikari");
+    }
+
+    public static String findSongTrueName(String song) throws Exception {
+        song = song.replace(" ","+");
+        String urlString = fixedURL + song;
+
+        URL url = new URL(urlString);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+        if (connection.getResponseCode() == 301) {
+            String newUrl = connection.getHeaderField("Location");
+            connection = (HttpURLConnection) new URL(newUrl).openConnection();
+        }
+
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(connection.getInputStream()));
+
+        String line;
+        StringBuffer html = new StringBuffer();
+
+        while ((line = in.readLine()) != null) {
+            html.append(line);
+        }
+        in.close();
+
+        JSONObject json = new JSONObject(html.toString());
+        String trueName;
+        JSONObject target;
+
+        target = json.getJSONArray("results").getJSONObject(0);
+        trueName = target.getString("romaji_name");
+        if (trueName == null) {
+            trueName = target.getString("name");
+        }
+        return trueName;
     }
 
     public static int findItunesId(String song) throws Exception {
@@ -43,6 +77,8 @@ public class SongSearch {
             html.append(line);
         }
         in.close();
+
+        System.out.println(html);
 
         JSONObject json = new JSONObject(html.toString());
         int id = 0;

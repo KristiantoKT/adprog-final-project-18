@@ -46,10 +46,12 @@ public class SongCsvWriter {
         try {
             fileWriter = new FileWriter(fileName,true);
 
+
             int songId = SongSearch.findItunesId(songName);
             String songAudioClipUrl = ItuneSearch.getSongClipLink(songId);
 
-            Song song = new Song(songName,songId,songAudioClipUrl);
+            Song song = new Song(SongSearch.findSongTrueName(songName)
+                    ,songId,songAudioClipUrl);
 
             //write the attributes to csv
             fileWriter.append(song.getSongName());

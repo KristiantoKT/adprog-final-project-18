@@ -14,9 +14,9 @@ import java.util.List;
 
 public class CarouselManager {
 
-    public static ArrayList<Song> deleteSong(ArrayList<Song> songs, String songName) {
+    public static ArrayList<Song> deleteSong(ArrayList<Song> songs, String songName) throws Exception{
         for (Song song : songs) {
-            if (song.getSongName().equalsIgnoreCase(songName)) {
+            if (song.getSongName().equalsIgnoreCase(SongSearch.findSongTrueName(songName))) {
                 songs.remove(song);
                 break;
             }
