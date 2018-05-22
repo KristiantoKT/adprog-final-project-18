@@ -52,13 +52,17 @@ public class ZonkbotController {
         TextMessageContent messageContent = event.getMessage();
         String textContent = messageContent.getText();
         String replyText = zonkbot.responseMessage(textContent, event.getReplyToken(), this);
-        if(!replyText.isEmpty())
+        if (replyText.equals("Carousel")) {
+            chooseCorrectAnswerWithCarousel(event.getReplyToken());
+        }
+        else if (!replyText.isEmpty())
             this.replyText(event.getReplyToken(),replyText);
         else
             this.replyText(event.getReplyToken(), "masuk ke class pertama");
     }
 
-    public void chooseCorrectAnswer(Question question, String replyToken) {
+    public void chooseCorrectAnswerWithCarousel(String replyToken) {
+        Question question = zonkbot.getPresentQuestion();
         List<String> answers = question.getAnswers();
         List<CarouselColumn> columns = new ArrayList<>();
         for (int i = 0; i < answers.size(); i++) {

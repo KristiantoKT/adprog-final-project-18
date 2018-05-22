@@ -35,6 +35,10 @@ public class Zonkbot {
         return -1;
     }
 
+    public Question getPresentQuestion() {
+        return question;
+    }
+
     public String responseMessage(String textContent, String replyToken, ZonkbotController zonkbotController) throws IOException {
         String replyText = "";
         //ADD_QUESTION
@@ -93,18 +97,12 @@ public class Zonkbot {
             result = "Answer " + giveAnswerCount + ":";
         } else if (giveAnswerCount >= 4) {
             question.addAnswer(textContent);
-            ZonkbotController.writeToJson(question);
             questions.add(question);
-            initialize(replyToken);
+            ZonkbotController.writeToJson(question);
+            result = "Carousel";
+            addQuestionReset();
         }
         return result;
-    }
-
-    private void initialize(String replyToken) throws IOException {
-        ZonkbotController.writeToJson(question);
-        ZonkbotController zc = new ZonkbotController();
-        zc.chooseCorrectAnswer(question, replyToken);
-        addQuestionReset();
     }
 
     private void addQuestionReset() {
