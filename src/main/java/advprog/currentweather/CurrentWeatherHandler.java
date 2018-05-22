@@ -26,6 +26,7 @@ public class CurrentWeatherHandler {
     }
 
     // depok -6.391256, 106.819511
+    // pseudo comment to trigger task
     public String getCurrentWeatherInfo(String lat, String lon) {
         String target = apiLink + "lat=" + lat + "&lon=" + lon + "&units=" + unitType
                 + "&appid=" + apiKey;
