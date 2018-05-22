@@ -64,7 +64,10 @@ public class EchoController {
                     Arrays.asList(
                             new CarouselColumn("https://i.schoolido.lu/songs/Snow_halation.jpg", "hoge", "fuga", Arrays.asList(
                                     new MessageAction("Listen",
-                                            "listen_song Snow Halation")
+                                            "listen_song Snow Halation"),
+                                    new PostbackAction("wut",
+                                            "ez",
+                                            "is this needed?")
                             )),
                             new CarouselColumn("https://i.schoolido.lu/songs/soldier_game.jpg", "hoge", "fuga", Arrays.asList(
                                     new PostbackAction("言 hello2",
