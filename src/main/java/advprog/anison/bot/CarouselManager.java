@@ -31,7 +31,7 @@ public class CarouselManager {
 
         System.out.println(songs.size());
 
-        for (int i = 0; i < songs.size(); i++) {
+        for (int i = 0; i < 2; i++) {
             Song current = songs.get(i);
 
             ArrayList<Action> act = new ArrayList<>();
