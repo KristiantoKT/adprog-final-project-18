@@ -15,6 +15,8 @@ import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
 
+import java.io.IOException;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -42,47 +44,272 @@ public class FakeNewsControllerTest {
     }
 
     @Test
-    void testHandleTextMessageEventIsFake() {
+    void testHandleTextMessageCheckNull() throws IOException {
         MessageEvent<TextMessageContent> event =
-                EventTestUtil.createDummyTextMessage("/is_fake");
+                EventTestUtil.createDummyTextMessage("/is_fake boboboi.com");
 
         TextMessage reply = fakeNewsController.handleTextMessageEvent(event);
 
-        assertEquals(reply.getText(), "ehe");
+        assertEquals(reply.getText(), "URL doesn't exist");
     }
 
     @Test
-    void testHandleTextMessageEventIsConspiracy() {
+    void testHandleTextMessageGroupMessageTest() throws IOException {
         MessageEvent<TextMessageContent> event =
-                EventTestUtil.createDummyTextMessage("/is_conspiracy");
+                EventTestUtil.createDummyTextGroupMessage("boboboi.com");
 
         TextMessage reply = fakeNewsController.handleTextMessageEvent(event);
 
-        assertEquals(reply.getText(), "ehe");
+        assertEquals(reply.getText(), "URL doesn't exist");
     }
 
     @Test
-    void testHandleTextMessageEventIsSatire() {
+    void testHandleTextMessageGroupMessageTestHttp() throws IOException {
         MessageEvent<TextMessageContent> event =
-                EventTestUtil.createDummyTextMessage("/is_satire");
+                EventTestUtil.createDummyTextGroupMessage("http://boboboi.com");
 
         TextMessage reply = fakeNewsController.handleTextMessageEvent(event);
 
-        assertEquals(reply.getText(), "ehe");
+        assertEquals(reply.getText(), "URL doesn't exist");
     }
 
     @Test
-    void testHandleTextMessageEventAddFilter() {
+    void testHandleTextMessageGroupMessageTestAllType() throws IOException {
         MessageEvent<TextMessageContent> event =
-                EventTestUtil.createDummyTextMessage("/add_filter");
+                EventTestUtil.createDummyTextGroupMessage("weeklyworldnews.com");
 
         TextMessage reply = fakeNewsController.handleTextMessageEvent(event);
 
-        assertEquals(reply.getText(), "ehe");
+        assertEquals(reply.getText(), "weeklyworldnews.com is fake, rumor,and clickbait");
     }
 
     @Test
-    void testErrorMessageEvent() {
+    void testHandleTextMessageGroupMessageTestTwoType() throws IOException {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextGroupMessage("vigilantcitizen.com");
+
+        TextMessage reply = fakeNewsController.handleTextMessageEvent(event);
+
+        assertEquals(reply.getText(), "vigilantcitizen.com is fake and conspiracy");
+    }
+
+    @Test
+    void testHandleTextMessageGroupMessageTestOneType() throws IOException {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextGroupMessage("worldrumor.com");
+
+        TextMessage reply = fakeNewsController.handleTextMessageEvent(event);
+
+        assertEquals(reply.getText(), "worldrumor.com is fake");
+    }
+
+    @Test
+    void testHandleTextMessageEventIsFake1() throws IOException {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/is_fake 16wmpo.com");
+
+        TextMessage reply = fakeNewsController.handleTextMessageEvent(event);
+
+        assertEquals(reply.getText(), "True");
+    }
+
+    @Test
+    void testHandleTextMessageEventIsFake2() throws IOException {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/is_fake conservativespirit.com");
+
+        TextMessage reply = fakeNewsController.handleTextMessageEvent(event);
+
+        assertEquals(reply.getText(), "True");
+    }
+
+    @Test
+    void testHandleTextMessageEventIsFake3() throws IOException {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/is_fake BB4SP.com");
+
+        TextMessage reply = fakeNewsController.handleTextMessageEvent(event);
+
+        assertEquals(reply.getText(), "True");
+    }
+
+    @Test
+    void testHandleTextMessageEventNotFake() throws IOException {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/is_fake abovetopsecret.com");
+
+        TextMessage reply = fakeNewsController.handleTextMessageEvent(event);
+
+        assertEquals(reply.getText(), "False");
+    }
+
+    @Test
+    void testHandleTextMessageEventIsConspiracy1() throws IOException {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/is_conspiracy abovetopsecret.com");
+
+        TextMessage reply = fakeNewsController.handleTextMessageEvent(event);
+
+        assertEquals(reply.getText(), "True");
+    }
+
+    @Test
+    void testHandleTextMessageEventIsConspiracy2() throws IOException {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/is_conspiracy clashdaily.com");
+
+        TextMessage reply = fakeNewsController.handleTextMessageEvent(event);
+
+        assertEquals(reply.getText(), "True");
+    }
+
+    @Test
+    void testHandleTextMessageEventIsConspiracy3() throws IOException {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/is_conspiracy truthfeed.com");
+
+        TextMessage reply = fakeNewsController.handleTextMessageEvent(event);
+
+        assertEquals(reply.getText(), "True");
+    }
+
+    @Test
+    void testHandleTextMessageEventIsNoConspiracy() throws IOException {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/is_conspiracy returnofkings.com");
+
+        TextMessage reply = fakeNewsController.handleTextMessageEvent(event);
+
+        assertEquals(reply.getText(), "False");
+    }
+
+    @Test
+    void testHandleTextMessageEventIsSatire1() throws IOException {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/is_satire dailyleak.org");
+
+        TextMessage reply = fakeNewsController.handleTextMessageEvent(event);
+
+        assertEquals(reply.getText(), "True");
+    }
+
+    @Test
+    void testHandleTextMessageEventIsSatire2() throws IOException {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/is_satire wtoe5news.com");
+
+        TextMessage reply = fakeNewsController.handleTextMessageEvent(event);
+
+        assertEquals(reply.getText(), "True");
+    }
+
+    @Test
+    void testHandleTextMessageEventIsSatire3() throws IOException {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/is_satire americannewsx.com");
+
+        TextMessage reply = fakeNewsController.handleTextMessageEvent(event);
+
+        assertEquals(reply.getText(), "True");
+    }
+
+    @Test
+    void testHandleTextMessageEventIsSatireWithHttp() throws IOException {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/is_satire http://conservativespirit.com");
+
+        TextMessage reply = fakeNewsController.handleTextMessageEvent(event);
+
+        assertEquals(reply.getText(), "False");
+    }
+
+    @Test
+    void testHandleTextMessageEventAddFilter() throws IOException {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/add_filter fake.com bias");
+
+        TextMessage reply = fakeNewsController.handleTextMessageEvent(event);
+
+        assertEquals(reply.getText(), "URL doesn't exist");
+    }
+
+    @Test
+    void testHandleTextMessageEventAddFilterWithHttp() throws IOException {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/add_filter http://www.fake.com bias");
+
+        TextMessage reply = fakeNewsController.handleTextMessageEvent(event);
+
+        assertEquals(reply.getText(), "URL doesn't exist");
+    }
+
+
+    @Test
+    void testHandleTextMessageEventAddFilterType1Same() throws IOException {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/add_filter 100percentfedup.com bias");
+
+        TextMessage reply = fakeNewsController.handleTextMessageEvent(event);
+
+        assertEquals(reply.getText(), "filter is already present");
+    }
+
+    @Test
+    void testHandleTextMessageEventAddFilterType2() throws IOException {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/add_filter 100percentfedup.com conspiracy");
+
+        TextMessage reply = fakeNewsController.handleTextMessageEvent(event);
+
+        assertEquals(reply.getText(), "added");
+    }
+
+    @Test
+    void testHandleTextMessageEventAddFilterType2Same() throws IOException {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/add_filter "
+                        + "ushealthyadvisor.com conspiracy");
+
+        TextMessage reply = fakeNewsController.handleTextMessageEvent(event);
+
+        assertEquals(reply.getText(), "filter is already present");
+    }
+
+    @Test
+    void testHandleTextMessageEventAddFilterType3Same() throws IOException {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/add_filter "
+                        + "conservativefiringline.com clickbait");
+
+        TextMessage reply = fakeNewsController.handleTextMessageEvent(event);
+
+        assertEquals(reply.getText(), "filter is already present");
+    }
+
+    @Test
+    void testHandleTextMessageEventAddFilterType3() throws IOException {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/add_filter "
+                        + "4threvolutionarywar.wordpress.com clickbait");
+
+        TextMessage reply = fakeNewsController.handleTextMessageEvent(event);
+
+        assertEquals(reply.getText(), "added");
+    }
+
+    @Test
+    void testHandleTextMessageEventAddFilterFull() throws IOException {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/add_filter "
+                        + "conservativefiringline.com satire");
+
+        TextMessage reply = fakeNewsController.handleTextMessageEvent(event);
+
+        assertEquals(reply.getText(), "criteria full");
+    }
+
+    @Test
+    void testErrorMessageEvent() throws IOException {
         MessageEvent<TextMessageContent> event =
                 EventTestUtil.createDummyTextMessage("/wawiwu");
 
