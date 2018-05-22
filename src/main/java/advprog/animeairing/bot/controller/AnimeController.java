@@ -7,6 +7,7 @@ import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
+import com.linecorp.bot.model.event.source.GroupSource;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
@@ -32,10 +33,17 @@ public class AnimeController {
         String contentText = content.getText();
         String result = null;
 
-        if (contentText.equalsIgnoreCase("hari ini nonton apa ya?")) {
+        if (contentText.equalsIgnoreCase("hari ini nonton apa ya?")
+                && event.getSource() instanceof GroupSource) {
             AnimeAiringToday airingToday =
                     new AnimeAiringToday("https://www.livechart.me/schedule/tv?layout=compact");
             result = airingToday.listAiringToday();
+            String replyToken = event.getReplyToken();
+            replyText(result, replyToken);
+            return new TextMessage(result);
+        } else if (event.getSource() instanceof GroupSource
+                && !(contentText.contains("hari ini nonton apa ya?"))) {
+            result = "Bot hanya bisa menjawab jika diberi pertanyaan, 'hari ini nonton apa ya?'";
             String replyToken = event.getReplyToken();
             replyText(result, replyToken);
             return new TextMessage(result);
