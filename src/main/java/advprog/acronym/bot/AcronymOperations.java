@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 
 public class AcronymOperations {
 
@@ -89,5 +90,18 @@ public class AcronymOperations {
 
         System.out.println(berhasil + " " + filedelete);
         return;
+    }
+
+    public static ArrayList<Acronym> addToArrayList(File file) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+        String i;
+        ArrayList<Acronym> arrayListBaru = new ArrayList<>();
+        while((i = br.readLine()) != null) {
+            String[] isplit = i.split(";");
+            Acronym acronymBaru = new Acronym(isplit[0], isplit[1]);
+            arrayListBaru.add(acronymBaru);
+        }
+
+        return arrayListBaru;
     }
 }

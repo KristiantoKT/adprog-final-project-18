@@ -73,13 +73,38 @@ public class EchoControllerTest {
     }
 
     @Test
-    public void testHandleTextMessageEvent() {
+    public void testHandleTextMessageEvent() throws IOException {
         MessageEvent<TextMessageContent> event =
                 EventTestUtil.createDummyTextMessage("/echo Lorem Ipsum");
 
         TextMessage reply = echoController.handleTextMessageEvent(event);
 
         assertEquals("Lorem Ipsum", reply.getText());
+    }
+
+    @Test
+    public void testHandleAddAcronym() throws IOException {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/add_acronym");
+
+        MessageEvent<TextMessageContent> event2 =
+                EventTestUtil.createDummyTextMessage("AL");
+
+        MessageEvent<TextMessageContent> event3 =
+                EventTestUtil.createDummyTextMessage("Ayy Lmao");
+
+        TextMessage reply = echoController.handleTextMessageEvent(event);
+
+        assertEquals("Silakan masukkan kependekan", reply.getText());
+
+        reply = echoController.handleTextMessageEvent(event2);
+
+        assertEquals("Silakan masukkan kepanjangan", reply.getText());
+        reply = echoController.handleTextMessageEvent(event3);
+        assertEquals(event2.getMessage().getText() + " - " + event3.getMessage().getText()
+                + " Berhasil ditambah", reply.getText());
+
+
     }
 
     @Test
@@ -111,7 +136,7 @@ public class EchoControllerTest {
     }
 
     @Test
-    public void testHandleSttCommand() {
+    public void testHandleSttCommand() throws IOException {
         MessageEvent<TextMessageContent> event =
                 EventTestUtil.createDummyTextMessage("/speech-to-text");
 
@@ -125,7 +150,7 @@ public class EchoControllerTest {
     }
 
     @Test
-    public void testHandleAudioWithSttCommand() {
+    public void testHandleAudioWithSttCommand() throws IOException {
         EchoController.canDoMethod = false;
         MessageEvent<TextMessageContent> event =
                 EventTestUtil.createDummyTextMessage("/speech-to-text");

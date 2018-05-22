@@ -3,8 +3,14 @@ package advprog.acronym.bot;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class AcronymOperationsTest {
@@ -123,5 +129,15 @@ public class AcronymOperationsTest {
             }
         }
         assertTrue(!ketemu);
+    }
+
+    @Test
+    public void testMasukinAcronymKeArrayList() throws IOException {
+        for (int i = 0; i < acronyms.length; i++) {
+            AcronymOperations.add(acronyms[i], file);
+        }
+        ArrayList<Acronym> arrayAcronym = AcronymOperations.addToArrayList(file);
+        assertEquals(arrayAcronym.size(), acronyms.length);
+
     }
 }

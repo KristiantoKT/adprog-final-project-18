@@ -1,5 +1,7 @@
 package advprog.example.bot.controller;
 
+import advprog.acronym.bot.Acronym;
+import advprog.acronym.bot.AcronymOperations;
 import advprog.example.bot.BotExampleApplication;
 import advprog.speechtotext.bot.FetchStuff;
 import advprog.speechtotext.bot.Text;
@@ -26,6 +28,7 @@ import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -50,23 +53,54 @@ public class EchoController {
     private static final Logger LOGGER = Logger.getLogger(EchoController.class.getName());
     static boolean canDoMethod = false;
     static File file = new File("acronyms/acronyms.csv");
+    static boolean terimaKependekan = false;
+    static boolean terimaKepanjangan = false;
+    String kependekan;
+    String kepanjangan;
+    ArrayList<Acronym> acronyms;
+    {
+        try {
+            acronyms = AcronymOperations.addToArrayList(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @EventMapping
-    public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
+    public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws IOException {
         LOGGER.fine(String.format("TextMessageContent(timestamp='%s',content='%s')",
                 event.getTimestamp(), event.getMessage()));
         TextMessageContent content = event.getMessage();
         String contentText = content.getText();
 
         String replyText = "";
-        if (contentText.contains("/echo")) {
-            replyText = contentText.replace("/echo ", "");
-        } else if (contentText.contains("/speech-to-text")) {
-            replyText = "Ready to recognize speech. Due to the "
-                    + "incompleteness of the current program, "
-                    + "please make sure the sound file is type .wav and "
-                    + "the length is less than 10 seconds.";
-            canDoMethod = true;
+        if (terimaKependekan) {
+            kependekan = contentText;
+            terimaKepanjangan = true;
+            terimaKependekan = false;
+            replyText = "Silakan masukkan kepanjangan";
+
+        } else if (terimaKepanjangan) {
+            kepanjangan = contentText;
+            terimaKepanjangan = false;
+            Acronym newAcronym = new Acronym(kependekan, kepanjangan);
+            AcronymOperations.add(newAcronym, file);
+            acronyms.add(newAcronym);
+            replyText = kependekan + " - " + kepanjangan + " Berhasil ditambah";
+
+        } else {
+            if (contentText.contains("/echo")) {
+                replyText = contentText.replace("/echo ", "");
+            } else if (contentText.contains("/speech-to-text")) {
+                replyText = "Ready to recognize speech. Due to the "
+                        + "incompleteness of the current program, "
+                        + "please make sure the sound file is type .wav and "
+                        + "the length is less than 10 seconds.";
+                canDoMethod = true;
+            } else if (contentText.contains("/add_acronym")) {
+                replyText = "Silakan masukkan kependekan";
+                terimaKependekan = true;
+            }
         }
         return new TextMessage(replyText);
     }
