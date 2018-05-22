@@ -67,6 +67,7 @@ public class ZonkbotController {
                 chooseQuestion(replyToken);
             } else if (replyText.equals("/name")) {
                 replyText = getProfileName(event.getSource().getUserId());
+                this.replyText(replyToken, replyText);
             } else if (!replyText.isEmpty()) {
                 this.replyText(replyToken, replyText);
             }
