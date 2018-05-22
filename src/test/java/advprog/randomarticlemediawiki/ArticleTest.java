@@ -6,17 +6,21 @@ import org.junit.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-public class ArticleMediaWikiTest {
-    ArticleMediaWiki article;
+public class ArticleTest {
+    Article article;
 
     @Before
-    public void setUp(){
-        article = new ArticleMediaWiki(null, null, null);
+    public void setUp() {
+        article = new Article("A", "B", "C");
     }
 
-    @Test
-    public void testGetRandomArticle(){
-        assertEquals(null, article.getRandomArticle());
+    public void getTitleTest() {
+        assertEquals("A", article.getTitle());
+    }
+
+    public void setTitleTest() {
+        article.setTitle("Z");
+        assertEquals("Z", article.getTitle())
     }
 
 }
