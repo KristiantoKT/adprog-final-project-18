@@ -1,8 +1,6 @@
 package advprog.example.bot.controller;
 
-import advprog.anison.bot.CarouselManager;
-import advprog.anison.bot.ItuneSearch;
-import advprog.anison.bot.SongSearch;
+import advprog.anison.bot.*;
 
 import com.linecorp.bot.model.action.DatetimePickerAction;
 import com.linecorp.bot.model.action.MessageAction;
@@ -20,6 +18,7 @@ import com.linecorp.bot.model.message.template.CarouselTemplate;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
@@ -66,7 +65,27 @@ public class EchoController {
                     "Carousel alt text", carouselTemplate);
             return templateMessage;*/
 
+            ArrayList<Song> songs = SongCsvReader.readSong("test");
+
+            CarouselColumn[] columns = new CarouselColumn[songs.size() - 1];
+
             String imageUrl = "https://i.schoolido.lu/songs/soldier_game.jpg";
+            for (int i = 0; i < columns.length - 1; i++) {
+                Song current = songs.get(i);
+                columns[i] = new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
+                        new URIAction("Go to line.me",
+                                "https://line.me"),
+                        new URIAction("Go to line.me",
+                                "https://line.me"),
+                        new PostbackAction("Say hello1",
+                                "hello こんにちは")
+                ));
+            }
+
+            CarouselTemplate carouselTemplate = new CarouselTemplate(
+                    Arrays.asList(columns)
+            );
+            /*String imageUrl = "https://i.schoolido.lu/songs/soldier_game.jpg";
             CarouselTemplate carouselTemplate = new CarouselTemplate(
                     Arrays.asList(
                             new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
@@ -108,7 +127,7 @@ public class EchoController {
                                             "23:59",
                                             "00:00")
                             ))
-                    ));
+                    ));*/
             TemplateMessage templateMessage = new TemplateMessage(
                     "Carousel alt text", carouselTemplate);
             return templateMessage;
