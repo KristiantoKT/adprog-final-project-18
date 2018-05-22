@@ -67,11 +67,7 @@ public class EchoController {
                     Arrays.asList(
                             new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
                                     new URIAction("Go to line.me",
-                                            "https://line.me"),
-                                    new URIAction("Go to line.me",
-                                            "https://line.me"),
-                                    new PostbackAction("Say hello1",
-                                            "hello こんにちは")
+                                            "https://line.me")
                             )),
                             new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
                                     new PostbackAction("言 hello2",
