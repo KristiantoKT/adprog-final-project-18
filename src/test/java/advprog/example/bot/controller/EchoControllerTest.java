@@ -38,7 +38,7 @@ public class EchoControllerTest {
     void testContextLoads() {
         assertNotNull(echoController);
     }
-    
+
     void testHandleTextMessageEvent() throws Exception {
         MessageEvent<TextMessageContent> event =
                 EventTestUtil.createDummyTextMessage("/echo Lorem Ipsum");

@@ -12,10 +12,6 @@ public class ItuneSearch {
 
     public static final String fixedURL = "https://itunes.apple.com/lookup?id=";
 
-    public static void main(String[] args) throws Exception {
-        System.out.println(getSongClipLink(587762424));
-    }
-
     public static String getSongClipLink(int id) throws Exception {
         String urlString = fixedURL + id;
 

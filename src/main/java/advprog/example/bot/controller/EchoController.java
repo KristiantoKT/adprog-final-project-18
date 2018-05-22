@@ -3,15 +3,21 @@ package advprog.example.bot.controller;
 import advprog.anison.bot.ItuneSearch;
 import advprog.anison.bot.SongSearch;
 
+import com.linecorp.bot.model.action.PostbackAction;
+import com.linecorp.bot.model.action.URIAction;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.AudioMessage;
 import com.linecorp.bot.model.message.Message;
+import com.linecorp.bot.model.message.TemplateMessage;
 import com.linecorp.bot.model.message.TextMessage;
+import com.linecorp.bot.model.message.template.CarouselColumn;
+import com.linecorp.bot.model.message.template.CarouselTemplate;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 
+import java.util.Arrays;
 import java.util.logging.Logger;
 
 @LineMessageHandler
@@ -51,6 +57,16 @@ public class EchoController {
 
             return new AudioMessage(url,30000);
 
+        } else if (inputan[0].equals("/carousel")) {
+            CarouselTemplate carouselTemplate = new CarouselTemplate(
+                    Arrays.asList(
+                            new CarouselColumn("","hoge",
+                                    "fuga",Arrays.asList(new PostbackAction(
+                                            "Soldier Game","/listen_song Soldier Game")))
+                    )
+            );
+            TemplateMessage templateMessage = new TemplateMessage("altText",carouselTemplate);
+            return templateMessage;
         }
 
         String replyText = contentText.replace("/echo", "");
