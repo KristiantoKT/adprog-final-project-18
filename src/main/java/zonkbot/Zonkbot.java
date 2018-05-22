@@ -36,7 +36,7 @@ public class Zonkbot {
         return question;
     }
 
-    public String responseMessage(String textContent, String replyToken) throws IOException {
+    public String responseMessage(String textContent) throws IOException {
         String replyText = "";
         //ADD_QUESTION
         if (textContent.equals("/add_question") && !add_question_section) {
@@ -70,6 +70,10 @@ public class Zonkbot {
             question.setCorrectAnswer(correctAnswerIndex);
             replyText = question.toString();
             question = null;
+        }
+        //NAME
+        else if (textContent.equals("/name")) {
+            replyText = "/name";
         }
         //ECHO
         else if (textContent.length() > 5
