@@ -99,7 +99,7 @@ public class Zonkbot {
             question.addAnswer(textContent);
             result = "Carousel";
             addQuestionReset();
-            ZonkbotController.writeToJson(question);
+//            ZonkbotController.writeToJson(question);
         }
         return result;
     }
