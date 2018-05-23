@@ -31,7 +31,7 @@ public class EchoControllerTest {
     }
 
     @Autowired
-    private BillboardController echoController;
+    private EchoController echoController;
 
     @Test
     void testContextLoads() {
