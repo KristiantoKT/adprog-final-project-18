@@ -21,17 +21,18 @@ public class CgvStusioTypeTest {
 
     @Test
     public void testDefaultState() {
-        String schedule = cgvCinema.cgvGoldClass();
+        String schedule = cgvCinema.cgv4DxCinema();
 
-        assertEquals(schedule, "(' DEADPOOL 2',[11:15 13:55])\n");
+        assertEquals(schedule, "('4DX2D DEADPOOL 2',[10:50 13:25])\n");
     }
 
     @Test
     public void testChangeState() {
         cgvCinema.setState(changeCinema);
-        String schedule = cgvCinema.cgvGoldClass();
+        String schedule = cgvCinema.cgv4DxCinema();
 
-        assertEquals(schedule, "(' DEADPOOL 2',[11:10 13:50 19:30])\n");
+        assertEquals(schedule, "Sorry your cinema theater is not available");
     }
+
 
 }
