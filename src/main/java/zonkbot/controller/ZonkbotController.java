@@ -73,10 +73,6 @@ public class ZonkbotController {
         }
     }
 
-    public void replyWithRandomQuestion(String replyToken) {
-        randomQuestionCarousel(replyToken, getRandomQuestion());
-    }
-
     public void groupResponseMessage(MessageEvent<TextMessageContent> event, String replyToken)
             throws ExecutionException, InterruptedException {
         String replyText;
@@ -127,8 +123,6 @@ public class ZonkbotController {
         }
         GroupZonkbot group = getGroup(groupId);
         boolean hasGroup = group != null;
-
-
         if (hasGroup) {
             replyText = group.responseMessage(textContent, userId);
         } else if (!hasGroup && textContent.equals("start zonk")) {
@@ -171,15 +165,17 @@ public class ZonkbotController {
         return null;
     }
 
-    public Question getRandomQuestion () {
+
+    public void replyWithRandomQuestion(String replyToken) {
         ArrayList<Question> questions = readFromJson();
         Random rand = new Random();
         int questionIndex = rand.nextInt(questions.size());
-        return questions.get(questionIndex);
+        randomQuestionCarousel(replyToken, questions.get(questionIndex),
+                questionIndex);
     }
 
-    public void randomQuestionCarousel(String replyToken, Question question) {
-        int questionIndex = readFromJson().indexOf(question);
+    public void randomQuestionCarousel(String replyToken, Question question,
+                                       int questionIndex) {
         List<String> answers = question.getAnswers();
         List<CarouselColumn> columns = new ArrayList<>();
         for (int i = 0; i < answers.size(); i++) {
@@ -246,12 +242,6 @@ public class ZonkbotController {
     }
 
     public void replyText(@NonNull String replyToken, @NonNull String message) {
-        if (replyToken.isEmpty()) {
-            throw new IllegalArgumentException("replyToken must not be empty");
-        }
-        if (message.length() > 1000) {
-            message = message.substring(0, 1000 - 2) + "……";
-        }
         reply(replyToken, new TextMessage(message));
     }
 
