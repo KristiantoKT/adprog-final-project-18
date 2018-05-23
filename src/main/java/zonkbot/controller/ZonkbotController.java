@@ -66,25 +66,21 @@ public class ZonkbotController {
         String userId = event.getSource().getUserId();
 
         if (event.getSource() instanceof UserSource) {
-            responseMessageForPersonal(userId, textContent, replyToken);
+            responseMessageForPersonal(textContent, replyToken);
         } else if (event.getSource() instanceof GroupSource) {
             String groupId = ((GroupSource) event.getSource()).getGroupId();
             responseMessageForGroup(groupId, userId, textContent, replyToken);
         }
     }
 
-    private void responseMessageForPersonal(String userId, String textContent, String replyToken)
-            throws ExecutionException, InterruptedException {
+    public void responseMessageForPersonal(String textContent, String replyToken) {
         String replyText;
         replyText = zonkbot.responseMessage(textContent);
         if (replyText.equals("/Choose correct answer")) {
             Question question = zonkbot.getPresentQuestion();
             chooseCorrectAnswerWithCarousel(replyToken, question);
         } else if (replyText.equals("/Choose question")) {
-            chooseQuestion(replyToken);
-        } else if (replyText.equals("/name")) {
-            replyText = getProfileName(userId);
-            this.replyText(replyToken, replyText);
+            chooseQuestionForChangeAnswer(replyToken);
         } else if (!replyText.isEmpty()) {
             this.replyText(replyToken, replyText);
         }
@@ -176,15 +172,17 @@ public class ZonkbotController {
     }
 
     //CHOOSE QUESTIONS WITH CAROUSEL
-    public void chooseQuestion(String replyToken) {
+    public void chooseQuestionForChangeAnswer(String replyToken) {
         List<Question> questions = readFromJson();
         List<CarouselColumn> columns = new ArrayList<>();
         for (int i = 0; i < questions.size(); i++) {
-            List<Action> actions = new ArrayList<>();
-            actions.add(new MessageAction("Select",
-                    String.format("/Question: %s", i + 1)));
-            columns.add(new CarouselColumn(null,
-                    "Choose Question", questions.get(i).getQuestion(), actions));
+            if (questions.get(i) != null) {
+                List<Action> actions = new ArrayList<>();
+                actions.add(new MessageAction("Select",
+                        String.format("/Question: %s", i + 1)));
+                columns.add(new CarouselColumn(null,
+                        "Choose Question", questions.get(i).getQuestion(), actions));
+            }
         }
         Template carouselTemplate = new CarouselTemplate(columns);
         TemplateMessage templateMessage = new TemplateMessage("Questions", carouselTemplate);
