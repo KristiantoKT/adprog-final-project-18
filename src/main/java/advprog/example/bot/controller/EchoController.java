@@ -46,7 +46,7 @@ public class EchoController {
                     String after = cgv.getState().cinemaName();
 
                     return new TextMessage(
-                            String.format("Congratulations ! Your Cinema Default change from %s to %s", before, after)
+                            String.format("Congrats! Your Cinema Default change from %s to %s", before, after)
                     );
                 } else {
                     return new TextMessage("Url is invalid");
