@@ -10,7 +10,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class cgvData {
+public class CgvData {
     private final State cinema;
 
     private HashMap<String, ArrayList<String>> goldSched = new HashMap<>();
@@ -21,7 +21,7 @@ public class cgvData {
 
     private String url;
 
-    public cgvData(State cinema, String url) {
+    public CgvData(State cinema, String url) {
         this.url = url;
         this.cinema = cinema;
     }
@@ -161,7 +161,7 @@ public class cgvData {
         for (Map.Entry<String, ArrayList<String>> entry : schedule.entrySet()) {
             String key = entry.getKey();
             ArrayList<String> value = entry.getValue();
-            sb.append("( '").append(key).append("' : ").append(value).append(" )\n");
+            sb.append("( '").append(key).append(" '\nSchedules : ").append(value).append(" )\n");
         }
 
         if (sb.length() == 0) {
