@@ -211,7 +211,7 @@ public class ZonkbotController {
         this.reply(replyToken, templateMessage);
     }
 
-    public String getProfileName(String userId) throws ExecutionException, InterruptedException {
+    private String getProfileName(String userId) throws ExecutionException, InterruptedException {
         return lineMessagingClient.getProfile(userId).get().getDisplayName();
     }
 
