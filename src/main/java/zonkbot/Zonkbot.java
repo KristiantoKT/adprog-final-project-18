@@ -86,10 +86,8 @@ public class Zonkbot {
 
     @NotNull
     private String gettingToAddQuestionSection() {
-        String replyText;
-        replyText = "Please input your question";
         addQuestionSection = true;
-        return replyText;
+        return "Please input your question";
     }
 
     public String addQuestionSection(String textContent) {
