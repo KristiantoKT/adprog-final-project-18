@@ -60,8 +60,6 @@ public class ZonkbotController {
     public void handleTextMessageEvent(MessageEvent<TextMessageContent> event)
             throws ExecutionException,
             InterruptedException {
-        LOGGER.fine(String.format("TextMessageContent(timestamp='%s',content='%s')",
-                event.getTimestamp(), event.getMessage()));
         TextMessageContent messageContent = event.getMessage();
         String textContent = messageContent.getText();
         String replyToken = event.getReplyToken();
@@ -80,7 +78,8 @@ public class ZonkbotController {
         String replyText;
         replyText = zonkbot.responseMessage(textContent);
         if (replyText.equals("/Choose correct answer")) {
-            chooseCorrectAnswerWithCarousel(replyToken);
+            Question question = zonkbot.getPresentQuestion();
+            chooseCorrectAnswerWithCarousel(replyToken, question);
         } else if (replyText.equals("/Choose question")) {
             chooseQuestion(replyToken);
         } else if (replyText.equals("/name")) {
@@ -150,11 +149,16 @@ public class ZonkbotController {
         return null;
     }
 
-    private void replyWithRandomQuestion(String replyToken) {
+    public void replyWithRandomQuestion(String replyToken) {
         ArrayList<Question> questions = readFromJson();
         Random rand = new Random();
         int questionIndex = rand.nextInt(questions.size());
         Question question = questions.get(questionIndex);
+        randomQuestionCarousel(replyToken, question, questionIndex);
+    }
+
+    private void randomQuestionCarousel(String replyToken,
+                                        Question question, int questionIndex) {
         List<String> answers = question.getAnswers();
         List<CarouselColumn> columns = new ArrayList<>();
         for (int i = 0; i < answers.size(); i++) {
@@ -187,8 +191,7 @@ public class ZonkbotController {
     }
 
     //CHOOSE CORRECT ANSWER WITH CAROUSEL
-    private void chooseCorrectAnswerWithCarousel(String replyToken) {
-        Question question = zonkbot.getPresentQuestion();
+    private void chooseCorrectAnswerWithCarousel(String replyToken, Question question) {
         List<String> answers = question.getAnswers();
         List<CarouselColumn> columns = new ArrayList<>();
         for (int i = 0; i < answers.size(); i++) {
