@@ -68,7 +68,7 @@ public class GroupZonkbot {
         int answerIndex = Integer.parseInt(textContent.substring(4, 5)) - 1;
         ArrayList<Question> questions = ZonkbotController.readFromJson();
         Question question = questions.get(questionIndex);
-        boolean answerCorrect = answerIndex == question.getCorrectAnswerIndex();
+        boolean answerCorrect = (answerIndex == question.getCorrectAnswerIndex());
         if (answerCorrect && user.getTakenChance() > 0) {
             user.setScore(user.getScore() + 1);
             replyText =  responseMessage("start zonk", userId);

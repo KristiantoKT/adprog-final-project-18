@@ -65,32 +65,17 @@ public class ZonkbotController {
         TextMessageContent messageContent = event.getMessage();
         String textContent = messageContent.getText();
         String replyToken = event.getReplyToken();
+        String userId = event.getSource().getUserId();
+
         if (event.getSource() instanceof UserSource) {
-            responseMessageForPersonal(event, textContent, replyToken);
+            responseMessageForPersonal(userId, textContent, replyToken);
         } else if (event.getSource() instanceof GroupSource) {
-            groupResponseMessage(event, replyToken);
-        }
-    }
-
-    private void groupResponseMessage(MessageEvent<TextMessageContent> event, String replyToken)
-            throws ExecutionException, InterruptedException {
-        String replyText;
-        replyText = responseMessageForGroup(event);
-
-        if (replyText.equals("/Random question")) {
-            replyWithRandomQuestion(replyToken);
-        } else if (replyText.equals("show leaderboard")) {
             String groupId = ((GroupSource) event.getSource()).getGroupId();
-            replyText = showLeaderboard(groupId);
-            groupZonkbots.remove(getGroup(groupId));
-            this.replyText(replyToken, replyText);
-        } else if (!replyText.isEmpty()) {
-            this.replyText(replyToken, replyText);
+            responseMessageForGroup(groupId, userId, textContent, replyToken);
         }
     }
 
-    private void responseMessageForPersonal(MessageEvent<TextMessageContent> event,
-                                            String textContent, String replyToken)
+    private void responseMessageForPersonal(String userId, String textContent, String replyToken)
             throws ExecutionException, InterruptedException {
         String replyText;
         replyText = zonkbot.responseMessage(textContent);
@@ -99,18 +84,32 @@ public class ZonkbotController {
         } else if (replyText.equals("/Choose question")) {
             chooseQuestion(replyToken);
         } else if (replyText.equals("/name")) {
-            replyText = getProfileName(event.getSource().getUserId());
+            replyText = getProfileName(userId);
             this.replyText(replyToken, replyText);
         } else if (!replyText.isEmpty()) {
             this.replyText(replyToken, replyText);
         }
     }
 
-    private String responseMessageForGroup(MessageEvent<TextMessageContent> event) {
+    private void responseMessageForGroup(String groupId, String userId,
+                                         String textContent, String replyToken)
+            throws ExecutionException, InterruptedException {
+        String replyText;
+        replyText = groupResponseMessage(groupId, userId, textContent);
+
+        if (replyText.equals("/Random question")) {
+            replyWithRandomQuestion(replyToken);
+        } else if (replyText.equals("show leaderboard")) {
+            replyText = showLeaderboard(groupId);
+            groupZonkbots.remove(getGroup(groupId));
+            this.replyText(replyToken, replyText);
+        } else if (!replyText.isEmpty()) {
+            this.replyText(replyToken, replyText);
+        }
+    }
+
+    private String groupResponseMessage(String groupId, String userId, String textContent) {
         String replyText = "";
-        String groupId = ((GroupSource) event.getSource()).getGroupId();
-        String userId = event.getSource().getUserId();
-        String textContent = event.getMessage().getText();
         GroupZonkbot group = getGroup(groupId);
         boolean hasGroup = group != null;
 

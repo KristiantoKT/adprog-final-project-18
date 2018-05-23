@@ -78,4 +78,9 @@ public class ZonkbotControllerTest {
         assertEquals(true,true);
     }
 
+    @Test
+    void correctAnswerTest() {
+        assertEquals(99, zonkbotController.readFromJson().toString());
+    }
+
 }
