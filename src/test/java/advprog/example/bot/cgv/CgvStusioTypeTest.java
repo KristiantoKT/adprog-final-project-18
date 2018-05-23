@@ -23,8 +23,7 @@ public class CgvStusioTypeTest {
     public void testDefaultState() {
         String schedule = cgvCinema.cgvGoldClass();
 
-        assertEquals(schedule, "( ' DEADPOOL 2 '\nSchedules : [11:15 13:55] )\n( ' SOLO: A STAR WARS STORY '\n"+
-                "Schedules : [16:35 19:30 22:25] )\n");
+        assertEquals(schedule, "(' DEADPOOL 2',[11:15 13:55])\n(' SOLO: A STAR WARS STORY',[16:35 19:30 22:25])\n");
     }
 
     @Test
@@ -32,8 +31,7 @@ public class CgvStusioTypeTest {
         cgvCinema.setState(changeCinema);
         String schedule = cgvCinema.cgvGoldClass();
 
-        assertEquals(schedule, "( ' DEADPOOL 2 '\nSchedules : [11:10 13:50 19:30] )\n( ' SOLO: A STAR WARS STORY '\n"+
-                "Schedules : [16:35 22:20] )\n");
+        assertEquals(schedule, "(' DEADPOOL 2',[11:10 13:50 19:30])\n(' SOLO: A STAR WARS STORY',[16:35 22:20])\n");
     }
 
 }
