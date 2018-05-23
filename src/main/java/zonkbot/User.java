@@ -1,6 +1,6 @@
 package zonkbot;
 
-public class User implements Comparable<User>{
+public class User implements Comparable<User> {
     private String userId;
     private int score;
     private int takenChance;

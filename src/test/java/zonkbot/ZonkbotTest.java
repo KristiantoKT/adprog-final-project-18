@@ -9,7 +9,6 @@ public class ZonkbotTest {
 
     private Zonkbot zonkbot = new Zonkbot();
 
-
     @Test
     void getPresentQuestion() {
         assertEquals(null, zonkbot.getPresentQuestion());
@@ -17,12 +16,12 @@ public class ZonkbotTest {
 
     @Test
     void responseMessageAddQuestion() {
-        assertEquals("Please input your question" ,zonkbot.responseMessage("/add_question"));
+        assertEquals("Please input your question", zonkbot.responseMessage("/add_question"));
     }
 
     @Test
     void responseMessageChangeAnswer() {
-        assertEquals("/Choose question" ,zonkbot.responseMessage("/change_answer"));
+        assertEquals("/Choose question", zonkbot.responseMessage("/change_answer"));
     }
 
     @Test
@@ -42,12 +41,12 @@ public class ZonkbotTest {
 
     @Test
     void changeAnswer() {
-        assertEquals("/Choose correct answer" ,zonkbot.responseMessage("/Question: 1"));
+        assertEquals("/Choose correct answer", zonkbot.responseMessage("/Question: 1"));
     }
 
     @Test
     void correctAnswer() {
-        assertEquals("" ,zonkbot.responseMessage("/Correct answer: 2"));
+        assertEquals("", zonkbot.responseMessage("/Correct answer: 2"));
     }
 
     @Test

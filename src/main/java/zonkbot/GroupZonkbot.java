@@ -41,21 +41,14 @@ public class GroupZonkbot {
 
         User user = getUser(userId);
         int chance = user.getTakenChance();
-        //ALL CHANCE IS 0
         if (chance == 0) {
             replyText =  isAllChanceIsZero();
-        }
-        //INITIAL START ZONK
-        else if (textContent.equals("start zonk")) {
+        } else if (textContent.equals("start zonk")) {
             replyText = startZonk();
-        }
-        //ANSWER QUESTION
-        else if (textContent.length() == 5 && textContent.substring(0,2).equals("/Q")
+        } else if (textContent.length() == 5 && textContent.substring(0,2).equals("/Q")
                 && textContent.substring(3,4).equals("A")) {
-            replyText = QandA(textContent, userId, replyText, user);
-        }
-        //STOP ZONK
-        else if (textContent.length() == 9 && textContent.equals("stop zonk")) {
+            replyText = questionAndAnswer(textContent, userId, replyText, user);
+        } else if (textContent.length() == 9 && textContent.equals("stop zonk")) {
             replyText = stopZonk();
         }
         return replyText;
@@ -69,10 +62,11 @@ public class GroupZonkbot {
         return replyText;
     }
 
-    public String QandA(String textContent, String userId, String replyText, User user) {
+    public String questionAndAnswer(String textContent, String userId,
+                                    String replyText, User user) {
         int questionIndex = Integer.parseInt(textContent.substring(2, 3)) - 1;
-        int answerIndex = Integer.parseInt(textContent.substring(4, 5)) - 1 ;
-        ArrayList<Question> questions = ZonkbotController.readFromJSON();
+        int answerIndex = Integer.parseInt(textContent.substring(4, 5)) - 1;
+        ArrayList<Question> questions = ZonkbotController.readFromJson();
         Question question = questions.get(questionIndex);
         boolean answerCorrect = answerIndex == question.getCorrectAnswerIndex();
         if (answerCorrect && user.getTakenChance() > 0) {
@@ -87,9 +81,10 @@ public class GroupZonkbot {
 
     @NotNull
     public String startZonk() {
-        ArrayList<Question> questions = ZonkbotController.readFromJSON();
-        if(questions.isEmpty())
+        ArrayList<Question> questions = ZonkbotController.readFromJson();
+        if (questions.isEmpty()) {
             return "Sorry but no question available";
+        }
         isZonk = true;
         return "/Random question";
     }
@@ -105,16 +100,18 @@ public class GroupZonkbot {
 
     public User getUser(String userId) {
         for (User user: users) {
-            if (user.getUserId().equals(userId))
+            if (user.getUserId().equals(userId)) {
                 return user;
+            }
         }
         return null;
     }
 
     private boolean isAllUserChanceIsZero() {
         for (User user: users) {
-            if (user.getTakenChance() > 0)
+            if (user.getTakenChance() > 0) {
                 return false;
+            }
         }
         return true;
     }

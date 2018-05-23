@@ -19,12 +19,6 @@ import com.linecorp.bot.model.message.template.Template;
 import com.linecorp.bot.model.response.BotApiResponse;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.NonNull;
-import zonkbot.GroupZonkbot;
-import zonkbot.Question;
-import zonkbot.User;
-import zonkbot.Zonkbot;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -37,6 +31,14 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
+
+import zonkbot.GroupZonkbot;
+import zonkbot.Question;
+import zonkbot.User;
+import zonkbot.Zonkbot;
 
 @LineMessageHandler
 public class ZonkbotController {
@@ -55,7 +57,9 @@ public class ZonkbotController {
     }
 
     @EventMapping
-    public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws ExecutionException, InterruptedException {
+    public void handleTextMessageEvent(MessageEvent<TextMessageContent> event)
+            throws ExecutionException,
+            InterruptedException {
         LOGGER.fine(String.format("TextMessageContent(timestamp='%s',content='%s')",
                 event.getTimestamp(), event.getMessage()));
         TextMessageContent messageContent = event.getMessage();
@@ -68,23 +72,26 @@ public class ZonkbotController {
         }
     }
 
-    private void groupResponseMessage(MessageEvent<TextMessageContent> event, String replyToken) throws ExecutionException, InterruptedException {
+    private void groupResponseMessage(MessageEvent<TextMessageContent> event, String replyToken)
+            throws ExecutionException, InterruptedException {
         String replyText;
         replyText = responseMessageForGroup(event);
 
-        if (replyText.equals("/Random question"))
+        if (replyText.equals("/Random question")) {
             replyWithRandomQuestion(replyToken);
-        else if (replyText.equals("show leaderboard")) {
+        } else if (replyText.equals("show leaderboard")) {
             String groupId = ((GroupSource) event.getSource()).getGroupId();
             replyText = showLeaderboard(groupId);
             groupZonkbots.remove(getGroup(groupId));
             this.replyText(replyToken, replyText);
-        }
-        else if (!replyText.isEmpty())
+        } else if (!replyText.isEmpty()) {
             this.replyText(replyToken, replyText);
+        }
     }
 
-    private void responseMessageForPersonal(MessageEvent<TextMessageContent> event, String textContent, String replyToken) throws ExecutionException, InterruptedException {
+    private void responseMessageForPersonal(MessageEvent<TextMessageContent> event,
+                                            String textContent, String replyToken)
+            throws ExecutionException, InterruptedException {
         String replyText;
         replyText = zonkbot.responseMessage(textContent);
         if (replyText.equals("/Choose correct answer")) {
@@ -118,9 +125,6 @@ public class ZonkbotController {
         }
 
         return replyText;
-
-
-
     }
 
     private String showLeaderboard(String groupId) throws ExecutionException, InterruptedException {
@@ -137,17 +141,18 @@ public class ZonkbotController {
     }
 
     private GroupZonkbot getGroup(String groupId) {
-        if(!groupZonkbots.isEmpty()) {
+        if (!groupZonkbots.isEmpty()) {
             for (GroupZonkbot group : groupZonkbots) {
-                if (group.getGroupId().equals(groupId))
+                if (group.getGroupId().equals(groupId)) {
                     return group;
+                }
             }
         }
         return null;
     }
 
     private void replyWithRandomQuestion(String replyToken) {
-        ArrayList<Question> questions = readFromJSON();
+        ArrayList<Question> questions = readFromJson();
         Random rand = new Random();
         int questionIndex = rand.nextInt(questions.size());
         Question question = questions.get(questionIndex);
@@ -168,12 +173,12 @@ public class ZonkbotController {
 
     //CHOOSE QUESTIONS WITH CAROUSEL
     private void chooseQuestion(String replyToken) {
-        List<Question> questions = readFromJSON();
+        List<Question> questions = readFromJson();
         List<CarouselColumn> columns = new ArrayList<>();
         for (int i = 0; i < questions.size(); i++) {
             List<Action> actions = new ArrayList<>();
             actions.add(new MessageAction("Select",
-                    String.format("/Question: %s", i+1)));
+                    String.format("/Question: %s", i + 1)));
             columns.add(new CarouselColumn(null,
                     "Choose Question", questions.get(i).getQuestion(), actions));
         }
@@ -190,7 +195,7 @@ public class ZonkbotController {
         for (int i = 0; i < answers.size(); i++) {
             List<Action> actions = new ArrayList<>();
             actions.add(new MessageAction("Select",
-                    String.format("/Correct answer: %s", i+1)));
+                    String.format("/Correct answer: %s", i + 1)));
             columns.add(new CarouselColumn(null,
                     question.getQuestion(), answers.get(i), actions));
         }
@@ -229,7 +234,7 @@ public class ZonkbotController {
 
     public static void writeToJson(Question question) {
         Gson gson = new Gson();
-        ArrayList<Question> questions = readFromJSON();
+        ArrayList<Question> questions = readFromJson();
         questions.add(question);
         try (FileWriter writer = new FileWriter("src/file.json")) {
             gson.toJson(questions,writer);
@@ -238,7 +243,7 @@ public class ZonkbotController {
         }
     }
 
-    public static ArrayList<Question> readFromJSON() {
+    public static ArrayList<Question> readFromJson() {
         Gson gson = new Gson();
         Question[] result = null;
 
@@ -251,5 +256,4 @@ public class ZonkbotController {
         ArrayList<Question> resultList = new ArrayList<Question>(Arrays.asList(result));
         return resultList;
     }
-
-    }
+}

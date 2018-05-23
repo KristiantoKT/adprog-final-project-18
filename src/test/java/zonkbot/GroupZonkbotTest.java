@@ -1,8 +1,9 @@
 package zonkbot;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 class GroupZonkbotTest {
 
@@ -52,8 +53,8 @@ class GroupZonkbotTest {
     }
 
     @Test
-    void QandATest() {
-        group.QandA("/Q2A1", "userId", "memeng", user);
+    void questionAndAnswerTest() {
+        group.questionAndAnswer("/Q2A1", "userId", "memeng", user);
     }
 
     @Test

@@ -1,9 +1,8 @@
 package zonkbot;
 
+import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import zonkbot.controller.ZonkbotController;
-
-import java.util.List;
 
 public class Zonkbot {
     private Question question;
@@ -22,35 +21,22 @@ public class Zonkbot {
 
     public String responseMessage(String textContent) {
         String replyText;
-        //ADD_QUESTION
         if (textContent.equals("/add_question") && !addQuestionSection) {
             replyText = gettingToAddQuestionSection();
-        }
-        //ADD_QUESTION_SECTION
-        else if (addQuestionSection) {
+        } else if (addQuestionSection) {
             replyText = addQuestionSection(textContent);
-        }
-        //CHANGE_ANSWER
-        else if (textContent.equals("/change_answer")) {
+        } else if (textContent.equals("/change_answer")) {
             replyText = gettingToChangeAnswerSection();
-        }
-        //CHANGE_ANSWER_SECTION
-        else if (textContent.length() > 10
+        } else if (textContent.length() > 10
                 && textContent.substring(0,9).equals("/Question")) {
             replyText = changeAnswerSection(textContent);
-        }
-        //CHOOSE CORRECT ANSWER
-        else if (textContent.length() >= 15
-                && textContent.substring(0,15).equals("/Correct answer")){
+        } else if (textContent.length() >= 15
+                && textContent.substring(0,15).equals("/Correct answer")) {
             replyText = chooseCorrectAnswer(textContent);
-        }
-        //ECHO
-        else if (textContent.length() > 5
+        } else if (textContent.length() > 5
                 && textContent.substring(0,5).equals("/echo")) {
             replyText = echo(textContent);
-        }
-        //OTHERS
-        else {
+        } else {
             replyText = textContent + " is not a command";
         }
         return replyText;
@@ -67,7 +53,7 @@ public class Zonkbot {
     private String chooseCorrectAnswer(String textContent) {
         String replyText = "";
         int correctAnswerIndex = Integer.parseInt(textContent.substring(17)) - 1;
-        if(question != null) {
+        if (question != null) {
             question.setCorrectAnswer(correctAnswerIndex);
             replyText = question.toString();
         }
@@ -79,7 +65,7 @@ public class Zonkbot {
     private String changeAnswerSection(String textContent) {
         String replyText;
         int questionIndex = Integer.parseInt(textContent.substring(11)) - 1;
-        List<Question> questions = ZonkbotController.readFromJSON();
+        List<Question> questions = ZonkbotController.readFromJson();
         question = questions.get(questionIndex);
         replyText = "/Choose correct answer";
         return replyText;
@@ -87,11 +73,13 @@ public class Zonkbot {
 
     @NotNull
     private String gettingToChangeAnswerSection() {
-        String replyText;List<Question> questions = ZonkbotController.readFromJSON();
-        if(questions.isEmpty())
+        String replyText;
+        List<Question> questions = ZonkbotController.readFromJson();
+        if (questions.isEmpty()) {
             replyText = "There is no question";
-        else
+        } else {
             replyText = "/Choose question";
+        }
         return replyText;
     }
 
@@ -130,7 +118,7 @@ public class Zonkbot {
     @Override
     public String toString() {
         String result = "";
-        List<Question> questions = ZonkbotController.readFromJSON();
+        List<Question> questions = ZonkbotController.readFromJson();
         for (Question element: questions) {
             result += element.toString();
         }

@@ -1,13 +1,12 @@
 package zonkbot;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Question {
 
     String question;
     ArrayList<String> answers;
-    int correct_answer_index;
+    int correctAnswerIndex;
 
     public Question(String question) {
         this.question = question;
@@ -15,11 +14,11 @@ public class Question {
     }
 
     public int getCorrectAnswerIndex() {
-        return correct_answer_index;
+        return correctAnswerIndex;
     }
 
-    public void setCorrectAnswer(int index){
-        correct_answer_index = index;
+    public void setCorrectAnswer(int index) {
+        correctAnswerIndex = index;
     }
 
     public void addAnswer(String answer) {
@@ -44,16 +43,17 @@ public class Question {
         return result;
     }
 
-    private String answerStringBuilder(int i){
-        String result = "";
-        if (correct_answer_index == i && i != answers.size() - 1)
+    private String answerStringBuilder(int i) {
+        String result;
+        if (correctAnswerIndex == i && i != answers.size() - 1) {
             result = "  *" + answers.get(i) + "*\n";
-        else if (correct_answer_index == i && i == answers.size() - 1)
+        } else if (correctAnswerIndex == i && i == answers.size() - 1) {
             result = "  *" + answers.get(i) + "*";
-        else if (i == answers.size())
+        } else if (i == answers.size()) {
             result = "    " + answers.get(i);
-        else
+        } else {
             result = "    " + answers.get(i) + "\n";
+        }
         return result;
     }
 
