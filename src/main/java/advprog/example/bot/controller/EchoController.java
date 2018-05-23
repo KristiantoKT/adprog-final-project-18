@@ -3,8 +3,6 @@ package advprog.example.bot.controller;
 import advprog.acronym.bot.Acronym;
 import advprog.acronym.bot.AcronymOperations;
 import advprog.example.bot.BotExampleApplication;
-import advprog.speechtotext.bot.FetchStuff;
-import advprog.speechtotext.bot.Text;
 import com.google.common.io.ByteStreams;
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.client.MessageContentResponse;
@@ -54,12 +52,14 @@ public class EchoController {
     @Autowired
     private LineMessagingClient lineMessagingClient;
     private static final Logger LOGGER = Logger.getLogger(EchoController.class.getName());
-    static boolean canDoMethod = false;
     static File file = new File("acronyms/acronyms.csv");
     static boolean terimaKependekan = false;
     static boolean terimaKepanjangan = false;
+    static boolean flagDelete = false;
+    static boolean flagUpdate = false;
     String kependekan;
     String kepanjangan;
+    static Acronym yangDicari;
     ArrayList<Acronym> acronyms;
     {
         try {
@@ -82,7 +82,6 @@ public class EchoController {
             terimaKepanjangan = true;
             terimaKependekan = false;
             replyText = "Silakan masukkan kepanjangan";
-
         } else if (terimaKepanjangan) {
             kepanjangan = contentText;
             terimaKepanjangan = false;
@@ -90,16 +89,28 @@ public class EchoController {
             AcronymOperations.add(newAcronym, file);
             acronyms.add(newAcronym);
             replyText = kependekan + " - " + kepanjangan + " Berhasil ditambah";
+        } else if (flagDelete) {
+            if (contentText.toLowerCase().contains("yes")) {
+                AcronymOperations.delete(yangDicari, file);
+                acronyms = AcronymOperations.addToArrayList(file);
+                replyText = yangDicari.getKependekan() + " - " + yangDicari.getKepanjangan()
+                        + " Telah didelete";
+            } else if (contentText.toLowerCase().contains("no")) {
+                replyText = yangDicari.getKependekan() + " - " + yangDicari.getKepanjangan()
+                        + " Gagal didelete";
+            }
+            flagDelete = false;
 
+        } else if (flagUpdate) {
+            String kepanjanganBaru = contentText;
+            AcronymOperations.update(yangDicari, kepanjanganBaru, file);
+            acronyms = AcronymOperations.addToArrayList(file);
+            flagUpdate = false;
+            replyText = yangDicari.getKependekan() + " - " + yangDicari.getKepanjangan()
+                    + " Berhasil diubah";
         } else {
             if (contentText.contains("/echo")) {
                 replyText = contentText.replace("/echo ", "");
-            } else if (contentText.contains("/speech-to-text")) {
-                replyText = "Ready to recognize speech. Due to the "
-                        + "incompleteness of the current program, "
-                        + "please make sure the sound file is type .wav and "
-                        + "the length is less than 10 seconds.";
-                canDoMethod = true;
             } else if (contentText.contains("/add_acronym")) {
                 replyText = "Silakan masukkan kependekan";
                 terimaKependekan = true;
@@ -134,59 +145,6 @@ public class EchoController {
         return new TextMessage(replyText);
     }
 
-
-    @EventMapping
-    public void handleAudioMessageEvent(MessageEvent<AudioMessageContent> event) {
-        //        LOGGER.fine(String.format("AudioMessageContent(timestamp='%s',content='%s')",
-        //                event.getTimestamp(), event.getMessage()));
-        //        AudioMessageContent content = event.getMessage();
-        //        String contentId = content.getId();
-        //        HttpHeaders httpHeaders = new HttpHeaders();
-        //        httpHeaders.add("Authorization", "Bearer " + tokenLine);
-        //        HttpEntity<String> httpEntity = new HttpEntity<String>("", httpHeaders);
-        //        RestTemplate restTemplate = new RestTemplate();
-        //        String contentLink = String.format(lineApiWebsite, contentId);
-        //        ResponseEntity<byte[]> kembalian = restTemplate.exchange(contentLink,
-        //                HttpMethod.GET,
-        //                httpEntity,
-        //                byte[].class);
-        //        Text textKembalian = new Text("");
-        //        try {
-        //            textKembalian.setSpeechText(FetchStuff.getTextFromSpeech(kembalian.getBody())
-        //                    .getSpeechText());
-        //        } catch (IOException e) {
-        //            e.printStackTrace();
-        //        }
-        if(canDoMethod) {
-            handleHeavyContent(
-                event.getReplyToken(),
-                event.getMessage().getId(),
-                responseBody -> {
-                    DownloadedContent wav = saveContent("wav", responseBody);
-                    File file = new File(wav.path.toString());
-                    FileInputStream fileInputStream;
-                    Text text = new Text("Gaada");
-                    try {
-                        fileInputStream = new FileInputStream(file);
-                        byte[] byteArray = new byte[(int) file.length()];
-                        fileInputStream.read(byteArray);
-                        text.setSpeechText(FetchStuff.getTextFromSpeech(byteArray).getSpeechText());
-                    } catch (IOException e) {
-                        LOGGER.fine(e.getLocalizedMessage());
-                        e.printStackTrace();
-                    }
-                    reply(event.getReplyToken(), new TextMessage(text.getSpeechText()
-                            != null || text.getSpeechText() != "" ? text.getSpeechText() : "Gaada"));
-                    canDoMethod = false;
-                });
-        } else {
-            reply(event.getReplyToken(), new TextMessage("tulis /speech-to-text "
-                    + "terlebih dahulu"));
-        }
-        //        return new TextMessage(textKembalian.getSpeechText() != null
-        //                ? textKembalian.getSpeechText() : "Tidak ada");
-    }
-
     @EventMapping
     public void handleDefaultMessage(Event event) {
         LOGGER.fine(String.format("Event(timestamp='%s',source='%s')",
@@ -194,79 +152,38 @@ public class EchoController {
     }
 
     @EventMapping
-    public void handlePostback(PostbackEvent event) {
+    public void handlePostback(PostbackEvent event) throws IOException {
         PostbackContent postbackContent = event.getPostbackContent();
         String postbackCommand = postbackContent.getData();
         String[] postbackCommandSplit = postbackCommand.split(" ");
-//        if(postbackCommandSplit[0].equals("Delete")) {
-//
-//        }
-//        else if(postbackCommandSplit[0].equals("Update")) {
-//
-//        }
-
-    }
-
-    private void handleHeavyContent(String replyToken, String messageId,
-                                    Consumer<MessageContentResponse> messageConsumer) {
-        final MessageContentResponse response;
-        try {
-            response = lineMessagingClient.getMessageContent(messageId)
-                    .get();
-        } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException(e);
+        if(postbackCommandSplit[0].equals("Delete")) {
+            int index = Integer.parseInt(postbackCommandSplit[1]);
+            yangDicari = acronyms.get(index);
+            flagDelete = true;
+            reply(event.getReplyToken(), new TextMessage("Are you sure?"));
         }
-        messageConsumer.accept(response);
-    }
-
-    private static DownloadedContent saveContent(String ext, MessageContentResponse responseBody) {
-        DownloadedContent tempFile = createTempFile(ext);
-        try (OutputStream outputStream = Files.newOutputStream(tempFile.path)) {
-            ByteStreams.copy(responseBody.getStream(), outputStream);
-            return tempFile;
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
+        else if(postbackCommandSplit[0].equals("Update")) {
+            int index = Integer.parseInt(postbackCommandSplit[1]);
+            yangDicari = acronyms.get(index);
+            flagUpdate = true;
+            reply(event.getReplyToken(), new TextMessage("Silakan masukkan kepanjangan"));
         }
+
     }
 
-    private static DownloadedContent createTempFile(String ext) {
-        String fileName = LocalDateTime.now().toString() + '-' + UUID.randomUUID().toString()
-                + '.' + ext;
-        Path tempFile = BotExampleApplication.downloadedContentDir.resolve(fileName);
-        tempFile.toFile().deleteOnExit();
-        return new DownloadedContent(
-                tempFile,
-                createUri("/downloaded/" + tempFile.getFileName()));
-    }
-
-    private static String createUri(String path) {
-        return ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(path).build()
-                .toUriString();
-    }
-
-    private void reply(@NonNull String replyToken, @NonNull Message message) {
+    public void reply(@NonNull String replyToken, @NonNull Message message) {
         reply(replyToken, Collections.singletonList(message));
     }
 
-    private void reply(@NonNull String replyToken, @NonNull List<Message> messages) {
+    public void reply(@NonNull String replyToken, @NonNull List<Message> messages) {
         try {
             BotApiResponse apiResponse = lineMessagingClient
                     .replyMessage(new ReplyMessage(replyToken, messages))
                     .get();
-        } catch (InterruptedException | ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e ) {
             throw new RuntimeException(e);
+        } catch (NullPointerException e) {
+            return;
         }
     }
-
-    public static class DownloadedContent {
-        Path path;
-        String uri;
-
-        public DownloadedContent(Path path, String uri) {
-            this.path = path;
-            this.uri = uri;
-        }
-    }
-
 }

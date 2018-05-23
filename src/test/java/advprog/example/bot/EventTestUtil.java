@@ -1,8 +1,11 @@
 package advprog.example.bot;
 
+import com.linecorp.bot.model.action.PostbackAction;
 import com.linecorp.bot.model.event.MessageEvent;
+import com.linecorp.bot.model.event.PostbackEvent;
 import com.linecorp.bot.model.event.message.AudioMessageContent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
+import com.linecorp.bot.model.event.postback.PostbackContent;
 import com.linecorp.bot.model.event.source.UserSource;
 import com.linecorp.bot.model.message.AudioMessage;
 
@@ -26,4 +29,11 @@ public class EventTestUtil {
                 new AudioMessageContent("id"),
                 Instant.parse("2018-01-01T00:00:00.000Z"));
     }
+
+    public static PostbackEvent createPostbackEvent(String data) {
+        return new PostbackEvent("replyToken", new UserSource("userId"),
+                new PostbackContent(data, null),
+                Instant.parse("2018-01-01T00:00:00.000Z"));
+    }
+
 }

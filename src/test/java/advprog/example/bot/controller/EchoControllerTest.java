@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
+import advprog.acronym.bot.AcronymOperations;
 import advprog.example.bot.BotExampleApplication;
 import advprog.example.bot.EventTestUtil;
 
@@ -13,6 +14,7 @@ import com.linecorp.bot.client.MessageContentResponse;
 import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
+import com.linecorp.bot.model.event.PostbackEvent;
 import com.linecorp.bot.model.event.message.AudioMessageContent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
@@ -103,8 +105,65 @@ public class EchoControllerTest {
         reply = echoController.handleTextMessageEvent(event3);
         assertEquals(event2.getMessage().getText() + " - " + event3.getMessage().getText()
                 + " Berhasil ditambah", reply.getText());
+    }
 
+    @Test
+    public void testHandleDeleteAcronym() throws IOException {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/delete_acronym");
 
+        PostbackEvent event2 = EventTestUtil.createPostbackEvent("Delete 2");
+
+        MessageEvent<TextMessageContent> event3 =
+                EventTestUtil.createDummyTextMessage("yes");
+
+        TextMessage reply = echoController.handleTextMessageEvent(event);
+
+        assertEquals("Silakan pilih yang mau "
+                + "didelete dari carousel", reply.getText());
+
+        echoController.handlePostback(event2);
+        verify(lineMessagingClient, atLeastOnce()).replyMessage(new ReplyMessage(
+                event2.getReplyToken(), new TextMessage("Are you sure?")
+        ));
+
+        reply = echoController.handleTextMessageEvent(event3);
+        assertEquals( echoController.yangDicari.getKependekan()
+                + " - "
+                + echoController.yangDicari.getKepanjangan()
+                + " Telah didelete", reply.getText());
+        AcronymOperations.add(echoController.yangDicari, echoController.file);
+    }
+
+    @Test
+    public void testHandleUpdateAcronym() throws IOException {
+        MessageEvent<TextMessageContent> event =
+                EventTestUtil.createDummyTextMessage("/update_acronym");
+
+        PostbackEvent event2 = EventTestUtil.createPostbackEvent("Update 2");
+
+        MessageEvent<TextMessageContent> event3 =
+                EventTestUtil.createDummyTextMessage("I De E");
+
+        String oldKepanjangan = echoController.acronyms.get(2).getKepanjangan();
+
+        TextMessage reply = echoController.handleTextMessageEvent(event);
+
+        assertEquals("Silakan pilih yang mau "
+                + "diupdate dari carousel", reply.getText());
+
+        echoController.handlePostback(event2);
+        verify(lineMessagingClient, atLeastOnce()).replyMessage(new ReplyMessage(
+                event2.getReplyToken(), new TextMessage("Silakan masukkan kepanjangan")
+        ));
+
+        reply = echoController.handleTextMessageEvent(event3);
+        assertEquals(EchoController.yangDicari.getKependekan()
+                + " - "
+                + EchoController.yangDicari.getKepanjangan()
+                + " Berhasil diubah", reply.getText());
+        AcronymOperations.update(echoController.yangDicari, oldKepanjangan,
+                echoController.file);
     }
 
     @Test
@@ -115,58 +174,6 @@ public class EchoControllerTest {
 
         verify(event, atLeastOnce()).getSource();
         verify(event, atLeastOnce()).getTimestamp();
-    }
-
-    @Test
-    public void testHandleAudioWithoutSttCommand() {
-        EchoController.canDoMethod = false;
-        MessageEvent<AudioMessageContent> event =
-                EventTestUtil.createDummyAudioMessage();
-        when(lineMessagingClient.replyMessage(new ReplyMessage(
-                "replyToken",
-                singletonList(new TextMessage("tulis /speech-to-text "
-                        + "terlebih dahulu")))
-        )).thenReturn(CompletableFuture.completedFuture(
-                new BotApiResponse("ok", Collections.emptyList())
-        ));
-        echoController.handleAudioMessageEvent(event);
-        verify(lineMessagingClient).replyMessage(new ReplyMessage("replyToken",
-                singletonList(new TextMessage("tulis /speech-to-text "
-                        + "terlebih dahulu"))));
-    }
-
-    @Test
-    public void testHandleSttCommand() throws IOException {
-        MessageEvent<TextMessageContent> event =
-                EventTestUtil.createDummyTextMessage("/speech-to-text");
-
-        TextMessage reply = echoController.handleTextMessageEvent(event);
-
-        assertEquals("Ready to recognize speech. Due to the "
-                + "incompleteness of the current program, "
-                + "please make sure the sound file is type .wav and "
-                + "the length is less than 10 seconds.", reply.getText());
-        EchoController.canDoMethod = false;
-    }
-
-    @Test
-    public void testHandleAudioWithSttCommand() throws IOException {
-        EchoController.canDoMethod = false;
-        MessageEvent<TextMessageContent> event =
-                EventTestUtil.createDummyTextMessage("/speech-to-text");
-        MessageEvent<AudioMessageContent> event2 =
-                EventTestUtil.createDummyAudioMessage();
-        TextMessage response = echoController.handleTextMessageEvent(event);
-        assertEquals(response.getText(), "Ready to recognize speech. Due to the "
-                + "incompleteness of the current program, "
-                + "please make sure the sound file is type .wav and "
-                + "the length is less than 10 seconds.");
-        try {
-            //kosong
-            echoController.handleAudioMessageEvent(event2);
-        } catch (NullPointerException e) {
-            return;
-        }
     }
 //
 //    @Test
