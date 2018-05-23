@@ -23,6 +23,8 @@ import zonkbot.GroupZonkbot;
 import zonkbot.Question;
 import zonkbot.User;
 
+import java.util.List;
+
 @SpringBootTest(properties = "line.bot.handler.enabled=false")
 @ExtendWith(SpringExtension.class)
 public class ZonkbotControllerTest {
@@ -183,10 +185,16 @@ public class ZonkbotControllerTest {
         question.addAnswer("Bobot proyek akhir");
         question.addAnswer("Bobotboy");
         question.setCorrectAnswer(2);
-        try {
-            zonkbotController.writeToJson(question);
-        } catch (Exception e) {
-            assertEquals(true,true);
+        List<Question> questions = ZonkbotController.readFromJson();
+        if (!questions.contains(question)) {
+            try {
+                zonkbotController.writeToJson(question);
+            } catch (Exception e) {
+                assertEquals(true, true);
+            }
+        }
+        else {
+            assertEquals(true, true);
         }
     }
 
