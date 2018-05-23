@@ -104,7 +104,6 @@ public class Zonkbot {
             question.addAnswer(textContent);
             result = "/Choose correct answer";
             addQuestionReset();
-            ZonkbotController.writeToJson(question);
         }
         return result;
     }
