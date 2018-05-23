@@ -90,7 +90,7 @@ public class ZonkbotController {
         }
     }
 
-    private void responseMessageForGroup(String groupId, String userId,
+    public void responseMessageForGroup(String groupId, String userId,
                                          String textContent, String replyToken)
             throws ExecutionException, InterruptedException {
         String replyText;
@@ -108,7 +108,7 @@ public class ZonkbotController {
         }
     }
 
-    private String groupResponseMessage(String groupId, String userId, String textContent) {
+    public String groupResponseMessage(String groupId, String userId, String textContent) {
         String replyText = "";
         GroupZonkbot group = getGroup(groupId);
         boolean hasGroup = group != null;

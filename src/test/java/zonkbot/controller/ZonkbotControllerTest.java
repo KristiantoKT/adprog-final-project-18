@@ -70,7 +70,29 @@ public class ZonkbotControllerTest {
     }
 
     @Test
-    void randomQuestionWithCarousel() {
+    void testGroupResponseMessage() {
+        try {
+            zonkbotController.groupResponseMessage("groupId",
+                    "userId", "start zonk");
+        } catch (Exception e) {
+
+        }
+    }
+
+    @Test
+    void responseMessageForGroupTest() {
+        try {
+            zonkbotController.responseMessageForGroup("groupId", "userId",
+                    "start zonk", "replyToken");
+            zonkbotController.responseMessageForGroup("groupId", "userId",
+                    "stop zonk", "replyToken");
+        } catch (Exception e) {
+
+        }
+    }
+
+    @Test
+    void randomQuestionCarousel() {
         Question question = new Question("Bobot apa yang besar?");
         question.addAnswer("Bobot kamu");
         question.addAnswer("Bobot UAS");
