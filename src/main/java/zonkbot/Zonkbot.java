@@ -110,7 +110,7 @@ public class Zonkbot {
         return result;
     }
 
-    private void addQuestionReset() {
+    public void addQuestionReset() {
         giveAnswerCount = 0;
         addQuestionSection = false;
     }

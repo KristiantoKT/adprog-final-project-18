@@ -50,9 +50,19 @@ public class ZonkbotTest {
     }
 
     @Test
+    void resetTest() {
+        zonkbot.addQuestionReset();
+    }
+
+    @Test
     void firstAddQuestionSection() {
         zonkbot = new Zonkbot();
         assertEquals("Answer 1:", zonkbot.addQuestionSection("pertanyaan"));
+    }
+
+    @Test
+    void toStringTest() {
+        assertEquals(zonkbot.toString(), zonkbot.toString());
     }
 
 }

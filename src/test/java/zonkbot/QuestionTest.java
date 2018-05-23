@@ -13,6 +13,11 @@ public class QuestionTest {
     private Question question = new Question("apakah adprog penting?");
 
     @Test
+    void setCorrectAnswerTest() {
+        question.setCorrectAnswer(3);
+    }
+
+    @Test
     void testQuestion() {
         question.addAnswer("ya");
         question.addAnswer("tidak");
