@@ -1,7 +1,7 @@
 package advprog.acronym.bot;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -10,8 +10,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.Before;
+import org.junit.Test;
 
 public class AcronymOperationsTest {
 
@@ -43,8 +43,8 @@ public class AcronymOperationsTest {
         boolean ketemu = false;
         fileInputStream = new FileInputStream(file);
         bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
-        while((y = bufferedReader.readLine()) != null) {
-            if(y.equals(acronyms[2].getKependekan() + ";" + acronyms[2].getKepanjangan())) {
+        while ((y = bufferedReader.readLine()) != null) {
+            if (y.equals(acronyms[2].getKependekan() + ";" + acronyms[2].getKepanjangan())) {
                 ketemu = true;
                 break;
             }
@@ -63,8 +63,8 @@ public class AcronymOperationsTest {
         boolean ketemu = false;
         fileInputStream = new FileInputStream(file);
         bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
-        while((y = bufferedReader.readLine()) != null) {
-            if(y.equals(acronyms[2].getKependekan() + ";" + acronyms[2].getKepanjangan())) {
+        while ((y = bufferedReader.readLine()) != null) {
+            if (y.equals(acronyms[2].getKependekan() + ";" + acronyms[2].getKepanjangan())) {
                 ketemu = true;
                 break;
             }
@@ -82,8 +82,8 @@ public class AcronymOperationsTest {
         boolean ketemu = false;
         fileInputStream = new FileInputStream(file);
         bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
-        while((y = bufferedReader.readLine()) != null) {
-            if(y.equals("NB;Not Bad")) {
+        while ((y = bufferedReader.readLine()) != null) {
+            if (y.equals("NB;Not Bad")) {
                 ketemu = true;
                 break;
             }
@@ -103,8 +103,8 @@ public class AcronymOperationsTest {
         boolean ketemu = false;
         fileInputStream = new FileInputStream(file);
         bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
-        while((y = bufferedReader.readLine()) != null) {
-            if(y.equals("NB;Not Bad")) {
+        while ((y = bufferedReader.readLine()) != null) {
+            if (y.equals("NB;Not Bad")) {
                 ketemu = true;
                 break;
             }
@@ -122,8 +122,8 @@ public class AcronymOperationsTest {
         bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
         boolean ketemu = false;
         String y;
-        while((y = bufferedReader.readLine()) != null) {
-            if(y.equals(dummyInput)) {
+        while ((y = bufferedReader.readLine()) != null) {
+            if (y.equals(dummyInput)) {
                 ketemu = true;
                 break;
             }

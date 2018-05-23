@@ -32,7 +32,10 @@ import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
@@ -58,9 +61,11 @@ public class EchoController {
     static boolean flagDelete = false;
     static boolean flagUpdate = false;
     String kependekan;
+
     String kepanjangan;
     static Acronym yangDicari;
     ArrayList<Acronym> acronyms;
+
     {
         try {
             acronyms = AcronymOperations.addToArrayList(file);
@@ -70,7 +75,8 @@ public class EchoController {
     }
 
     @EventMapping
-    public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws IOException {
+    public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event)
+            throws IOException {
         LOGGER.fine(String.format("TextMessageContent(timestamp='%s',content='%s')",
                 event.getTimestamp(), event.getMessage()));
         TextMessageContent content = event.getMessage();
@@ -123,8 +129,10 @@ public class EchoController {
                             Arrays.asList(new PostbackAction("Delete", "Delete "
                                     + i))));
                 }
-                CarouselTemplate carouselTemplate = new CarouselTemplate(carouselColumns);
-                TemplateMessage templateMessage = new TemplateMessage("Delete this", carouselTemplate);
+                CarouselTemplate carouselTemplate =
+                        new CarouselTemplate(carouselColumns);
+                TemplateMessage templateMessage = new TemplateMessage("Delete this",
+                        carouselTemplate);
                 reply(event.getReplyToken(), templateMessage);
                 replyText = "Silakan pilih yang mau didelete dari carousel";
             } else if (contentText.contains("/update_acronym")) {
@@ -137,7 +145,8 @@ public class EchoController {
                                     + i))));
                 }
                 CarouselTemplate carouselTemplate = new CarouselTemplate(carouselColumns);
-                TemplateMessage templateMessage = new TemplateMessage("Update this", carouselTemplate);
+                TemplateMessage templateMessage = new TemplateMessage("Update this",
+                        carouselTemplate);
                 reply(event.getReplyToken(), templateMessage);
                 replyText = "Silakan pilih yang mau diupdate dari carousel";
             }
@@ -156,13 +165,12 @@ public class EchoController {
         PostbackContent postbackContent = event.getPostbackContent();
         String postbackCommand = postbackContent.getData();
         String[] postbackCommandSplit = postbackCommand.split(" ");
-        if(postbackCommandSplit[0].equals("Delete")) {
+        if (postbackCommandSplit[0].equals("Delete")) {
             int index = Integer.parseInt(postbackCommandSplit[1]);
             yangDicari = acronyms.get(index);
             flagDelete = true;
             reply(event.getReplyToken(), new TextMessage("Are you sure?"));
-        }
-        else if(postbackCommandSplit[0].equals("Update")) {
+        } else if (postbackCommandSplit[0].equals("Update")) {
             int index = Integer.parseInt(postbackCommandSplit[1]);
             yangDicari = acronyms.get(index);
             flagUpdate = true;
@@ -180,7 +188,7 @@ public class EchoController {
             BotApiResponse apiResponse = lineMessagingClient
                     .replyMessage(new ReplyMessage(replyToken, messages))
                     .get();
-        } catch (InterruptedException | ExecutionException e ) {
+        } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         } catch (NullPointerException e) {
             return;

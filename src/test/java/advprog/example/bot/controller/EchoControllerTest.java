@@ -3,7 +3,9 @@ package advprog.example.bot.controller;
 import static java.util.Collections.singletonList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 import advprog.acronym.bot.AcronymOperations;
 import advprog.example.bot.BotExampleApplication;
@@ -19,7 +21,9 @@ import com.linecorp.bot.model.event.message.AudioMessageContent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
 
-import com.linecorp.bot.model.response.BotApiResponse;
+import java.io.IOException;
+import java.nio.file.Files;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,13 +39,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.util.Collections;
-import java.util.concurrent.CompletableFuture;
 
 @SpringBootTest(properties = "line.bot.handler.enabled=false")
 @ExtendWith(SpringExtension.class)
@@ -92,12 +89,13 @@ public class EchoControllerTest {
         MessageEvent<TextMessageContent> event2 =
                 EventTestUtil.createDummyTextMessage("AL");
 
-        MessageEvent<TextMessageContent> event3 =
-                EventTestUtil.createDummyTextMessage("Ayy Lmao");
 
         TextMessage reply = echoController.handleTextMessageEvent(event);
 
         assertEquals("Silakan masukkan kependekan", reply.getText());
+
+        MessageEvent<TextMessageContent> event3 =
+                EventTestUtil.createDummyTextMessage("Ayy Lmao");
 
         reply = echoController.handleTextMessageEvent(event2);
 
@@ -114,13 +112,14 @@ public class EchoControllerTest {
 
         PostbackEvent event2 = EventTestUtil.createPostbackEvent("Delete 2");
 
-        MessageEvent<TextMessageContent> event3 =
-                EventTestUtil.createDummyTextMessage("yes");
-
         TextMessage reply = echoController.handleTextMessageEvent(event);
 
         assertEquals("Silakan pilih yang mau "
                 + "didelete dari carousel", reply.getText());
+
+        MessageEvent<TextMessageContent> event3 =
+                EventTestUtil.createDummyTextMessage("yes");
+
 
         echoController.handlePostback(event2);
         verify(lineMessagingClient, atLeastOnce()).replyMessage(new ReplyMessage(
@@ -128,7 +127,7 @@ public class EchoControllerTest {
         ));
 
         reply = echoController.handleTextMessageEvent(event3);
-        assertEquals( echoController.yangDicari.getKependekan()
+        assertEquals(echoController.yangDicari.getKependekan()
                 + " - "
                 + echoController.yangDicari.getKepanjangan()
                 + " Telah didelete", reply.getText());
@@ -142,27 +141,30 @@ public class EchoControllerTest {
 
         PostbackEvent event2 = EventTestUtil.createPostbackEvent("Update 2");
 
-        MessageEvent<TextMessageContent> event3 =
-                EventTestUtil.createDummyTextMessage("I De E");
-
-        String oldKepanjangan = echoController.acronyms.get(2).getKepanjangan();
 
         TextMessage reply = echoController.handleTextMessageEvent(event);
 
         assertEquals("Silakan pilih yang mau "
                 + "diupdate dari carousel", reply.getText());
 
+        MessageEvent<TextMessageContent> event3 =
+                EventTestUtil.createDummyTextMessage("I De E");
+
+        String oldKepanjangan = echoController.acronyms.get(2).getKepanjangan();
+
         echoController.handlePostback(event2);
         verify(lineMessagingClient, atLeastOnce()).replyMessage(new ReplyMessage(
                 event2.getReplyToken(), new TextMessage("Silakan masukkan kepanjangan")
         ));
+
+        String oldKepanjangann = oldKepanjangan;
 
         reply = echoController.handleTextMessageEvent(event3);
         assertEquals(EchoController.yangDicari.getKependekan()
                 + " - "
                 + EchoController.yangDicari.getKepanjangan()
                 + " Berhasil diubah", reply.getText());
-        AcronymOperations.update(echoController.yangDicari, oldKepanjangan,
+        AcronymOperations.update(echoController.yangDicari, oldKepanjangann,
                 echoController.file);
     }
 
@@ -175,13 +177,4 @@ public class EchoControllerTest {
         verify(event, atLeastOnce()).getSource();
         verify(event, atLeastOnce()).getTimestamp();
     }
-//
-//    @Test
-//    public void saveContentTestFail()  {
-//        String tmp = "tmp";
-//        InputStream is = new ByteArrayInputStream(tmp.getBytes());
-//        EchoController.saveContent(MessageContentResponse.builder().stream(is).build());
-//    }
-
-
 }

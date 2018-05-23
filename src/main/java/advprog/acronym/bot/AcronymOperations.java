@@ -19,14 +19,14 @@ public class AcronymOperations {
         String yangDicari = acronym.getKependekan() + ";" + acronym.getKepanjangan();
         String i;
         boolean ketemu = false;
-        while((i = br.readLine()) != null) {
+        while ((i = br.readLine()) != null) {
             String[] a = i.split(";");
-            if(acronym.getKependekan().equals(a[0])) {
+            if (acronym.getKependekan().equals(a[0])) {
                 ketemu = true;
                 break;
             }
         }
-        if(!ketemu) {
+        if (!ketemu) {
             bw.append(yangDicari + "\n");
         }
         br.close();
@@ -47,9 +47,9 @@ public class AcronymOperations {
                                         .getPath()))));
         String i;
         acronym.setKepanjangan(newKepanjangan);
-        while((i = br.readLine()) != null) {
+        while ((i = br.readLine()) != null) {
             String[] a = i.split(";");
-            if(acronym.getKependekan().equals(a[0])) {
+            if (acronym.getKependekan().equals(a[0])) {
                 bw.write(a[0] + ";" + newKepanjangan + "\n");
                 continue;
             }
@@ -96,7 +96,7 @@ public class AcronymOperations {
         BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
         String i;
         ArrayList<Acronym> arrayListBaru = new ArrayList<>();
-        while((i = br.readLine()) != null) {
+        while ((i = br.readLine()) != null) {
             String[] isplit = i.split(";");
             Acronym acronymBaru = new Acronym(isplit[0], isplit[1]);
             arrayListBaru.add(acronymBaru);
