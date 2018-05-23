@@ -14,6 +14,7 @@ import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
 
+import com.sun.org.apache.xpath.internal.operations.String;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -55,7 +56,9 @@ public class EchoControllerTest {
 
         TextMessage reply = echoController.handleTextMessageEvent(event);
 
-        assertEquals("(' DEADPOOL 2',[11:35 14:15 17:00 19:45 22:30])\n", reply.getText());
+        assertEquals(new StringBuilder()
+                .append("(' DEADPOOL 2',[11:15 13:55])\n")
+                .append("(' SOLO: A STAR WARS STORY',[16:35 19:30 22:25])\n"), reply.getText());
     }
 
     @Test
@@ -66,8 +69,13 @@ public class EchoControllerTest {
         TextMessage reply = echoController.handleTextMessageEvent(event);
 
         assertEquals(new StringBuilder()
-                .append("(' DEADPOOL 2',[10:30 13:10 15:50 18:30 21:10 23:50])\n")
-                .append("(' VFF: SAMA JUGA BOHONG ',[14:00])\n").toString(), reply.getText());
+                .append("(' DEADPOOL 2',[10:45 13:30 16:00 18:35 21:10 23:45])\n\n")
+                .append("(' ANON ',[12:40 17:05])\n")
+                .append("(' SUBMERGENCE',[12:10 14:30 16:55 19:20 21:45])\n")
+                .append("(' SOLO: A STAR WARS STORY',[15:00])\n")
+                .append("(' GHOST STORIES',[14:50 19:15 21:25])\n")
+                .append("(' AVENGERS: INFINITY WAR',[11:50 17:45 20:50])\n")
+                .append("(' 3 AM PART 3',[11:30 13:40 15:45 18:00 20:15 22:30])\n"), reply.getText());
     }
 
     @Test
@@ -77,7 +85,7 @@ public class EchoControllerTest {
 
         TextMessage reply = echoController.handleTextMessageEvent(event);
 
-        assertEquals("('4DX2D DEADPOOL 2',[11:15 13:45 16:20 19:00 21:35])\n", reply.getText());
+        assertEquals("('4DX2D DEADPOOL 2',[10:50 13:25])\n", reply.getText());
     }
 
     @Test
@@ -87,7 +95,9 @@ public class EchoControllerTest {
 
         TextMessage reply = echoController.handleTextMessageEvent(event);
 
-        assertEquals("(' DEADPOOL 2',[10:45 13:30 16:10 18:50 21:30 24:10])\n", reply.getText());
+        assertEquals(new StringBuilder()
+                .append("(' DEADPOOL 2',[12:45])\n")
+                .append("(' SOLO: A STAR WARS STORY',[15:30 18:25 21:20])\n"),reply.getText());
     }
 
     @Test
@@ -97,7 +107,9 @@ public class EchoControllerTest {
 
         TextMessage reply = echoController.handleTextMessageEvent(event);
 
-        assertEquals("(' DEADPOOL 2',[10:30 13:10 15:50 18:30 21:10 23:50])\n", reply.getText());
+        assertEquals(new StringBuilder()
+                .append("(' DEADPOOL 2',[12:00 14:35])\n")
+                .append("(' SOLO: A STAR WARS STORY',[17:10 20:00 22:50])\n"), reply.getText());
     }
 
     @Test
@@ -109,7 +121,7 @@ public class EchoControllerTest {
 
         TextMessage reply = echoController.handleTextMessageEvent(event);
 
-        assertEquals("Cinema default change from Grand Indonesia to Aeon Mall", reply.getText());
+        assertEquals("Yay ! Your Cinema change from Grand Indonesia to Aeon Mall", reply.getText());
     }
 
     @Test
