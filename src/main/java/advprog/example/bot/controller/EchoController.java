@@ -46,7 +46,7 @@ public class EchoController {
                     String after = cgv.getState().cinemaName();
 
                     return new TextMessage(
-                            String.format("Congrats! Your Cinema Default change from %s to %s", before, after)
+                            String.format("Yay ! Your default Cinema change from %s to %s", before, after)
                     );
                 } else {
                     return new TextMessage("Url is invalid");
@@ -64,7 +64,7 @@ public class EchoController {
             }
         }
 
-        if(contentText.contains("/echo")) {
+        if (contentText.contains("/echo")) {
             String replyText = contentText.replace("/echo", "");
             return new TextMessage(replyText.substring(1));
         } else {
