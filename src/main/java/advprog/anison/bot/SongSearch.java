@@ -14,11 +14,6 @@ public class SongSearch {
 
     public static final String fixedURL = "https://schoolido.lu/api/songs/?search=";
 
-    public static void main(String[] args) throws Exception{
-        SongCsvWriter.writeSong("test","bokutachi wa hitotsu no hikari");
-        //SongCsvReader.readSong("test");
-    }
-
     public static String findSongTrueName(String song) throws Exception {
         song = song.replace(" ","+");
         String urlString = fixedURL + song;

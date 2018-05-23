@@ -131,7 +131,7 @@ public class EchoController {
                 songName.append(" ");
             }
             String song = songName.toString();
-            SongCsvWriter.writeSong("test",song);
+            //SongCsvWriter.writeSong("test",song);
         } else if (inputan[0].equals("/delete_song")) {
             StringBuilder songName = new StringBuilder();
             for (int i = 1; i < inputan.length; i++) {
@@ -140,7 +140,7 @@ public class EchoController {
             }
             String song = songName.toString();
             ArrayList<Song> songs = SongCsvReader.readSong("test");
-            SongCsvWriter.writeSongArray("test", CarouselManager.deleteSong(songs,song));
+            //SongCsvWriter.writeSongArray("test", CarouselManager.deleteSong(songs,song));
         }
 
         String replyText = contentText.replace("/echo", "");

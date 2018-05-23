@@ -50,6 +50,7 @@ public class CarouselManager {
 
         TemplateMessage templateMessage = new TemplateMessage(
                 "Carousel alt text", carouselTemplate);
+        System.out.println(templateMessage.toString());
         return templateMessage;
     }
 
