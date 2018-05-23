@@ -58,17 +58,6 @@ public class ZonkbotControllerTest {
         verify(event, atLeastOnce()).getTimestamp();
     }
 
-    @Test
-    void randomQuestionCarouselTest() {
-        Question question = zonkbotController.getRandomQuestion();
-        try{
-            zonkbotController.randomQuestionCarousel("replToken",
-                    question);
-        } catch (Exception e) {
-            //do nothing
-        }
-    }
-
 
     @Test
     void handleTextMessageEvent() {
@@ -99,12 +88,6 @@ public class ZonkbotControllerTest {
         } catch (Exception e) {
           //do nothing
         }
-    }
-
-    @Test
-    void getRandomQuestionTest () {
-        Question question = zonkbotController.getRandomQuestion();
-        assertEquals(question, question);
     }
 
     @Test

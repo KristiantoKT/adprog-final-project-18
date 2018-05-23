@@ -242,6 +242,12 @@ public class ZonkbotController {
     }
 
     public void replyText(@NonNull String replyToken, @NonNull String message) {
+        if (replyToken.isEmpty()) {
+            throw new IllegalArgumentException("replyToken must not be empty");
+        }
+        if (message.length() > 1000) {
+            message = message.substring(0, 1000 - 2) + "……";
+        }
         reply(replyToken, new TextMessage(message));
     }
 
