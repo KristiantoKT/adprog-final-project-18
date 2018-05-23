@@ -197,6 +197,19 @@ public class ZonkbotController {
                 TemplateMessage templateMessage = new TemplateMessage("Questions", carouselTemplate);
                 reply(replyToken, templateMessage);
             }
+        } else {
+            List<CarouselColumn> columns = new ArrayList<>();
+            for (int i = 0; i < questions.size(); i++ ) {
+                List<Action> actions = new ArrayList<>();
+                actions.add(new MessageAction("Select",
+                        String.format("/Question: %s", i + 1)));
+                columns.add(new CarouselColumn(null,
+                        "Choose Question", questions.get(i).getQuestion(), actions));
+
+            }
+            Template carouselTemplate = new CarouselTemplate(columns);
+            TemplateMessage templateMessage = new TemplateMessage("Questions", carouselTemplate);
+            reply(replyToken, templateMessage);
         }
     }
 
