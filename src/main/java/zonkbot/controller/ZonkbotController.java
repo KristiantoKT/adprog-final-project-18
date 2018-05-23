@@ -174,19 +174,30 @@ public class ZonkbotController {
     //CHOOSE QUESTIONS WITH CAROUSEL
     public void chooseQuestionForChangeAnswer(String replyToken) {
         List<Question> questions = readFromJson();
-        List<CarouselColumn> columns = new ArrayList<>();
-        for (int i = 0; i < questions.size(); i++) {
-            if (questions.get(i) != null) {
+        if (questions.size() > 10) {
+            int i = 0;
+            for(int j = 0; j < questions.size() / 10; j++) {
+                List<CarouselColumn> columns = new ArrayList<>();
                 List<Action> actions = new ArrayList<>();
                 actions.add(new MessageAction("Select",
                         String.format("/Question: %s", i + 1)));
                 columns.add(new CarouselColumn(null,
                         "Choose Question", questions.get(i).getQuestion(), actions));
+                i++;
+                while (i % 10 != 0 ) {
+                    actions = new ArrayList<>();
+                    actions.add(new MessageAction("Select",
+                            String.format("/Question: %s", i + 1)));
+                    columns.add(new CarouselColumn(null,
+                            "Choose Question", questions.get(i).getQuestion(), actions));
+
+                    i++;
+                }
+                Template carouselTemplate = new CarouselTemplate(columns);
+                TemplateMessage templateMessage = new TemplateMessage("Questions", carouselTemplate);
+                reply(replyToken, templateMessage);
             }
         }
-        Template carouselTemplate = new CarouselTemplate(columns);
-        TemplateMessage templateMessage = new TemplateMessage("Questions", carouselTemplate);
-        reply(replyToken, templateMessage);
     }
 
     //CHOOSE CORRECT ANSWER WITH CAROUSEL
