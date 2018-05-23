@@ -16,9 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import zonkbot.EventTestUtil;
-import zonkbot.GroupZonkbot;
 import zonkbot.Question;
-import zonkbot.User;
 
 @SpringBootTest(properties = "line.bot.handler.enabled=false")
 @ExtendWith(SpringExtension.class)
@@ -60,23 +58,12 @@ public class ZonkbotControllerTest {
 
 
     @Test
-    void handleTextMessageEvent() {
+    void handleTextMessageEvent() throws ExecutionException, InterruptedException {
         MessageEvent<TextMessageContent> event = EventTestUtil.createDummyTextMessage("test");
         try {
             zonkbotController.handleTextMessageEvent(event);
         } catch (Exception e) {
           //do nothing
-        }
-    }
-
-    @Test
-    void getLeaderboardTest() {
-        try {
-            User user = new User("userId");
-            GroupZonkbot group = new GroupZonkbot("groupId", user);
-            zonkbotController.getLeaderboard(group);
-        } catch (Exception e) {
-            //do nothing
         }
     }
 
@@ -104,19 +91,9 @@ public class ZonkbotControllerTest {
     void responseMessageForPersonalTest() {
         MessageEvent<TextMessageContent> event = EventTestUtil.createDummyTextMessage("test");
         try {
-            zonkbotController.responseMessageForPersonal(event.getSource().getUserId(),
-                    "textContent","replyToken");
+            zonkbotController.responseMessageForPersonal(event, "textContent","replyToken");
         } catch (Exception e) {
           //do nothing
-        }
-    }
-
-    @Test
-    void showLeaderboardTest() {
-        try {
-            zonkbotController.showLeaderboard("2");
-        } catch (Exception e) {
-            //do nothing
         }
     }
 
@@ -131,13 +108,8 @@ public class ZonkbotControllerTest {
 
     @Test
     void chooseAnswerTest() {
-        Question question = new Question("Hidung-hidung apa yang menyebalkan?");
-        question.addAnswer("Hidung kucing");
-        question.addAnswer("Hidung cicak");
-        question.addAnswer("Hidung kecoa");
-        question.addAnswer("Hidung belang");
         try {
-            zonkbotController.chooseCorrectAnswerWithCarousel("replyToken", question);
+            zonkbotController.chooseCorrectAnswerWithCarousel("replyToken");
         } catch (Exception e) {
             //do nothing
         }
@@ -178,6 +150,12 @@ public class ZonkbotControllerTest {
     void groupResponseMessageTest() throws ExecutionException, InterruptedException {
         MessageEvent<TextMessageContent> messages = null;
         zonkbotController.groupResponseMessage(messages, "id");
+    }
+
+    @Test
+    void showLeaderboardTest() throws ExecutionException, InterruptedException {
+        zonkbotController.showLeaderboard("id");
+        assertEquals(true, true);
     }
 
     @Test

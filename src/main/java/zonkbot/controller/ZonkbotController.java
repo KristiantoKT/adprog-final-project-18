@@ -66,8 +66,7 @@ public class ZonkbotController {
         String textContent = messageContent.getText();
         String replyToken = event.getReplyToken();
         if (event.getSource() instanceof UserSource) {
-            responseMessageForPersonal(event.getSource().getUserId(),
-                    textContent, replyToken);
+            responseMessageForPersonal(event, textContent, replyToken);
         } else if (event.getSource() instanceof GroupSource) {
             groupResponseMessage(event, replyToken);
         }
@@ -90,21 +89,17 @@ public class ZonkbotController {
         }
     }
 
-    public void responseMessageForPersonal(String userId,
+    public void responseMessageForPersonal(MessageEvent<TextMessageContent> event,
                                             String textContent, String replyToken)
             throws ExecutionException, InterruptedException {
         String replyText;
         replyText = zonkbot.responseMessage(textContent);
         if (replyText.equals("/Choose correct answer")) {
-            Question question = null;
-            if (zonkbot.getPresentQuestion() != null) {
-                question = zonkbot.getPresentQuestion();
-            }
-            chooseCorrectAnswerWithCarousel(replyToken, question);
+            chooseCorrectAnswerWithCarousel(replyToken);
         } else if (replyText.equals("/Choose question")) {
             chooseQuestion(replyToken);
         } else if (replyText.equals("/name")) {
-            replyText = getProfileName(userId);
+            replyText = getProfileName(event.getSource().getUserId());
             this.replyText(replyToken, replyText);
         } else if (!replyText.isEmpty()) {
             this.replyText(replyToken, replyText);
@@ -123,6 +118,8 @@ public class ZonkbotController {
         }
         GroupZonkbot group = getGroup(groupId);
         boolean hasGroup = group != null;
+
+
         if (hasGroup) {
             replyText = group.responseMessage(textContent, userId);
         } else if (!hasGroup && textContent.equals("start zonk")) {
@@ -136,22 +133,18 @@ public class ZonkbotController {
     }
 
     public String showLeaderboard(String groupId) throws ExecutionException, InterruptedException {
+        StringBuilder reply = new StringBuilder();
         GroupZonkbot group = getGroup(groupId);
-        return getLeaderboard(group);
-    }
-
-    public String getLeaderboard(GroupZonkbot group) throws ExecutionException, InterruptedException {
-        String reply = "";
         if (group != null) {
             List<User> users = group.getUsers();
             Collections.sort(users);
             for (User user : users) {
                 String userId = user.getUserId();
                 String name = getProfileName(userId);
-                reply += name +": " + user.getScore() + "\n";
+                reply.append(name).append(": ").append(user.getScore()).append("\n");
             }
         }
-        return reply;
+        return reply.toString();
     }
 
     public GroupZonkbot getGroup(String groupId) {
@@ -165,17 +158,11 @@ public class ZonkbotController {
         return null;
     }
 
-
     public void replyWithRandomQuestion(String replyToken) {
         ArrayList<Question> questions = readFromJson();
         Random rand = new Random();
         int questionIndex = rand.nextInt(questions.size());
-        randomQuestionCarousel(replyToken, questions.get(questionIndex),
-                questionIndex);
-    }
-
-    public void randomQuestionCarousel(String replyToken, Question question,
-                                       int questionIndex) {
+        Question question = questions.get(questionIndex);
         List<String> answers = question.getAnswers();
         List<CarouselColumn> columns = new ArrayList<>();
         for (int i = 0; i < answers.size(); i++) {
@@ -208,7 +195,8 @@ public class ZonkbotController {
     }
 
     //CHOOSE CORRECT ANSWER WITH CAROUSEL
-    public void chooseCorrectAnswerWithCarousel(String replyToken, Question question) {
+    public void chooseCorrectAnswerWithCarousel(String replyToken) {
+        Question question = zonkbot.getPresentQuestion();
         List<String> answers = question.getAnswers();
         List<CarouselColumn> columns = new ArrayList<>();
         for (int i = 0; i < answers.size(); i++) {
