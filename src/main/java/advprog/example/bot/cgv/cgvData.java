@@ -161,7 +161,7 @@ public class cgvData {
         for (Map.Entry<String, ArrayList<String>> entry : schedule.entrySet()) {
             String key = entry.getKey();
             ArrayList<String> value = entry.getValue();
-            sb.append("('").append(key).append("',").append(value).append(")\n");
+            sb.append("( '").append(key).append("' : ").append(value).append(" )\n");
         }
 
         if (sb.length() == 0) {
