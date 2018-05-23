@@ -18,7 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import zonkbot.GroupZonkbot;
 import zonkbot.Question;
+import zonkbot.User;
 
 @SpringBootTest(properties = "line.bot.handler.enabled=false")
 @ExtendWith(SpringExtension.class)
@@ -58,29 +60,93 @@ public class ZonkbotControllerTest {
         verify(event, atLeastOnce()).getTimestamp();
     }
 
+    @Test
+    void replyWithRandomQuestionTest() {
+        try {
+            zonkbotController.replyWithRandomQuestion("replyToken");
+        } catch (Exception e) {
+
+        }
+    }
 
     @Test
-    void handleTextMessageEvent() throws ExecutionException, InterruptedException {
-        zonkbotController.handleTextMessageEvent(null);
-        assertEquals(true, true);
+    void randomQuestionWithCarousel() {
+        Question question = new Question("Bobot apa yang besar?");
+        question.addAnswer("Bobot kamu");
+        question.addAnswer("Bobot UAS");
+        question.addAnswer("Bobot proyek akhir");
+        question.addAnswer("Bobotboy");
+        try {
+            zonkbotController.randomQuestionCarousel("replyToken",
+                    question, 0);
+        } catch (Exception e) {
+
+        }
+    }
+
+    @Test
+    void chooseQuestion() {
+        try {
+            zonkbotController.chooseQuestion("replyToken");
+        } catch (Exception e) {
+
+        }
+    }
+
+
+    @Test
+    void chooseCorrectAnswerWithCarouselTest() {
+        Question question = new Question("Bobot apa yang besar?");
+        question.addAnswer("Bobot kamu");
+        question.addAnswer("Bobot UAS");
+        question.addAnswer("Bobot proyek akhir");
+        question.addAnswer("Bobotboy");
+        try {
+            zonkbotController.chooseCorrectAnswerWithCarousel("replyToken", question);
+        } catch (Exception e) {
+
+        }
+    }
+
+    @Test
+    void showLeaderBoardTest() {
+        User user = new User("userId");
+        GroupZonkbot group = new GroupZonkbot("groupId", user);
+        try {
+            zonkbotController.showLeaderboard(group);
+        } catch (Exception e) {
+
+        }
+    }
+
+    @Test
+    void replyTextTest() {
+        try {
+            zonkbotController.replyText("replyToken","Sample Message");
+        } catch (Exception e) {
+
+        }
     }
 
     @Test
     void writeToJson() {
-        Question question = new Question("halo?");
-        zonkbotController.writeToJson(question);
-        assertEquals(true,true);
+        Question question = new Question("Bobot apa yang besar?");
+        question.addAnswer("Bobot kamu");
+        question.addAnswer("Bobot UAS");
+        question.addAnswer("Bobot proyek akhir");
+        question.addAnswer("Bobotboy");
+        question.setCorrectAnswer(2);
+        try {
+            zonkbotController.writeToJson(question);
+        } catch (Exception e) {
+
+        }
     }
 
     @Test
     void readFromJson() {
         zonkbotController.readFromJson();
-        assertEquals(true,true);
     }
 
-    @Test
-    void correctAnswerTest() {
-        assertEquals(99, zonkbotController.readFromJson().toString());
-    }
 
 }

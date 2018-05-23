@@ -57,6 +57,7 @@ public class Zonkbot {
             question.setCorrectAnswer(correctAnswerIndex);
             replyText = question.toString();
         }
+        ZonkbotController.writeToJson(question);
         question = null;
         return replyText;
     }

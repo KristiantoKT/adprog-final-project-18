@@ -99,7 +99,8 @@ public class ZonkbotController {
         if (replyText.equals("/Random question")) {
             replyWithRandomQuestion(replyToken);
         } else if (replyText.equals("show leaderboard")) {
-            replyText = showLeaderboard(groupId);
+            GroupZonkbot group = getGroup(groupId);
+            replyText = showLeaderboard(group);
             groupZonkbots.remove(getGroup(groupId));
             this.replyText(replyToken, replyText);
         } else if (!replyText.isEmpty()) {
@@ -125,9 +126,9 @@ public class ZonkbotController {
         return replyText;
     }
 
-    private String showLeaderboard(String groupId) throws ExecutionException, InterruptedException {
+    public String showLeaderboard(GroupZonkbot group)
+            throws ExecutionException, InterruptedException {
         StringBuilder reply = new StringBuilder();
-        GroupZonkbot group = getGroup(groupId);
         List<User> users = group.getUsers();
         Collections.sort(users);
         for (User user: users) {
@@ -157,7 +158,7 @@ public class ZonkbotController {
         randomQuestionCarousel(replyToken, question, questionIndex);
     }
 
-    private void randomQuestionCarousel(String replyToken,
+    public void randomQuestionCarousel(String replyToken,
                                         Question question, int questionIndex) {
         List<String> answers = question.getAnswers();
         List<CarouselColumn> columns = new ArrayList<>();
@@ -175,7 +176,7 @@ public class ZonkbotController {
     }
 
     //CHOOSE QUESTIONS WITH CAROUSEL
-    private void chooseQuestion(String replyToken) {
+    public void chooseQuestion(String replyToken) {
         List<Question> questions = readFromJson();
         List<CarouselColumn> columns = new ArrayList<>();
         for (int i = 0; i < questions.size(); i++) {
@@ -191,7 +192,7 @@ public class ZonkbotController {
     }
 
     //CHOOSE CORRECT ANSWER WITH CAROUSEL
-    private void chooseCorrectAnswerWithCarousel(String replyToken, Question question) {
+    public void chooseCorrectAnswerWithCarousel(String replyToken, Question question) {
         List<String> answers = question.getAnswers();
         List<CarouselColumn> columns = new ArrayList<>();
         for (int i = 0; i < answers.size(); i++) {
@@ -224,7 +225,7 @@ public class ZonkbotController {
         }
     }
 
-    private void replyText(@NonNull String replyToken, @NonNull String message) {
+    public void replyText(@NonNull String replyToken, @NonNull String message) {
         if (replyToken.isEmpty()) {
             throw new IllegalArgumentException("replyToken must not be empty");
         }
@@ -234,7 +235,7 @@ public class ZonkbotController {
         reply(replyToken, new TextMessage(message));
     }
 
-    public static void writeToJson(Question question) {
+    public static void writeToJson(@NonNull Question question) {
         Gson gson = new Gson();
         ArrayList<Question> questions = readFromJson();
         questions.add(question);
