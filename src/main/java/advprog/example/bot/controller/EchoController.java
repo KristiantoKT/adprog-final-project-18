@@ -12,8 +12,10 @@ import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.action.PostbackAction;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
+import com.linecorp.bot.model.event.PostbackEvent;
 import com.linecorp.bot.model.event.message.AudioMessageContent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
+import com.linecorp.bot.model.event.postback.PostbackContent;
 import com.linecorp.bot.model.message.AudioMessage;
 import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TemplateMessage;
@@ -132,6 +134,7 @@ public class EchoController {
         return new TextMessage(replyText);
     }
 
+
     @EventMapping
     public void handleAudioMessageEvent(MessageEvent<AudioMessageContent> event) {
         //        LOGGER.fine(String.format("AudioMessageContent(timestamp='%s',content='%s')",
@@ -188,6 +191,20 @@ public class EchoController {
     public void handleDefaultMessage(Event event) {
         LOGGER.fine(String.format("Event(timestamp='%s',source='%s')",
                 event.getTimestamp(), event.getSource()));
+    }
+
+    @EventMapping
+    public void handlePostback(PostbackEvent event) {
+        PostbackContent postbackContent = event.getPostbackContent();
+        String postbackCommand = postbackContent.getData();
+        String[] postbackCommandSplit = postbackCommand.split(" ");
+//        if(postbackCommandSplit[0].equals("Delete")) {
+//
+//        }
+//        else if(postbackCommandSplit[0].equals("Update")) {
+//
+//        }
+
     }
 
     private void handleHeavyContent(String replyToken, String messageId,
