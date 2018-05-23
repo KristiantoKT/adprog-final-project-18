@@ -10,7 +10,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class CgvMetadata {
+public class cgvData {
     private final State cinema;
 
     private HashMap<String, ArrayList<String>> goldSched = new HashMap<>();
@@ -21,7 +21,7 @@ public class CgvMetadata {
 
     private String url;
 
-    public CgvMetadata(State cinema, String url) {
+    public cgvData(State cinema, String url) {
         this.url = url;
         this.cinema = cinema;
     }

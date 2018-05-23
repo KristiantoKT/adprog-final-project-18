@@ -4,7 +4,7 @@ package advprog.example.bot.cgv;
 public class DefaultCinema implements State {
 
     private final String cinemaUrl = "https://www.cgv.id/en/schedule/cinema/002";
-    private final CgvMetadata cgvMetadata = new CgvMetadata(this,cinemaUrl);
+    private final cgvData cgvMetadata = new cgvData(this,cinemaUrl);
 
     public DefaultCinema() {
         cgvMetadata.groupingMovieByClass();

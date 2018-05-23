@@ -3,12 +3,12 @@ package advprog.example.bot.cgv;
 
 public class ChangeCinema implements State {
 
-    CgvMetadata cgvMetadata;
+    cgvData cgvMetadata;
     private String url;
 
     public ChangeCinema(String url) {
         this.url = url;
-        cgvMetadata = new CgvMetadata(this, this.url);
+        cgvMetadata = new cgvData(this, this.url);
 
         cgvMetadata.groupingMovieByClass();
         cgvMetadata.groupingMovieByDimension();

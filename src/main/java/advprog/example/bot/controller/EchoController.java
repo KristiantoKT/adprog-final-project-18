@@ -46,7 +46,7 @@ public class EchoController {
                     String after = cgv.getState().cinemaName();
 
                     return new TextMessage(
-                            String.format("Cinema default change from %s to %s", before, after)
+                            String.format("Congratulations ! Your Cinema Default change from %s to %s\nNow you can search the best schedule for you !", before, after)
                     );
                 } else {
                     return new TextMessage("Url is invalid");
@@ -61,15 +61,17 @@ public class EchoController {
                 return new TextMessage(cgv.cgvVelvet());
             } else if (contentText.contains("/cgv_sweet_box")) {
                 return new TextMessage(cgv.cgvSweetBox());
-            }else {
-                return new TextMessage("Command Not Found ! Please input the right command ");
             }
-
         }
 
-        String replyText = contentText.replace("/echo", "");
+        if(contentText.contains("/echo")) {
 
-        return new TextMessage(replyText.substring(1));
+            String replyText = contentText.replace("/echo", "");
+            return new TextMessage(replyText.substring(1));
+        } else {
+            return new TextMessage("Command Not Found ! Please input the right command ");
+        }
+
     }
 
     @EventMapping
