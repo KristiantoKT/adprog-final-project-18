@@ -36,11 +36,6 @@ public class PrintController {
     private BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
     private ObjectMapper objectMapper = new ObjectMapper();
     private HalteBikun[] halteBikuns = objectMapper.readValue(bufferedReader, HalteBikun[].class);
-
-    public static String getState() {
-        return state;
-    }
-
     private static String state = "";
     private static final Logger LOGGER = Logger.getLogger(PrintController.class.getName());
 

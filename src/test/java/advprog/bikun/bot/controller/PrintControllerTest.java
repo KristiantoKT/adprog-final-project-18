@@ -14,8 +14,11 @@ import com.linecorp.bot.model.action.PostbackAction;
 import com.linecorp.bot.model.action.URIAction;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
+import com.linecorp.bot.model.event.PostbackEvent;
 import com.linecorp.bot.model.event.message.LocationMessageContent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
+import com.linecorp.bot.model.event.source.GroupSource;
+import com.linecorp.bot.model.event.source.Source;
 import com.linecorp.bot.model.event.source.UserSource;
 import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TemplateMessage;
@@ -135,6 +138,44 @@ public class PrintControllerTest {
         );
         printController.handleLocationMessageEvent(event2);
     }
+
+    @Test
+    void testHandleWrongRequestHalteByUser() throws Exception {
+        TextMessageContent textMessageContent = new TextMessageContent("123", "/indras");
+        MessageEvent<TextMessageContent> event = new MessageEvent<>(
+                "123", new UserSource("1234"), textMessageContent, Instant.now()
+        );
+        printController.handleTextMessageEvent(event);
+        LocationMessageContent locationMessageContent =
+                new LocationMessageContent("123",
+                        "Faculty of Computer Science, University of Indonesia",
+                        "Kampus UI Depok, Pd. Cina, Beji, Kota Depok, Jawa Barat 16424",
+                        -6.3646009, 106.8264999);
+        MessageEvent<LocationMessageContent> event2 = new MessageEvent<>(
+                "123", new UserSource("1234"), locationMessageContent, Instant.now()
+        );
+        printController.handleLocationMessageEvent(event2);
+    }
+
+
+
+
+
+    @Test
+    void testHandleRequestHalteByGroup() throws Exception {
+        LocationMessageContent locationMessageContent =
+                new LocationMessageContent("123",
+                        "Faculty of Computer Science, University of Indonesia",
+                        "Kampus UI Depok, Pd. Cina, Beji, Kota Depok, Jawa Barat 16424",
+                        -6.3646009, 106.8264999);
+        MessageEvent<LocationMessageContent> event2 = new MessageEvent<>(
+                "123", new GroupSource("12345", "1234"), locationMessageContent, Instant.now()
+        );
+
+        printController.handleLocationMessageEvent(event2);
+    }
+
+
 
     @Test
     void testHandleDefaultMessage() {
