@@ -66,10 +66,15 @@ public class ZonkbotController {
         String textContent = messageContent.getText();
         String replyToken = event.getReplyToken();
         if (event.getSource() instanceof UserSource) {
-            responseMessageForPersonal(event, textContent, replyToken);
+            responseMessageForPersonal(event.getSource().getUserId(),
+                    textContent, replyToken);
         } else if (event.getSource() instanceof GroupSource) {
             groupResponseMessage(event, replyToken);
         }
+    }
+
+    public void replyWithRandomQuestion(String replyToken) {
+        randomQuestionCarousel(replyToken, getRandomQuestion());
     }
 
     public void groupResponseMessage(MessageEvent<TextMessageContent> event, String replyToken)
@@ -89,17 +94,21 @@ public class ZonkbotController {
         }
     }
 
-    public void responseMessageForPersonal(MessageEvent<TextMessageContent> event,
+    public void responseMessageForPersonal(String userId,
                                             String textContent, String replyToken)
             throws ExecutionException, InterruptedException {
         String replyText;
         replyText = zonkbot.responseMessage(textContent);
         if (replyText.equals("/Choose correct answer")) {
-            chooseCorrectAnswerWithCarousel(replyToken);
+            Question question = null;
+            if (zonkbot.getPresentQuestion() != null) {
+                question = zonkbot.getPresentQuestion();
+            }
+            chooseCorrectAnswerWithCarousel(replyToken, question);
         } else if (replyText.equals("/Choose question")) {
             chooseQuestion(replyToken);
         } else if (replyText.equals("/name")) {
-            replyText = getProfileName(event.getSource().getUserId());
+            replyText = getProfileName(userId);
             this.replyText(replyToken, replyText);
         } else if (!replyText.isEmpty()) {
             this.replyText(replyToken, replyText);
@@ -133,18 +142,22 @@ public class ZonkbotController {
     }
 
     public String showLeaderboard(String groupId) throws ExecutionException, InterruptedException {
-        StringBuilder reply = new StringBuilder();
         GroupZonkbot group = getGroup(groupId);
+        return getLeaderboard(group);
+    }
+
+    public String getLeaderboard(GroupZonkbot group) throws ExecutionException, InterruptedException {
+        String reply = "";
         if (group != null) {
             List<User> users = group.getUsers();
             Collections.sort(users);
             for (User user : users) {
                 String userId = user.getUserId();
                 String name = getProfileName(userId);
-                reply.append(name).append(": ").append(user.getScore()).append("\n");
+                reply += name +": " + user.getScore() + "\n";
             }
         }
-        return reply.toString();
+        return reply;
     }
 
     public GroupZonkbot getGroup(String groupId) {
@@ -158,11 +171,15 @@ public class ZonkbotController {
         return null;
     }
 
-    public void replyWithRandomQuestion(String replyToken) {
+    public Question getRandomQuestion () {
         ArrayList<Question> questions = readFromJson();
         Random rand = new Random();
         int questionIndex = rand.nextInt(questions.size());
-        Question question = questions.get(questionIndex);
+        return questions.get(questionIndex);
+    }
+
+    public void randomQuestionCarousel(String replyToken, Question question) {
+        int questionIndex = readFromJson().indexOf(question);
         List<String> answers = question.getAnswers();
         List<CarouselColumn> columns = new ArrayList<>();
         for (int i = 0; i < answers.size(); i++) {
@@ -195,8 +212,7 @@ public class ZonkbotController {
     }
 
     //CHOOSE CORRECT ANSWER WITH CAROUSEL
-    public void chooseCorrectAnswerWithCarousel(String replyToken) {
-        Question question = zonkbot.getPresentQuestion();
+    public void chooseCorrectAnswerWithCarousel(String replyToken, Question question) {
         List<String> answers = question.getAnswers();
         List<CarouselColumn> columns = new ArrayList<>();
         for (int i = 0; i < answers.size(); i++) {
