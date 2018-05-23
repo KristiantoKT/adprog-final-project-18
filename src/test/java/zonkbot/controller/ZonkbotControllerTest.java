@@ -125,6 +125,15 @@ public class ZonkbotControllerTest {
     }
 
     @Test
+    void getProfileTest() {
+        try {
+            zonkbotController.getProfileName("idngasal");
+        } catch (Exception e) {
+            //do nothing
+        }
+    }
+
+    @Test
     void writeToJson() {
         Question question = new Question("halo?");
         zonkbotController.writeToJson(question);
