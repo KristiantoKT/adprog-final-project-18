@@ -11,7 +11,6 @@ import java.util.logging.Logger;
 
 @LineMessageHandler
 public class EchoController {
-
     private static final Logger LOGGER = Logger.getLogger(EchoController.class.getName());
 
     @EventMapping
