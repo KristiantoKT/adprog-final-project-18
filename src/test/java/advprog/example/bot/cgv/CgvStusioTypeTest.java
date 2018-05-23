@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CgvCinemaTest {
+public class CgvStusioTypeTest {
 
     CgvStudioType cgvCinema;
     State defaultCinema;
@@ -23,7 +23,8 @@ public class CgvCinemaTest {
     public void testDefaultState() {
         String schedule = cgvCinema.cgvGoldClass();
 
-        assertEquals(schedule, "(' DEADPOOL 2',[11:35 14:15 17:00 19:45 22:30])\n");
+        assertEquals(schedule, "( ' DEADPOOL 2 '\nSchedules : [11:15 13:55] )\n( ' SOLO: A STAR WARS STORY '\n"+
+                "Schedules : [16:35 19:30 22:25] )\n");
     }
 
     @Test
@@ -31,7 +32,8 @@ public class CgvCinemaTest {
         cgvCinema.setState(changeCinema);
         String schedule = cgvCinema.cgvGoldClass();
 
-        assertEquals(schedule, "(' DEADPOOL 2',[11:00 13:40 16:20 19:00 21:40 24:20])\n");
+        assertEquals(schedule, "( ' DEADPOOL 2 '\nSchedules : [11:10 13:50 19:30] )\n( ' SOLO: A STAR WARS STORY '\n"+
+                "Schedules : [16:35 22:20] )\n");
     }
 
 }
