@@ -135,7 +135,7 @@ public class ZonkbotController {
     public String showLeaderboard(String groupId) throws ExecutionException, InterruptedException {
         StringBuilder reply = new StringBuilder();
         GroupZonkbot group = getGroup(groupId);
-        if(group != null) {
+        if (group != null) {
             List<User> users = group.getUsers();
             Collections.sort(users);
             for (User user : users) {
