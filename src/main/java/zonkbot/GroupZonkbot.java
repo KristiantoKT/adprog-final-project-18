@@ -1,9 +1,9 @@
 package zonkbot;
 
+import java.util.ArrayList;
 import org.jetbrains.annotations.NotNull;
 import zonkbot.controller.ZonkbotController;
 
-import java.util.ArrayList;
 
 public class GroupZonkbot {
     ArrayList<User> users;
@@ -62,14 +62,14 @@ public class GroupZonkbot {
     }
 
     @NotNull
-    private String stopZonk() {
+    public String stopZonk() {
         String replyText;
         isZonk = false;
         replyText =  "show leaderboard";
         return replyText;
     }
 
-    private String QandA(String textContent, String userId, String replyText, User user) {
+    public String QandA(String textContent, String userId, String replyText, User user) {
         int questionIndex = Integer.parseInt(textContent.substring(2, 3)) - 1;
         int answerIndex = Integer.parseInt(textContent.substring(4, 5)) - 1 ;
         ArrayList<Question> questions = ZonkbotController.readFromJSON();
@@ -86,7 +86,7 @@ public class GroupZonkbot {
     }
 
     @NotNull
-    private String startZonk() {
+    public String startZonk() {
         ArrayList<Question> questions = ZonkbotController.readFromJSON();
         if(questions.isEmpty())
             return "Sorry but no question available";
@@ -95,14 +95,13 @@ public class GroupZonkbot {
     }
 
     @NotNull
-    private String isAllChanceIsZero() {
+    public String isAllChanceIsZero() {
         if (isAllUserChanceIsZero()) {
             resetChance();
             return "/Random question";
         }
         return "";
     }
-
 
     public User getUser(String userId) {
         for (User user: users) {
@@ -111,7 +110,6 @@ public class GroupZonkbot {
         }
         return null;
     }
-
 
     private boolean isAllUserChanceIsZero() {
         for (User user: users) {

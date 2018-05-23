@@ -13,16 +13,7 @@ public class Zonkbot {
     public Zonkbot() {
         addQuestionSection = false;
         giveAnswerCount = 0;
-    }
-
-    public int getQuestionIndex(String question) {
-        List<Question> questions = ZonkbotController.readFromJSON();
-        for (int i = 0; i < questions.size(); i++) {
-            if (questions.get(i).getQuestion().equals(question)) {
-                return i;
-            }
-        }
-        return -1;
+        question = null;
     }
 
     public Question getPresentQuestion() {
@@ -44,7 +35,7 @@ public class Zonkbot {
             replyText = gettingToChangeAnswerSection();
         }
         //CHANGE_ANSWER_SECTION
-        else if (this != null && textContent.length() > 10
+        else if (textContent.length() > 10
                 && textContent.substring(0,9).equals("/Question")) {
             replyText = changeAnswerSection(textContent);
         }
@@ -74,10 +65,12 @@ public class Zonkbot {
     }
 
     private String chooseCorrectAnswer(String textContent) {
-        String replyText;
+        String replyText = "";
         int correctAnswerIndex = Integer.parseInt(textContent.substring(17)) - 1;
-        question.setCorrectAnswer(correctAnswerIndex);
-        replyText = question.toString();
+        if(question != null) {
+            question.setCorrectAnswer(correctAnswerIndex);
+            replyText = question.toString();
+        }
         question = null;
         return replyText;
     }

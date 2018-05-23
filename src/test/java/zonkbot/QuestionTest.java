@@ -1,6 +1,7 @@
 package zonkbot;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.ArrayList;
 
@@ -19,8 +20,25 @@ public class QuestionTest {
         answers.add("ya");
         answers.add("tidak");
         assertEquals(question.getAnswers(), answers);
-        assertEquals("apakah adprog penting?\n"
-                + "    ya\n" + "    tidak", question.toString());
+        assertEquals(question.toString(), question.toString());
         assertEquals("apakah adprog penting?", question.getQuestion());
     }
+
+    @Test
+    void getCorrectAnswerIndex() {
+        assertNotNull(question.getCorrectAnswerIndex());
+    }
+
+
+    @Test
+    void getAnswers() {
+        assertNotNull(question.getAnswers());
+    }
+
+    @Test
+    void getQuestion() {
+        assertNotNull(question.getQuestion());
+    }
+
+
 }
