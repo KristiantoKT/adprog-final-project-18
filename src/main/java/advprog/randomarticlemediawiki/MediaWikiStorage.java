@@ -8,10 +8,9 @@ import java.io.IOException;
 import java.util.Set;
 
 import org.json.JSONObject;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-
-import org.springframework.http.HttpStatus;
 
 
 public class MediaWikiStorage {
@@ -20,12 +19,12 @@ public class MediaWikiStorage {
     public MediaWikiStorage() {
     }
 
-    public static boolean addUrl(String url){
+    public static boolean addUrl(String url) {
         FileWriter writer = null;
         try {
             String[] current = getUrl();
             boolean isExist = isExistCheck(current, url);
-            if(isExist) {
+            if (isExist) {
                 writer.close();
                 return false;
             } else {
@@ -46,8 +45,8 @@ public class MediaWikiStorage {
 
     public static boolean isExistCheck(String[] arr, String text) {
         boolean hasil = false;
-        for(String e: arr) {
-            if(e.equalsIgnoreCase("text")) {
+        for (String e: arr) {
+            if (e.equalsIgnoreCase("text")) {
                 hasil = true;
             }
         }

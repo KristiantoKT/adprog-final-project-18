@@ -19,14 +19,14 @@ import com.linecorp.bot.model.message.template.CarouselTemplate;
 import com.linecorp.bot.model.response.BotApiResponse;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
+
 
 @LineMessageHandler
 public class EchoController {
@@ -51,7 +51,7 @@ public class EchoController {
         } else if (arrContentText[0].equalsIgnoreCase("/add_wiki")) {
             if (MediaWikiStorage.isMediaWikiApiActive(arrContentText[1])) {
                 boolean hasil = MediaWikiStorage.addUrl(arrContentText[1]);
-                if(hasil) {
+                if (hasil) {
                     return new TextMessage(arrContentText[1] + " berhasil ditambahkan");
                 } else {
                     return new TextMessage(arrContentText[1] + " sudah ada");

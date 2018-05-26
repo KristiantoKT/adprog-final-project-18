@@ -10,7 +10,7 @@ public class ArticleTest {
 
     @Before
     public void setUp() {
-        article = new Article("A", "B", "C");
+        article = new Article("A", "B", "C", "D");
     }
 
     @Test
