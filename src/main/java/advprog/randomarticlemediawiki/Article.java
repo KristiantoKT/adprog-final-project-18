@@ -4,11 +4,13 @@ public class Article {
     private String title;
     private String summary;
     private String link;
+    private String imageUrl;
 
-    public Article(String title, String summary, String link) {
+    public Article(String title, String summary, String link, String imageUrl) {
         this.title = title;
         this.summary = summary;
         this.link = link;
+        this.imageUrl = imageUrl;
     }
 
     public String getTitle() {
@@ -35,4 +37,11 @@ public class Article {
         this.link = link;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 }
