@@ -5,37 +5,56 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.Set;
 
 import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import org.springframework.http.HttpStatus;
+
 
 public class MediaWikiStorage {
-    private final String csvFileName = "mediawikistorage.csv";
+    private static final String csvFileName = "mediawikistorage.csv";
 
     public MediaWikiStorage() {
     }
 
-    public void addUrl(String url) {
+    public static boolean addUrl(String url){
         FileWriter writer = null;
         try {
-            File file = new File(csvFileName);
-            writer = new FileWriter(file, true);
-            StringBuilder sb = new StringBuilder();
-            sb.append(url);
-            sb.append((','));
-            writer.write(sb.toString());
-            writer.close();
+            String[] current = getUrl();
+            boolean isExist = isExistCheck(current, url);
+            if(isExist) {
+                writer.close();
+                return false;
+            } else {
+                File file = new File(csvFileName);
+                writer = new FileWriter(file, true);
+                StringBuilder sb = new StringBuilder();
+                sb.append(url);
+                sb.append((','));
+                writer.write(sb.toString());
+                writer.close();
+                return true;
+            }
         } catch (IOException e) {
             e.getStackTrace();
+            return false;
         }
-
     }
 
-    public String[] getUrl() {
+    public static boolean isExistCheck(String[] arr, String text) {
+        boolean hasil = false;
+        for(String e: arr) {
+            if(e.equalsIgnoreCase("text")) {
+                hasil = true;
+            }
+        }
+        return hasil;
+    }
+
+    public static String[] getUrl() {
         String[] hasil = new String[0];
         try {
             BufferedReader br = new BufferedReader(new FileReader(csvFileName));
@@ -46,17 +65,35 @@ public class MediaWikiStorage {
         return hasil;
     }
 
-    public Article getRandomArticle(String url) {
+    public static Article getRandomArticle(String url) {
         RestTemplate rest = new RestTemplate();
-        url = url + "?format=json&action=query&"
+
+        //Get Title And URL
+        String titleAndUrl = url + "?format=json&action=query&"
                 + "generator=random&grnnamespace=0&grnlimit=1&prop=info&inprop=url";
-        ResponseEntity<String> responseEntity = rest.getForEntity(url, String.class);
+        ResponseEntity<String> responseEntity = rest.getForEntity(titleAndUrl, String.class);
         JSONObject json1 = new JSONObject(responseEntity.getBody());
         JSONObject pages = json1.getJSONObject("query").getJSONObject("pages");
         Set<String> keysSet = pages.keySet();
         String key = keysSet.toArray()[0].toString();
         String title = pages.getJSONObject(key).getString("title");
         String urlArticle = pages.getJSONObject(key).getString("fullurl");
-        return new Article(title,"",urlArticle);
+
+        return new Article(title,"Can't get summary", urlArticle, null);
+    }
+
+    public static boolean isMediaWikiApiActive(String url) {
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response;
+        try {
+            response = restTemplate.getForEntity(url, String.class);
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+
+        return response != null
+                && response.getStatusCode() == HttpStatus.OK
+                && response.getBody().contains("MediaWiki")
+                && response.getBody().contains("API");
     }
 }
