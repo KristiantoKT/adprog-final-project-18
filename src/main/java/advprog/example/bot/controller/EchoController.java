@@ -3,7 +3,6 @@ package advprog.example.bot.controller;
 import advprog.randomarticlemediawiki.Article;
 import advprog.randomarticlemediawiki.MediaWikiStorage;
 import com.linecorp.bot.client.LineMessagingClient;
-import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.action.Action;
 import com.linecorp.bot.model.action.PostbackAction;
 import com.linecorp.bot.model.event.Event;
@@ -16,9 +15,11 @@ import com.linecorp.bot.model.message.TemplateMessage;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.message.template.CarouselColumn;
 import com.linecorp.bot.model.message.template.CarouselTemplate;
-import com.linecorp.bot.model.response.BotApiResponse;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -38,7 +39,7 @@ public class EchoController {
     private boolean stateStatus = false;
 
     @EventMapping
-    public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
+    public Message handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
         LOGGER.fine(String.format("TextMessageContent(timestamp='%s',content='%s')",
                 event.getTimestamp(), event.getMessage()));
         TextMessageContent content = event.getMessage();
@@ -57,7 +58,7 @@ public class EchoController {
                     return new TextMessage(arrContentText[1] + " sudah ada");
                 }
             } else {
-                return new TextMessage("Link salah, bukan MediaWiki Endpoint");
+                return new TextMessage("[ERROR] Link Salah, Format : https://[MediaWikiUrl]/api.php");
             }
 
         } else if (arrContentText[0].equalsIgnoreCase("/random_wiki_article")) {
@@ -65,16 +66,21 @@ public class EchoController {
             List<CarouselColumn> carousel = new ArrayList<>();
 
             for (String i : arrUrl) {
+                URL url = null;
+                try {
+                    url = new URL(i);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
                 List<Action> s = new ArrayList<>();
-                s.add(new PostbackAction("baca artikel", i));
-                carousel.add(new CarouselColumn(null, null,  i, s));
+                s.add(new PostbackAction("Baca artikel", i));
+                carousel.add(new CarouselColumn(null, null,  url.getHost(), s));
             }
 
             CarouselTemplate carouselTemplate = new CarouselTemplate(carousel);
             TemplateMessage templateMessage = new TemplateMessage(
                     "Carousel alt text", carouselTemplate);
-            this.replyCarousel(event.getReplyToken(), templateMessage);
-            return new TextMessage("");
+            return templateMessage;
         } else {
             return new TextMessage("Format penulisan salah."
                     + "\n untuk menambahkan url ketik \n'/add_wiki url'."
@@ -82,22 +88,8 @@ public class EchoController {
         }
     }
 
-    private void replyCarousel(String replyToken, Message message) {
-        reply(replyToken, Collections.singletonList(message));
-    }
-
-    private void reply(String replyToken, List<Message> messages) {
-        try {
-            lineMessagingClient
-                    .replyMessage(new ReplyMessage(replyToken, messages))
-                    .get();
-        } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     @EventMapping
-    public void handlePostbackEvent(PostbackEvent event) throws Exception {
+    public List<Message> handlePostbackEvent(PostbackEvent event) throws Exception {
         String replyToken = event.getReplyToken();
         Article article = MediaWikiStorage.getRandomArticle(event.getPostbackContent().getData());
 
@@ -111,7 +103,7 @@ public class EchoController {
             c.add(a);
         }
         c.add(b);
-        this.reply(replyToken, c);
+        return c;
     }
 
     @EventMapping

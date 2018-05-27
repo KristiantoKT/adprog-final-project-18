@@ -5,10 +5,14 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Set;
 
 import org.json.JSONObject;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
@@ -22,14 +26,14 @@ public class MediaWikiStorage {
     public static boolean addUrl(String url) {
         FileWriter writer = null;
         try {
+            File file = new File(csvFileName);
+            writer = new FileWriter(file, true);
             String[] current = getUrl();
             boolean isExist = isExistCheck(current, url);
             if (isExist) {
                 writer.close();
                 return false;
             } else {
-                File file = new File(csvFileName);
-                writer = new FileWriter(file, true);
                 StringBuilder sb = new StringBuilder();
                 sb.append(url);
                 sb.append((','));
@@ -46,7 +50,7 @@ public class MediaWikiStorage {
     public static boolean isExistCheck(String[] arr, String text) {
         boolean hasil = false;
         for (String e: arr) {
-            if (e.equalsIgnoreCase("text")) {
+            if (e.equalsIgnoreCase(text)) {
                 hasil = true;
             }
         }
@@ -58,7 +62,7 @@ public class MediaWikiStorage {
         try {
             BufferedReader br = new BufferedReader(new FileReader(csvFileName));
             hasil = br.readLine().split(",");
-        } catch (IOException e) {
+        } catch (Exception e) {
             hasil = new String[0];
         }
         return hasil;
@@ -81,18 +85,39 @@ public class MediaWikiStorage {
         return new Article(title,"Can't get summary", urlArticle, null);
     }
 
-    public static boolean isMediaWikiApiActive(String url) {
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response;
+    public static boolean isMediaWikiApiActive(String webPage) {
         try {
-            response = restTemplate.getForEntity(url, String.class);
-        } catch (IllegalArgumentException e) {
+            URL url = new URL(webPage);
+            URLConnection urlConnection = url.openConnection();
+            InputStream is = urlConnection.getInputStream();
+            InputStreamReader isr = new InputStreamReader(is);
+
+            int numCharsRead;
+            char[] charArray = new char[1024];
+            StringBuffer sb = new StringBuffer();
+            while ((numCharsRead = isr.read(charArray)) > 0) {
+                sb.append(charArray, 0, numCharsRead);
+            }
+            String result = sb.toString();
+            return ((HttpURLConnection)urlConnection).getResponseCode() == 200
+                    && result.contains("MediaWiki")
+                    && result.contains("API");
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
             return false;
         }
 
-        return response != null
-                && response.getStatusCode() == HttpStatus.OK
-                && response.getBody().contains("MediaWiki")
-                && response.getBody().contains("API");
+    }
+
+    public static void hapusFile() {
+        File file = new File(csvFileName);
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter(file);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
