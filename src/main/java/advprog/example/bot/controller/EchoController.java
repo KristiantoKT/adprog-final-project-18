@@ -32,11 +32,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @LineMessageHandler
 public class EchoController {
 
-    @Autowired
-    private LineMessagingClient lineMessagingClient;
-
     private static final Logger LOGGER = Logger.getLogger(EchoController.class.getName());
-    private boolean stateStatus = false;
 
     @EventMapping
     public Message handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
